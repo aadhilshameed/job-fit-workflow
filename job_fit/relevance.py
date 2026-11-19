@@ -5,9 +5,8 @@ Two providers, same questions, same answer shape, so they can be compared (scrip
 - "google": Gemini Decisions API, model gemini-decision-1 (reads GEMINI_API_KEY; needs google-genai 3.2 or newer)
 Both cost $0.10 per million input tokens, and output is free.
 
-The Decisions API answers closed questions with a probability instead of writing text. Input tokens cost
-$0.10 per million and output is free, so one posting (about 1,500 tokens) costs about 0.015 cents.
-It reads OPENAI_API_KEY from the environment (.env).
+A Decisions API answers closed questions with a probability instead of writing text, so one posting
+(about 1,500 tokens) costs about 0.015 cents.
 
 Three questions share one request (the posting is billed once):
 - is_target_role (yes/no): the probability that the role is hands-on AI building work. This one decides.
@@ -17,6 +16,7 @@ Three questions share one request (the posting is billed once):
 """
 
 DEFAULT_PROVIDER = "openai"
+QUESTIONS_VERSION = "q2"   # q1: first test; q2: "must live in the region" counts as weekly presence
 MODELS = {"openai": "gpt-6-luna", "google": "gemini-decision-1"}
 THRESHOLD = 0.5   # starting point; set from the test results, not by guessing
 
@@ -45,7 +45,8 @@ PRESENCE_CHOICES = [
     {"value": "remote", "description": "Fully remote, or office visits are only optional."},
     {"value": "occasional", "description": "Hybrid or mobile work with some office days, a few per month at most, "
                                            "or mostly remote."},
-    {"value": "weekly", "description": "Fixed office days every week, mostly on site, or no remote work."},
+    {"value": "weekly", "description": "Fixed office days every week, mostly on site, no remote work, "
+                                       "or the person must live in the city or region."},
     {"value": "regular_unspecified", "description": "Regular presence at the office is required, "
                                                     "without saying how often."},
 ]

@@ -101,7 +101,7 @@ def main():
             note = "no posting text"
         else:
             note = (f"target {row['target_probability']:.2f} {str(row['main_focus']):15} "
-                    f"presence {row['office_presence']}{'  LOCATION GAP' if row['location_gap'] else ''}")
+                    f"presence {row['office_presence']}{('  LOCATION ' + row['location_gap']['kind'].upper()) if row['location_gap'] else ''}")
         print(f"[{i}/{min(len(passed), args.max)}] {title[:55]:55} {note}")
         if row.get("is_target_role"):
             final_set.append({k: row.get(k) for k in SET_FIELDS})

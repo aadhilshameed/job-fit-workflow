@@ -46,7 +46,7 @@ def main():
             p[key] = rel[key]
         gap = location_gap(p["office_presence"], p.get("locations") or [])
         print(f"[{i}/{len(postings)}] {p['title'][:55]:55} target {p['target_probability']:.2f} "
-              f"{str(p['main_focus']):15} presence {p['office_presence']}{'  LOCATION GAP' if gap else ''}")
+              f"{str(p['main_focus']):15} presence {p['office_presence']}{('  LOCATION ' + gap['kind'].upper()) if gap else ''}")
         args.set.write_text(json.dumps(postings, ensure_ascii=False, indent=1), encoding="utf-8")   # save as we go
     print(f"Done. Cost: ${tokens * 0.10 / 1_000_000:.4f}")
 

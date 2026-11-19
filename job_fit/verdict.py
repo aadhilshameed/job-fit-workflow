@@ -2,8 +2,9 @@
 
 Ported from the n8n "Parse and verdict" node. Same rules, same order:
 skip > lack_of_info > stretch > apply.
-Two additions (19 Nov 2026): a location gap from location.py counts as a critical eligibility gap,
-and a posting with no requirements at all is lack_of_info, never apply.
+Two additions (19 Nov 2026): a location result from location.py ("skip": the office is out of reach;
+"check": you need to look up the train time, so lack_of_info), and a posting with no requirements at all
+is lack_of_info, never apply.
 """
 
 import re
@@ -32,10 +33,10 @@ def quote_status(quote: str, background: str) -> str:
     return "not_verified"
 
 
-def compute_verdict(assessment: Assessment, background: str, location_gap: str | None = None) -> dict:
+def compute_verdict(assessment: Assessment, background: str, location_gap: dict | None = None) -> dict:
     """Returns the code verdict plus everything needed to explain it.
 
-    location_gap: None, or the reason from location.location_gap() why the office is out of reach.
+    location_gap: None, or {"kind": "skip" or "check", "reason": ...} from location.location_gap().
     """
     requirements = [r.model_copy() for r in assessment.requirements if r.found_in != "tasks_section"]
     tasks = [r.requirement_text for r in assessment.requirements if r.found_in == "tasks_section"]
@@ -56,9 +57,12 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: str |
     eligibility_gaps = [r for r in critical_eligibility if r.match_result == "hard_gap"]
     missing_eligibility = [r for r in critical_eligibility if r.match_result == "not_stated"]
 
-    if location_gap or eligibility_gaps or len(hard_gaps) >= 2 or len(partials) > 2:
+    location_skip = bool(location_gap) and location_gap["kind"] == "skip"
+    location_check = bool(location_gap) and location_gap["kind"] == "check"
+
+    if location_skip or eligibility_gaps or len(hard_gaps) >= 2 or len(partials) > 2:
         verdict = "skip"
-    elif missing_eligibility or not requirements:      # nothing to judge is not a fit
+    elif location_check or missing_eligibility or not requirements:      # nothing to judge is not a fit
         verdict = "lack_of_info"
     elif len(hard_gaps) == 1 or len(partials) == 2:
         verdict = "stretch"
@@ -71,7 +75,7 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: str |
         "verdicts_agree": verdict == assessment.model_verdict,
         "model_verdict_reason": assessment.model_verdict_reason,
         "role_focus": assessment.role_focus[:3],
-        "critical_gaps": ([f"hard_gap: {location_gap}"] if location_gap else [])
+        "critical_gaps": ([f"location ({location_gap['kind']}): {location_gap['reason']}"] if location_gap else [])
                          + [f"{r.match_result}: {r.requirement_text}" for r in eligibility_gaps + hard_gaps + partials],
         "location_gap": location_gap,
         "missing_eligibility": [r.requirement_text for r in missing_eligibility],

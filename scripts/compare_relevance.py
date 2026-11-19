@@ -27,7 +27,7 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit.location import location_gap           # noqa: E402
-from job_fit.relevance import check_relevance        # noqa: E402
+from job_fit.relevance import QUESTIONS_VERSION, check_relevance        # noqa: E402
 
 PROVIDERS = ["openai", "google"]
 
@@ -40,7 +40,7 @@ def main():
 
     postings = json.loads(args.set.read_text(encoding="utf-8"))
     name = "comparison" if args.set.stem == "comparison_set" else args.set.stem
-    out = ROOT / "results" / f"relevance_{name}.jsonl"
+    out = ROOT / "results" / f"relevance_{name}_{QUESTIONS_VERSION}.jsonl"
     out.parent.mkdir(parents=True, exist_ok=True)
     done = set()
     if out.exists():
@@ -60,7 +60,7 @@ def main():
                 tokens[provider] += rel["input_tokens"] or 0
                 rel["location_gap"] = location_gap(rel["office_presence"], p.get("locations") or [])
                 row, status = rel, (f"target {rel['target_probability']:.2f} {str(rel['main_focus']):15} "
-                                    f"presence {rel['office_presence']}{'  LOCATION GAP' if rel['location_gap'] else ''}")
+                                    f"presence {rel['office_presence']}{('  LOCATION ' + rel['location_gap']['kind'].upper()) if rel['location_gap'] else ''}")
             except Exception as e:                                       # noqa: BLE001
                 row, status = {"error": f"{type(e).__name__}: {e}"[:400]}, "ERROR " + f"{type(e).__name__}: {e}"[:100]
             row |= {"provider": provider, "refnr": p["refnr"], "seconds": round(time.perf_counter() - start, 2)}
