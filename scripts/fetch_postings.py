@@ -35,7 +35,7 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit import arbeitsagentur                                  # noqa: E402
-from job_fit.location import location_gap, locations_from_api       # noqa: E402
+from job_fit.location import location_gap, location_note, locations_from_api   # noqa: E402
 from job_fit.relevance import check_relevance                        # noqa: E402
 from job_fit.title_filter import genai_signals, title_status         # noqa: E402
 
@@ -91,7 +91,8 @@ def main():
                 rel = check_relevance(title, text)
                 relevance_tokens += rel.pop("input_tokens")
                 row.update(rel)
-                row["location_gap"] = location_gap(rel["office_presence"], locations, rel["presence_confidence"])
+                row["location_gap"] = location_gap(rel["office_presence"], locations)
+                row["location_note"] = location_note(rel["office_presence"], locations)
             except Exception as e:                                      # noqa: BLE001
                 row["relevance_error"] = f"{type(e).__name__}: {e}"[:300]
         batch.append(row)

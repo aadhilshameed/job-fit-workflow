@@ -34,8 +34,9 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit.llm import ask_model                      # noqa: E402
-from job_fit.location import location_gap              # noqa: E402
+from job_fit.location import location_gap, location_note   # noqa: E402
 from job_fit.prompt import PROMPT_VERSION, build_user_message   # noqa: E402
+from job_fit.relevance import THRESHOLD                # noqa: E402
 from job_fit.verdict import compute_verdict            # noqa: E402
 
 # ---------------------------------------------------------------- the frozen setup
@@ -81,8 +82,18 @@ MAX_ATTEMPTS = 2              # one retry, as the gate allows
 _write_lock = threading.Lock()
 
 
+def passes_relevance(p) -> bool:
+    """Only postings the relevance check lets through get assessed, as in the real pipeline.
+    A posting without a relevance answer (not checked yet, or the call failed) is assessed anyway."""
+    return p.get("target_probability") is None or p["target_probability"] >= THRESHOLD
+
+
 def load_inputs(set_path=DEFAULT_SET):
-    postings = json.loads(set_path.read_text(encoding="utf-8"))
+    everything = json.loads(set_path.read_text(encoding="utf-8"))
+    postings = [p for p in everything if passes_relevance(p)]
+    if len(postings) < len(everything):
+        print(f"{len(everything) - len(postings)} postings dropped by the relevance check "
+              f"(below {THRESHOLD}), {len(postings)} assessed")
     background = (DATA / "background.txt").read_text(encoding="utf-8")
     labels_path = (DATA / "labels.json" if set_path.resolve() == DEFAULT_SET.resolve()
                    else set_path.with_name(set_path.name.replace("set_", "labels_", 1)))
@@ -107,9 +118,9 @@ def assess_once(posting, background, name, run):
         start = time.perf_counter()               # time only the attempt that counts
         try:
             assessment, usage = ask_model(user_message, cfg["provider"], cfg["model"], cfg["effort"])
-            gap = location_gap(posting.get("office_presence"), posting.get("locations") or [],
-                               posting.get("presence_confidence"))
-            result, error = compute_verdict(assessment, background, gap), None
+            presence, places = posting.get("office_presence"), posting.get("locations") or []
+            result, error = compute_verdict(assessment, background, location_gap(presence, places)), None
+            result["location_note"] = location_note(presence, places)
             break
         except Exception as e:                    # noqa: BLE001  (any failure is recorded, not hidden)
             error = f"{type(e).__name__}: {e}"[:500]

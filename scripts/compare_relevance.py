@@ -58,8 +58,7 @@ def main():
             try:
                 rel = check_relevance(p["title"], p["description"], provider)
                 tokens[provider] += rel["input_tokens"] or 0
-                rel["location_gap"] = location_gap(rel["office_presence"], p.get("locations") or [],
-                                                   rel["presence_confidence"])
+                rel["location_gap"] = location_gap(rel["office_presence"], p.get("locations") or [])
                 row, status = rel, (f"target {rel['target_probability']:.2f} {str(rel['main_focus']):15} "
                                     f"presence {rel['office_presence']}{('  LOCATION ' + rel['location_gap']['kind'].upper()) if rel['location_gap'] else ''}")
             except Exception as e:                                       # noqa: BLE001

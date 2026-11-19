@@ -12,7 +12,11 @@
     "lat": 52.83531,
     "lon": 8.3926845
    }
-  ]
+  ],
+  "target_probability": 0.96,
+  "main_focus": "agentic_ai",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.9
  },
  {
   "refnr": "10001-1003490754-S",
@@ -27,7 +31,11 @@
     "lat": 48.076119,
     "lon": 11.772909
    }
-  ]
+  ],
+  "target_probability": 0.33,
+  "main_focus": "other",
+  "office_presence": "occasional",
+  "presence_confidence": 0.93
  },
  {
   "refnr": "10001-1002793394-S",
@@ -42,7 +50,11 @@
     "lat": 54.312183,
     "lon": 10.099314
    }
-  ]
+  ],
+  "target_probability": 0.86,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.79
  },
  {
   "refnr": "10001-1002425985-S",
@@ -57,7 +69,11 @@
     "lat": 48.961701,
     "lon": 10.132965
    }
-  ]
+  ],
+  "target_probability": 0.52,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.44
  },
  {
   "refnr": "10001-1003449525-S",
@@ -72,7 +88,11 @@
     "lat": 49.011867,
     "lon": 8.350488
    }
-  ]
+  ],
+  "target_probability": 0.84,
+  "main_focus": "ai_automation",
+  "office_presence": "regular_unspecified",
+  "presence_confidence": 0.95
  },
  {
   "refnr": "13635-d44f31cc_JB5238877-S",
@@ -87,7 +107,11 @@
     "lat": 50.2485297,
     "lon": 8.5835649
    }
-  ]
+  ],
+  "target_probability": 1.0,
+  "main_focus": "ai_engineering",
+  "office_presence": "occasional",
+  "presence_confidence": 0.59
  },
  {
   "refnr": "12465-1635998-1-S",
@@ -102,7 +126,11 @@
     "lat": 49.5880258,
     "lon": 11.0123432
    }
-  ]
+  ],
+  "target_probability": 0.62,
+  "main_focus": "other",
+  "office_presence": "occasional",
+  "presence_confidence": 0.99
  },
  {
   "refnr": "12462-1632096-1-S",
@@ -117,7 +145,11 @@
     "lat": 48.1794094,
     "lon": 11.5532293
    }
-  ]
+  ],
+  "target_probability": 0.89,
+  "main_focus": "agentic_ai",
+  "office_presence": "occasional",
+  "presence_confidence": 0.34
  },
  {
   "refnr": "14922-143560-S",
@@ -132,7 +164,11 @@
     "lat": 48.3919865,
     "lon": 9.966891
    }
-  ]
+  ],
+  "target_probability": 0.96,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99
  },
  {
   "refnr": "15112-44461975-923-S",
@@ -147,7 +183,11 @@
     "lat": 50.164508105,
     "lon": 8.986816052
    }
-  ]
+  ],
+  "target_probability": 0.14,
+  "main_focus": "other",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.94
  },
  {
   "refnr": "13183-8122-KORIAN1-S",
@@ -162,7 +202,11 @@
     "lat": 48.132279,
     "lon": 11.623896
    }
-  ]
+  ],
+  "target_probability": 0.76,
+  "main_focus": "other",
+  "office_presence": "occasional",
+  "presence_confidence": 0.29
  },
  {
   "refnr": "20208-36d6b56530384055a6d-S",
@@ -177,7 +221,11 @@
     "lat": 51.224913,
     "lon": 6.776874
    }
-  ]
+  ],
+  "target_probability": 0.37,
+  "main_focus": "ai_engineering",
+  "office_presence": "regular_unspecified",
+  "presence_confidence": 0.43
  },
  {
   "refnr": "13649-13178671AB-S",
@@ -192,7 +240,11 @@
     "lat": 53.5561857,
     "lon": 10.0145837
    }
-  ]
+  ],
+  "target_probability": 0.12,
+  "main_focus": "other",
+  "office_presence": "weekly",
+  "presence_confidence": 0.98
  },
  {
   "refnr": "13183-8121-KORIAN1-S",
@@ -207,7 +259,11 @@
     "lat": 48.132279,
     "lon": 11.623896
    }
-  ]
+  ],
+  "target_probability": 0.83,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.27
  },
  {
   "refnr": "10001-1003090842-S",
@@ -228,7 +284,11 @@
     "lat": 51.044157,
     "lon": 13.774392
    }
-  ]
+  ],
+  "target_probability": 0.93,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.96
  },
  {
   "refnr": "12688-REG-42997-RJA-S",
@@ -243,7 +303,11 @@
     "lat": 53.7090978,
     "lon": 9.9753185
    }
-  ]
+  ],
+  "target_probability": 0.51,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99
  },
  {
   "refnr": "15986-REF294857Q-8e4740b-S",
@@ -258,7 +322,11 @@
     "lat": 49.1122984,
     "lon": 10.7293852
    }
-  ]
+  ],
+  "target_probability": 0.1,
+  "main_focus": "other",
+  "office_presence": "regular_unspecified",
+  "presence_confidence": 0.61
  },
  {
   "refnr": "13151-1618906-3-S",
@@ -285,7 +353,11 @@
     "lat": 48.3906475,
     "lon": 9.9558042
    }
-  ]
+  ],
+  "target_probability": 0.95,
+  "main_focus": "agentic_ai",
+  "office_presence": "occasional",
+  "presence_confidence": 0.91
  },
  {
   "refnr": "20119-0067629437-S",
@@ -300,7 +372,11 @@
     "lat": 53.095396918,
     "lon": 8.776319276
    }
-  ]
+  ],
+  "target_probability": 0.5,
+  "main_focus": "other",
+  "office_presence": "weekly",
+  "presence_confidence": 0.56
  },
  {
   "refnr": "10001-1003553407-S",
@@ -315,7 +391,11 @@
     "lat": 49.89072526500007,
     "lon": 8.609696644000053
    }
-  ]
+  ],
+  "target_probability": 0.97,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.96
  },
  {
   "refnr": "12951-d8683082-a3ed-4fc5--S",
@@ -330,7 +410,11 @@
     "lat": 52.512201,
     "lon": 13.320513
    }
-  ]
+  ],
+  "target_probability": 0.74,
+  "main_focus": "ai_automation",
+  "office_presence": "weekly",
+  "presence_confidence": 0.89
  },
  {
   "refnr": "20208-68857a48291c4824a5a-S",
@@ -345,7 +429,11 @@
     "lat": 48.367206,
     "lon": 10.8860535
    }
-  ]
+  ],
+  "target_probability": 0.32,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.93
  },
  {
   "refnr": "10001-1002980097-S",
@@ -360,7 +448,11 @@
     "lat": 49.299138,
     "lon": 10.579005
    }
-  ]
+  ],
+  "target_probability": 0.49,
+  "main_focus": "ai_engineering",
+  "office_presence": "occasional",
+  "presence_confidence": 0.91
  },
  {
   "refnr": "12811-2333483-S",
@@ -375,7 +467,11 @@
     "lat": 52.545789,
     "lon": 13.5156915
    }
-  ]
+  ],
+  "target_probability": 0.95,
+  "main_focus": "ai_automation",
+  "office_presence": "occasional",
+  "presence_confidence": 0.74
  },
  {
   "refnr": "12456-1632546-1-S",
@@ -390,6 +486,10 @@
     "lat": 51.7583559,
     "lon": 14.3118516
    }
-  ]
+  ],
+  "target_probability": 0.73,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.98
  }
 ]

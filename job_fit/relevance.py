@@ -9,16 +9,17 @@ A Decisions API answers closed questions with a probability instead of writing t
 (about 1,500 tokens) costs about 0.015 cents.
 
 Three questions share one request (the posting is billed once):
-- is_target_role (yes/no): the probability that the role is hands-on AI building work. This one decides.
-- main_focus (choice): what the role is mostly about. Only for reading the results, it decides nothing.
-- office_presence (choice): how often the candidate must be at the office. location.py turns this,
+- yes_no_target_role: the probability that the role is hands-on AI building work. This one decides:
+  THRESHOLD or higher goes to Haiku.
+- choice_main_focus: what the role is mostly about. Only for reading the results, it decides nothing.
+- choice_office_presence: how often the candidate must be at the office. location.py turns this,
   plus the posting's coordinates and federal state, into a location gap or none.
 """
 
 DEFAULT_PROVIDER = "openai"
 QUESTIONS_VERSION = "q2"   # q1: first test; q2: "must live in the region" counts as weekly presence
 MODELS = {"openai": "gpt-6-luna", "google": "gemini-decision-1"}
-THRESHOLD = 0.5   # starting point; set from the test results, not by guessing
+THRESHOLD = 0.49  # target_probability >= 0.49 goes to Haiku (set 19 Nov 2026 from the 25-posting test)
 
 TARGET_ROLE_QUESTION = (
     "Is the main work of this role hands-on building with AI: AI agents (agentic AI), LLM applications, "
@@ -71,18 +72,19 @@ def _ask_openai(text: str) -> dict:
         model=MODELS["openai"],
         input=text,
         questions=[
-            {"type": "predicate", "name": "is_target_role", "instructions": TARGET_ROLE_QUESTION}, #predicate means yes/no, name-> a label we pick
-            {"type": "choice", "name": "main_focus",
+            {"type": "predicate", "name": "yes_no_target_role", "instructions": TARGET_ROLE_QUESTION}, #predicate means yes/no, name-> a label we pick
+            {"type": "choice", "name": "choice_main_focus",
              "instructions": "What is the main work of this role?", "choices": FOCUS_CHOICES},
-            {"type": "choice", "name": "office_presence",
+            {"type": "choice", "name": "choice_office_presence",
              "instructions": "How often must the person in this role be physically present at the office?",
              "choices": PRESENCE_CHOICES},
         ],
     )
     answers = {a.name: a for a in decision.answers}      # a list of answers -> a dictionary by name
-    target, focus, presence = (answers.get(n) for n in ("is_target_role", "main_focus", "office_presence"))
+    target, focus, presence = (answers.get(n) for n in ("yes_no_target_role", "choice_main_focus",
+                                                         "choice_office_presence"))
     if target is None or target.type == "refusal":
-        raise ValueError("The Decisions API refused or did not answer is_target_role")
+        raise ValueError("The Decisions API refused or did not answer yes_no_target_role")
     ok = lambda a: a is not None and a.type == "choice"
     return {"probability": target.probability,
             "focus": focus.choice if ok(focus) else None, "focus_confidence": focus.confidence if ok(focus) else None,
@@ -98,17 +100,18 @@ def _ask_gemini(text: str) -> dict:
         model=MODELS["google"],
         input=text,
         questions={
-            "is_target_role": {"type": "noul", "instructions": TARGET_ROLE_QUESTION},
-            "main_focus": {"type": "choice", "instructions": "What is the main work of this role?",
+            "yes_no_target_role": {"type": "noul", "instructions": TARGET_ROLE_QUESTION},
+            "choice_main_focus": {"type": "choice", "instructions": "What is the main work of this role?",
                            "criteria": {c["value"]: c["description"] for c in FOCUS_CHOICES}},
-            "office_presence": {"type": "choice",
+            "choice_office_presence": {"type": "choice",
                                 "instructions": "How often must the person in this role be physically present at the office?",
                                 "criteria": {c["value"]: c["description"] for c in PRESENCE_CHOICES}},
         },
     )
-    target, focus, presence = (result.answers.get(n) for n in ("is_target_role", "main_focus", "office_presence"))
+    target, focus, presence = (result.answers.get(n) for n in ("yes_no_target_role", "choice_main_focus",
+                                                                "choice_office_presence"))
     if target is None or getattr(target, "noul", None) is None:
-        raise ValueError("The Gemini Decisions API did not answer is_target_role")
+        raise ValueError("The Gemini Decisions API did not answer yes_no_target_role")
     usage = result.usage
     tokens = getattr(usage, "total_input_tokens", None) or getattr(usage, "input_tokens", None) or 0
     return {"probability": target.noul,
