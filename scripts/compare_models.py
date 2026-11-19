@@ -34,6 +34,7 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit.llm import ask_model                      # noqa: E402
+from job_fit.location import location_gap              # noqa: E402
 from job_fit.prompt import PROMPT_VERSION, build_user_message   # noqa: E402
 from job_fit.verdict import compute_verdict            # noqa: E402
 
@@ -106,7 +107,8 @@ def assess_once(posting, background, name, run):
         start = time.perf_counter()               # time only the attempt that counts
         try:
             assessment, usage = ask_model(user_message, cfg["provider"], cfg["model"], cfg["effort"])
-            result, error = compute_verdict(assessment, background), None
+            gap = location_gap(posting.get("office_presence"), posting.get("locations") or [])
+            result, error = compute_verdict(assessment, background, gap), None
             break
         except Exception as e:                    # noqa: BLE001  (any failure is recorded, not hidden)
             error = f"{type(e).__name__}: {e}"[:500]
@@ -131,6 +133,10 @@ def run_config(name, postings, background, runs, done):
 
 def cmd_run(args):
     postings, background, _ = load_inputs(args.set)
+    missing = [p["refnr"] for p in postings if not p.get("office_presence")]
+    if missing:
+        print(f"WARNING: {len(missing)} postings have no office_presence, so no location check for them. "
+              f"Run first: python -m scripts.check_relevance --set {args.set}")
     RESULTS.parent.mkdir(parents=True, exist_ok=True)
     done = {(r["config"], r["refnr"], r["run"]) for r in load_rows() if not r["error"]}
     names = args.only or list(CONFIGS)

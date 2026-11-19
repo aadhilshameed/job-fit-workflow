@@ -24,9 +24,9 @@
   "check": null
  },
  "10001-1003449525-S": {
-  "verdict": "apply",
-  "eligibility_gap": false,
-  "note": "Hands-on AI tool use and process automation; study field 'or comparable'.",
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "'Regelmäßig mit im Office' in Karlsruhe with no frequency, so by your rule it counts as weekly, and Karlsruhe is outside the weekly range. (Was apply in the first draft, before the location rule.)",
   "check": null
  },
  "13635-d44f31cc_JB5238877-S": {
@@ -99,7 +99,7 @@
   "verdict": "skip",
   "eligibility_gap": true,
   "note": "'Deine Präsenz vor Ort ist erforderlich' in Gunzenhausen.",
-  "check": null
+  "check": "Gunzenhausen: is it within 2.5 hours for you?"
  },
  "13151-1618906-3-S": {
   "verdict": "apply",

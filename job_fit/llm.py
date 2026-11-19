@@ -58,13 +58,17 @@ def ask_claude(user_message: str, model: str, effort: str | None):
     extra = {"output_config": {"effort": effort}} if effort else {}
     response = _client("anthropic").messages.parse(
         model=model,
-        max_tokens=32000,                    # a ceiling, not a spend: thinking counts toward it (16000 was hit once)
+        # a ceiling, not a spend: thinking counts toward it (16000 was hit once, the longest answer used 15,850).
+        # Above about 21,000 the Anthropic SDK refuses a non-streaming call ("may take longer than 10 minutes"),
+        # so 20000 it is, with an explicit 10-minute timeout.
+        max_tokens=20000,
+        timeout=600,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_message}],
         output_format=Assessment,
         **extra,
     )
-    if response.parsed_output is None:
+    if response.parsed_output is None: #response.parsed_output checks if the parsing failed
         raise ValueError(f"No structured answer (stop_reason={response.stop_reason})")
     usage = {"input": response.usage.input_tokens, "output": response.usage.output_tokens}
     return response.parsed_output, usage

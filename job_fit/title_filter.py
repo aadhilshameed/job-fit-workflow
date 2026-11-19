@@ -1,10 +1,15 @@
-"""The two-stage keyword filter from n8n ("Filter AI roles" and "Check ambiguous roles"), ported line by line.
+"""The free keyword filter on the title, ported from n8n ("Filter AI roles"), made more lenient on 19 Nov 2026.
 
-Stage 1 (title and occupation, before the detail call): keep, check or drop.
-Stage 2 (description, after the detail call): a "check" posting stays only if its text has at least
-two different GenAI signals. "keep" postings skip stage 2.
+It sorts every search result into keep, check or drop, before any detail call. Everything that is not
+dropped goes on to the relevance question (relevance.py), which reads the whole posting. Because that
+question now does the careful work, this filter only throws out what is clearly off-target, and
+lets doubtful titles through:
+- a GenAI word in the title (LLM, LLMs, GenAI, agent, chatbot, prompt, generative) is never dropped:
+  if a blocked word or occupation is also there, it becomes "check" instead;
+- "Artificial Intelligence" counts as an AI word.
 
-This is the free first sieve. The paid relevance question (relevance.py) comes after it.
+The old stage 2 (a "check" posting needed two GenAI words in its text) is gone: the relevance question
+replaced it. genai_signals() is kept only so the batch file shows which words a posting contains.
 """
 
 import re
@@ -20,10 +25,10 @@ CHECK_TITLE_WORDS = ["qualitätsmanagement", "produktmanagement", "projektmanage
                      "data analytics", "datenanalyse", "business intelligence", "kommunikation", "community",
                      "security", "people & culture"]
 CHECK_TITLE_WHOLE_WORDS = ["data", "hr"]
-GENAI_WHOLE_WORDS = ["llm", "genai"]
+GENAI_WHOLE_WORDS = ["llms?", "genai"]
 GENAI_WORD_STARTS = ["generativ", "agent", "chatbot", "prompt"]
 AI_WHOLE_WORDS = ["ki", "ai"]
-AI_WORD_STARTS = ["künstliche intelligenz"]
+AI_WORD_STARTS = ["künstliche intelligenz", "artificial intelligence"]
 
 LETTERS = "a-z0-9äöüß"
 
@@ -49,14 +54,13 @@ def title_status(job: dict) -> str:
                 or any(has_start(title, w) for w in AI_WORD_STARTS))
     if not ai_title:
         return "drop"
-    if any(w in occupation for w in BLOCKED_OCCUPATIONS):
-        return "drop"
-    if any(w in title for w in HARD_BLOCKED_TITLE_WORDS):
-        return "drop"
-    if any(has_whole(title, w) for w in HARD_BLOCKED_TITLE_WHOLE_WORDS):
-        return "drop"
+    blocked = (any(w in occupation for w in BLOCKED_OCCUPATIONS)
+               or any(w in title for w in HARD_BLOCKED_TITLE_WORDS)
+               or any(has_whole(title, w) for w in HARD_BLOCKED_TITLE_WHOLE_WORDS))
     if genai_title:
-        return "keep"
+        return "check" if blocked else "keep"     # a GenAI word is never thrown away on a title alone
+    if blocked:
+        return "drop"
     ambiguous = (any(w in title for w in CHECK_TITLE_WORDS)
                  or any(has_whole(title, w) for w in CHECK_TITLE_WHOLE_WORDS))
     return "check" if ambiguous else "keep"
@@ -86,6 +90,3 @@ def genai_signals(description: str) -> list[str]:
     return [name for name, test in SIGNALS.items() if test(text)]
 
 
-def passes_description_check(description: str) -> bool:
-    """Stage 2 for "check" postings: at least two different GenAI signals in the text."""
-    return len(genai_signals(description)) >= 2
