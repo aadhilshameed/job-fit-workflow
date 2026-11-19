@@ -179,3 +179,13 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+
+# secrets and private files
+n8n-jobfit-*.json
+*-key.json
+credentials.json
+token.json
+data/background.txt
+# model comparison outputs (they quote my background)
+results/

@@ -1,0 +1,17 @@
+EDUCATION
+MSc Example Studies, Example University, Germany. October 2025 to September 2027 (in progress, currently in semester 2).
+
+AVAILABILITY
+Available for Werkstudent roles at 20 hours per week during the lecture period, starting immediately. Based in Example City.
+
+PROJECTS
+Example RAG App, Python. Retrieval pipeline with a FAISS index and a cross-encoder reranker; 80% top-3 accuracy on 20 questions.
+
+SKILLS
+Python, pandas, Git, REST APIs.
+
+LANGUAGES
+English: C1. German: B1.
+
+STATED GAPS (absent from this profile; treat as genuinely absent, not merely unmentioned)
+No cloud deployment. No SQL.
