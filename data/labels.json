@@ -1,0 +1,152 @@
+{
+ "10001-1003680301-S": {
+  "verdict": "skip",
+  "eligibility_gap": false,
+  "note": "C#/.NET, Azure and Microsoft AI Foundry are required and not in the background (several hard gaps).",
+  "check": null
+ },
+ "10001-1003490754-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Check posting from n8n. Only German is below the level asked (partial).",
+  "check": null
+ },
+ "10001-1002793394-S": {
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "Requires 3rd semester or higher; you are in semester 2.",
+  "check": null
+ },
+ "10001-1002425985-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "C2 German is mandatory, but under your rule a lower German level is only partial.",
+  "check": null
+ },
+ "10001-1003449525-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Hands-on AI tool use and process automation; study field 'or comparable'.",
+  "check": null
+ },
+ "13635-d44f31cc_JB5238877-S": {
+  "verdict": "skip",
+  "eligibility_gap": false,
+  "note": "Senior-style LLM platform role: React/TypeScript and MCP required, both absent.",
+  "check": null
+ },
+ "12465-1635998-1-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Hybrid; prompt testing, data management. Only MS Office/SharePoint below level.",
+  "check": null
+ },
+ "12462-1632096-1-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "AI agents for development processes; German 'verhandlungssicher' is partial under your rule.",
+  "check": null
+ },
+ "14922-143560-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "GenAI prototyping on a no-code platform; no hard gaps.",
+  "check": null
+ },
+ "15112-44461975-923-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "'Arbeitszeitmodell: Vollzeit' is a header field on a Werkstudent posting, most likely a template error, not a requirement.",
+  "check": "Vollzeit header: requirement or template error?"
+ },
+ "13183-8122-KORIAN1-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Munich, but the posting offers home office rules and does not require on-site days. C1 German partial.",
+  "check": "Location"
+ },
+ "20208-36d6b56530384055a6d-S": {
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "Requirements say 'Zusammenarbeit im Team vor Ort' in Düsseldorf: regular on-site presence.",
+  "check": null
+ },
+ "13649-13178671AB-S": {
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "Hamburg office only, explicitly no remote work.",
+  "check": null
+ },
+ "13183-8121-KORIAN1-S": {
+  "verdict": "stretch",
+  "eligibility_gap": false,
+  "note": "SQL is required and absent (one hard gap); home office rules, so location does not block.",
+  "check": "Location"
+ },
+ "10001-1003090842-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Lists Chemnitz or Dresden as sites but asks for no on-site days; Python and ML basics match.",
+  "check": "Location"
+ },
+ "12688-REG-42997-RJA-S": {
+  "verdict": "lack_of_info",
+  "eligibility_gap": false,
+  "note": "The posting text is only the title (179 characters). Nothing to judge, so it should never be an apply.",
+  "check": null
+ },
+ "15986-REF294857Q-8e4740b-S": {
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "'Deine Präsenz vor Ort ist erforderlich' in Gunzenhausen.",
+  "check": null
+ },
+ "13151-1618906-3-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "AI agents and robotics, hybrid, German OR English. Strong fit.",
+  "check": null
+ },
+ "20119-0067629437-S": {
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "React, Next.js and SQL required, plus regular presence in Bremen.",
+  "check": null
+ },
+ "10001-1003553407-S": {
+  "verdict": "stretch",
+  "eligibility_gap": false,
+  "note": "Python, REST and LLMs match; GDPR awareness is absent and German 'gut' is partial.",
+  "check": null
+ },
+ "12951-d8683082-a3ed-4fc5--S": {
+  "verdict": "skip",
+  "eligibility_gap": true,
+  "note": "Requires living in Berlin or the surrounding area.",
+  "check": null
+ },
+ "20208-68857a48291c4824a5a-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Claude Code and Cursor named; German partial. Office in Augsburg, no on-site rule stated.",
+  "check": "Location"
+ },
+ "10001-1002980097-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Flexible and mobile work; M365/Copilot listed under 'idealerweise'. German partial.",
+  "check": null
+ },
+ "12811-2333483-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Routine LLM and agent-building use matches; C1 German partial. Hybrid with a focus on the Berlin office.",
+  "check": "Location"
+ },
+ "12456-1632546-1-S": {
+  "verdict": "apply",
+  "eligibility_gap": false,
+  "note": "Cottbus, at least six months, no remote statement either way. C1 German partial.",
+  "check": "Location"
+ }
+}

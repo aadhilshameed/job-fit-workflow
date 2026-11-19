@@ -1,4 +1,5 @@
-"""The frozen assessment prompt (version 1, frozen 19 Nov 2026 for the model comparison).
+"""The assessment prompt. Version v2 (19 Nov 2026) = v1 plus the work-location rule.
+v1 was frozen for the first Haiku run on 19 Nov 2026.
 
 Taken from the final n8n Build request node, with two changes made before freezing:
 1. The implied-skill rule is one short paragraph (the Azure example from one posting is gone).
@@ -10,7 +11,7 @@ Do not edit this text during the comparison. Any change after it gets a new vers
 and the labelled postings are re-run as a regression test.
 """
 
-PROMPT_VERSION = "v1"
+PROMPT_VERSION = "v2"
 
 SYSTEM_PROMPT = """You are assessing whether a candidate is a good fit for a job posting. You will receive the job posting and the candidate's background, and you will work through the steps below. In short: extract the requirements from the posting, classify each one, compare each one against the background, and give a verdict.
 
@@ -52,6 +53,8 @@ hard_gap: the requirement is not present in the background at all. This covers m
 not_stated: the background does not mention it, but that absence cannot be read as a gap, because the candidate may well have it. For example, if the posting requires at least one more year of studies and the background does not mention it, that is not_stated, not a hard_gap.
 
 For an eligibility requirement with a number, such as a minimum semester, hours per week or a start date, compare it with the number in the background. If the background states a number that does not meet it, that is a hard_gap. If the background does not mention it at all, that is not_stated.
+
+A work location is an eligibility requirement only when the posting says the candidate must be physically present there regularly, for example "vor Ort", "Präsenz erforderlich", "kein Remote" or "du wohnst in der Region X". If it requires presence but does not say how often, assume every week. Compare that with the travel limits in the background: if the background rules it out, it is hard_gap. If the posting only names a city or an office, or offers hybrid or mobile work, do not extract a location requirement.
 
 For a language requirement, if the candidate has the language at any level below what the posting asks, it is partial, never hard_gap. It is hard_gap only if the candidate has no knowledge of that language.
 

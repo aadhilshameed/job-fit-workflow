@@ -58,7 +58,7 @@ def ask_claude(user_message: str, model: str, effort: str | None):
     extra = {"output_config": {"effort": effort}} if effort else {}
     response = _client("anthropic").messages.parse(
         model=model,
-        max_tokens=16000,                    # thinking counts toward this limit, so leave room
+        max_tokens=32000,                    # a ceiling, not a spend: thinking counts toward it (16000 was hit once)
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_message}],
         output_format=Assessment,

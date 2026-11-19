@@ -15,9 +15,13 @@ Language rule (kept from n8n on purpose): a language at any lower level is parti
 | `job_fit/schema.py` | The response schema every model must fill (Pydantic) |
 | `job_fit/llm.py` | One function per provider (Gemini, OpenAI, Anthropic), same answer shape for all |
 | `job_fit/verdict.py` | Quote check and the verdict rules, in code |
-| `scripts/compare_models.py` | Runs every config on the comparison set and scores it |
+| `job_fit/arbeitsagentur.py` | Search and detail calls to the Arbeitsagentur API |
+| `job_fit/title_filter.py` | The free two-stage keyword filter from n8n (title, then description) |
+| `job_fit/relevance.py` | The relevance question (OpenAI Decisions API): is this hands-on AI building work? |
+| `scripts/fetch_postings.py` | Fresh postings through search, filter, details and relevance, saved in `data/batches/` |
+| `scripts/compare_models.py` | Runs every config on a set of postings and scores it (`--set` picks the set) |
 | `scripts/report.py` | Builds the side-by-side comparison page |
-| `data/comparison_set.json` | 30 real postings from the Arbeitsagentur API (Sept to Nov 2026) |
+| `data/comparison_set.json` | 25 real postings from the Arbeitsagentur API (Sept to Nov 2026) that pass today's filter |
 | `data/background.txt` | My real background. **Not in Git** (see `.gitignore`); `background.example.txt` shows the format |
 | `data/labels.json` | The correct verdict per posting, drafted by Claude and checked by me |
 
@@ -50,3 +54,11 @@ python -m scripts.compare_models run --only haiku-high --runs 1    # smoke test 
 python -m scripts.compare_models run                               # everything (resumes if stopped)
 python -m scripts.compare_models report                            # results/comparison_v1.html
 ```
+
+## Changes after the first Haiku run (19 Nov 2026)
+
+- Prompt v2: a work location only counts when the posting demands regular presence; the travel limits are in the background.
+- Haiku max_tokens 16000 -> 32000 (one posting ran out of room). It is a ceiling, not a spend.
+- Terra high and Sonnet dropped: too expensive to ever be the pick.
+- 5 postings removed from the set because today's filter would not let them through.
+- New: fresh intake and a relevance check before the assessment, so off-target roles never reach Haiku.

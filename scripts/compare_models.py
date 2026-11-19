@@ -3,7 +3,9 @@
 Run it from the repo folder:
     python -m scripts.compare_models run            # all configs, 3 runs each (resumes where it stopped)
     python -m scripts.compare_models run --only haiku-high --runs 1   # a smoke test on one config
-    python -m scripts.compare_models report         # summary in the terminal + results/comparison.html
+    python -m scripts.compare_models report         # summary in the terminal + an HTML page in results/
+    Add --set data/batches/set_<date>.json to either command to use another set of postings
+    (its labels, if any, go in a file next to it named labels_<date>.json).
 
 Same idea as the AI Project screening notebook: every answer is appended to a .jsonl file the moment it
 arrives, so a crash or Ctrl+C loses nothing, and running again only does what is missing.
@@ -41,8 +43,9 @@ CONFIGS = {
     "gemini36-default": {"provider": "google",    "model": "gemini-3.6-flash",  "effort": None},   # baseline, as in n8n
     "gemini38-high":    {"provider": "google",    "model": "gemini-3.8-flash",  "effort": "high"},
     "terra-medium":     {"provider": "openai",    "model": "gpt-6.1-terra",     "effort": "medium"},
-    "terra-high":       {"provider": "openai",    "model": "gpt-6.1-terra",     "effort": "high"},
-    "sonnet-medium":    {"provider": "anthropic", "model": "claude-sonnet-5-5", "effort": "medium"},
+    # dropped on 19 Nov 2026 as too expensive to ever be the pick:
+    # "terra-high":       {"provider": "openai",    "model": "gpt-6.1-terra",     "effort": "high"},
+    # "sonnet-medium":    {"provider": "anthropic", "model": "claude-sonnet-5-5", "effort": "medium"},
     "haiku-high":       {"provider": "anthropic", "model": "claude-haiku-5-5",  "effort": "high"},
 }
 
@@ -70,16 +73,18 @@ RULE = (f"Gates: no failed call, every labelled eligibility gap caught (skip) in
         f"{int(COST_TIE * 100)}% on cost are a tie, broken by correct postings, then p90.")
 
 DATA = ROOT / "data"
-RESULTS = ROOT / "results" / f"comparison_{PROMPT_VERSION}.jsonl"
+DEFAULT_SET = DATA / "comparison_set.json"
+RESULTS = None     # set in main(): results/<set name>_<prompt version>.jsonl
 MAX_ATTEMPTS = 2              # one retry, as the gate allows
 
 _write_lock = threading.Lock()
 
 
-def load_inputs():
-    postings = json.loads((DATA / "comparison_set.json").read_text(encoding="utf-8"))
+def load_inputs(set_path=DEFAULT_SET):
+    postings = json.loads(set_path.read_text(encoding="utf-8"))
     background = (DATA / "background.txt").read_text(encoding="utf-8")
-    labels_path = DATA / "labels.json"
+    labels_path = (DATA / "labels.json" if set_path.resolve() == DEFAULT_SET.resolve()
+                   else set_path.with_name(set_path.name.replace("set_", "labels_", 1)))
     labels = json.loads(labels_path.read_text(encoding="utf-8")) if labels_path.exists() else {}
     return postings, background, labels
 
@@ -125,7 +130,7 @@ def run_config(name, postings, background, runs, done):
 
 
 def cmd_run(args):
-    postings, background, _ = load_inputs()
+    postings, background, _ = load_inputs(args.set)
     RESULTS.parent.mkdir(parents=True, exist_ok=True)
     done = {(r["config"], r["refnr"], r["run"]) for r in load_rows() if not r["error"]}
     names = args.only or list(CONFIGS)
@@ -170,7 +175,8 @@ def summarize(name, rows, postings, labels):
     correct = sum(1 for ref in labelled if majority[ref] == labels[ref]["verdict"])
     stable = sum(1 for vs in verdicts.values() if len(vs) > 1 and len(set(vs)) == 1 and "error" not in vs)
     elig = [ref for ref in labelled if labels[ref].get("eligibility_gap")]
-    elig_caught = sum(1 for ref in elig if verdicts[ref].count("skip") >= 2)
+    # caught = skip in most runs (2 of 3, or 1 of 1 while only run 1 exists)
+    elig_caught = sum(1 for ref in elig if verdicts[ref].count("skip") * 2 > len(verdicts[ref]))
     quotes = sum(r["result"]["quotes_checked"] for r in ok)
     unverified = sum(len(r["result"]["unverified_quotes"]) for r in ok)
     seconds = sorted(r["seconds"] for r in ok) or [0.0]
@@ -185,6 +191,7 @@ def summarize(name, rows, postings, labels):
         "quotes_verified_pct": 100 * (quotes - unverified) / quotes if quotes else 100.0,
         "agree_pct": 100 * sum(r["result"]["verdicts_agree"] for r in ok) / len(ok) if ok else 0.0,
         "cost_now": statistics.mean(cost(r, PRICES) for r in mine),
+        "total_spend": sum(cost(r, PRICES) for r in mine),
         "cost_2027": statistics.mean(cost(r, PRICES_FROM_2027) for r in mine),
         "median_s": statistics.median(seconds), "p90_s": p90,
         "verdicts": verdicts, "majority": majority,
@@ -208,8 +215,8 @@ def pick(summary):
 def cmd_report(args):
     from scripts.report import build_report
 
-    postings, _, labels = load_inputs()
-    rows = latest_rows(load_rows())
+    postings, _, labels = load_inputs(args.set)
+    rows = [r for r in latest_rows(load_rows()) if r["refnr"] in {p["refnr"] for p in postings}]
     summary = [s for s in (summarize(n, rows, postings, labels) for n in CONFIGS) if s]
     chosen = pick(summary)
 
@@ -223,10 +230,15 @@ def cmd_report(args):
               f"{s['p90_s']:5.1f}s  {'pass' if s['passes'] else 'fail'}")
     if len(labels) < len(postings):
         print(f"\nOnly {len(labels)} of {len(postings)} postings are labelled, so no config can pass yet.")
+    print(f"\nSpend: " + ", ".join(f"{s['config']} ${s['total_spend']:.2f}" for s in summary)
+          + f"; total ${sum(s['total_spend'] for s in summary):.2f}")
+    failed = [s for s in summary if s["errors"]]
+    if failed:
+        print("WARNING: failed calls: " + ", ".join(f"{s['config']} {s['errors']}" for s in failed))
     print("\nRule picks:", chosen or "nothing passes")
 
     page = build_report(summary, postings, rows, labels, list(CONFIGS), RULE, chosen,
-                        ROOT / "results" / f"comparison_{PROMPT_VERSION}.html")
+                        RESULTS.with_suffix(".html"))
     print("Open this file in your browser:", page)
 
 
@@ -236,8 +248,13 @@ def main():
     run = sub.add_parser("run")
     run.add_argument("--runs", type=int, default=3)
     run.add_argument("--only", nargs="*", choices=list(CONFIGS))
-    sub.add_parser("report")
+    report = sub.add_parser("report")
+    for p in (run, report):
+        p.add_argument("--set", type=Path, default=DEFAULT_SET, help="which postings (default: data/comparison_set.json)")
     args = parser.parse_args()
+    global RESULTS
+    set_name = "comparison" if args.set.resolve() == DEFAULT_SET.resolve() else args.set.stem
+    RESULTS = ROOT / "results" / f"{set_name}_{PROMPT_VERSION}.jsonl"
     {"run": cmd_run, "report": cmd_report}[args.command](args)
 
 

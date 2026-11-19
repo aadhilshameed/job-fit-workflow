@@ -49,6 +49,7 @@ details summary {{ cursor:pointer; color:var(--muted); }}
 <h1>Model comparison</h1>
 <p class="muted">{_esc(rule)}</p>
 <p><b>Rule picks:</b> {_esc(chosen or "nothing passes (yet)")}</p>
+<p><b>Spend:</b> {_esc(", ".join(f"{s['config']} ${s['total_spend']:.2f}" for s in summary))}; total ${sum(s['total_spend'] for s in summary):.2f}</p>
 <div class="scroll"><table><tr><th>config</th><th>errors</th><th>correct</th><th>stable</th><th>eligibility caught</th>
 <th>quotes verified</th><th>code = model verdict</th><th>$ per posting (now)</th><th>$ 2027</th><th>median</th><th>p90</th><th>rule</th></tr>"""]
     for s in summary:
