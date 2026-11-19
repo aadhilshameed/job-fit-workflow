@@ -118,10 +118,25 @@ def _ask_gemini(text: str) -> dict:
             "input_tokens": tokens}
 
 
+ATTEMPTS = 3          # a failed call is tried again twice, 3 seconds apart
+
+
 def check_relevance(title: str, description: str, provider: str = DEFAULT_PROVIDER) -> dict:
-    """Returns the probability, the yes/no decision, the main focus, the office presence and the token count."""
+    """Returns the probability, the yes/no decision, the main focus, the office presence and the token count.
+
+    Raises the last error if all attempts fail; the caller decides what to do then (fetch_postings lets
+    the posting through, so an API hiccup never drops a job).
+    """
+    import time
     text = f"Job title: {title}\n\nJob posting:\n{description}"
-    a = _ask_openai(text) if provider == "openai" else _ask_gemini(text)
+    for attempt in range(1, ATTEMPTS + 1):
+        try:
+            a = _ask_openai(text) if provider == "openai" else _ask_gemini(text)
+            break
+        except Exception:
+            if attempt == ATTEMPTS:
+                raise
+            time.sleep(3)
     rnd = lambda x: round(x, 3) if x is not None else None
     return {
         "target_probability": rnd(a["probability"]),

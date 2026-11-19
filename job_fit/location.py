@@ -13,6 +13,8 @@ The rule (agreed 19 Nov 2026), with three zones for weekly presence so nothing r
 - occasional: at least one location in TWICE_A_MONTH_STATES (or within the weekly radius), else "skip".
 - remote or not_mentioned: fine. "Not mentioned" counts as fine, so a posting is never dropped over
   something it does not say.
+- Safety net: a "skip" that rests on a presence answer with confidence below MIN_SKIP_CONFIDENCE becomes
+  "check" instead, so an unsure answer never throws a job away on its own.
 
 The radius is a straight line, not train time. 115 km covers Hof, Bayreuth, Bamberg, Coburg, Plauen,
 Zwickau, Erlangen, Nuremberg, Fürth and Chemnitz (107 km), and leaves out Dresden (168 km),
@@ -28,6 +30,7 @@ TWICE_A_MONTH_STATES = {"BAYERN", "THUERINGEN", "SACHSEN", "SACHSEN_ANHALT", "HE
                         "BADEN_WUERTTEMBERG", "BERLIN"}   # the API's own spelling of the federal states
 
 NEEDS_WEEKLY = {"weekly", "regular_unspecified"}
+MIN_SKIP_CONFIDENCE = 0.6   # from the 19 Nov test: the one harmful presence mistake had 0.58
 
 
 def distance_km(a: tuple[float, float], b: tuple[float, float]) -> float:
@@ -37,8 +40,19 @@ def distance_km(a: tuple[float, float], b: tuple[float, float]) -> float:
     return 2 * 6371 * asin(sqrt(h))
 
 
-def location_gap(office_presence: str | None, locations: list[dict]) -> dict | None:
-    """None if the job is reachable often enough. Otherwise {"kind": "skip" or "check", "reason": one line}.
+def location_gap(office_presence: str | None, locations: list[dict],
+                 presence_confidence: float | None = None) -> dict | None:
+    """None if the job is reachable often enough. Otherwise {"kind": "skip" or "check", "reason": one line}."""
+    result = _raw_gap(office_presence, locations)
+    if (result and result["kind"] == "skip" and presence_confidence is not None
+            and presence_confidence < MIN_SKIP_CONFIDENCE):
+        return {"kind": "check", "reason": f"{result['reason']} (the presence answer is unsure, "
+                                           f"confidence {presence_confidence:.2f}: check the posting)"}
+    return result
+
+
+def _raw_gap(office_presence: str | None, locations: list[dict]) -> dict | None:
+    """The rule itself, before the confidence safety net.
 
     locations: [{"city": ..., "region": ..., "lat": ..., "lon": ...}, ...]; a job is fine if ANY of its
     locations works (for example "Chemnitz or Dresden").

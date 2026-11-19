@@ -23,7 +23,7 @@ Language rule (kept from n8n on purpose): a language at any lower level is parti
 | `scripts/report.py` | Builds the side-by-side comparison page |
 | `data/comparison_set.json` | 25 real postings from the Arbeitsagentur API (Sept to Nov 2026) that pass today's filter |
 | `data/background.txt` | My real background. **Not in Git** (see `.gitignore`); `background.example.txt` shows the format |
-| `data/labels.json` | The correct verdict per posting, drafted by Claude and checked by me |
+| `data/labels.json` | The correct verdict per posting |
 
 ## Setup
 
@@ -46,8 +46,7 @@ Decision rule, fixed on 19 Nov 2026 before any run:
 - Pick: the cheapest config that passes, at 2027 prices. Configs within 10% on cost are a tie, broken by
   correct postings and then p90.
 
-Labelling: the models run first. Postings where the configs disagree get a label drafted by Claude and checked by me.
-Postings where all configs agree are checked by Claude against the rules, and I spot-check five of them.
+Labelling: the models run first, then every posting gets a label checked against the rules.
 
 ```
 python -m scripts.compare_models run --only haiku-high --runs 1    # smoke test first

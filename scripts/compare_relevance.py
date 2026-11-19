@@ -4,7 +4,7 @@
     python -m scripts.compare_relevance --set data/batches/set_<date>.json
 
 Nothing is written into the set. Every answer goes to results/relevance_<set name>.jsonl, so a rerun only
-asks what is missing, and Claude checks each answer against the posting text before we pick a provider.
+asks what is missing. Each answer is checked against the posting text before a provider is picked.
 Cost: about 0.015 cents per posting per provider, so under 1 cent for 25 postings.
 """
 
@@ -58,7 +58,8 @@ def main():
             try:
                 rel = check_relevance(p["title"], p["description"], provider)
                 tokens[provider] += rel["input_tokens"] or 0
-                rel["location_gap"] = location_gap(rel["office_presence"], p.get("locations") or [])
+                rel["location_gap"] = location_gap(rel["office_presence"], p.get("locations") or [],
+                                                   rel["presence_confidence"])
                 row, status = rel, (f"target {rel['target_probability']:.2f} {str(rel['main_focus']):15} "
                                     f"presence {rel['office_presence']}{('  LOCATION ' + rel['location_gap']['kind'].upper()) if rel['location_gap'] else ''}")
             except Exception as e:                                       # noqa: BLE001
@@ -68,7 +69,7 @@ def main():
                 f.write(json.dumps(row, ensure_ascii=False) + "\n")
             print(f"[{provider:6} {i}/{len(postings)}] {p['title'][:50]:50} {status}")
     print("Cost: " + ", ".join(f"{p} ${t * 0.10 / 1_000_000:.4f}" for p, t in tokens.items()))
-    print(f"Saved {out.relative_to(ROOT)}. Tell Claude, who checks the answers.")
+    print(f"Saved {out.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

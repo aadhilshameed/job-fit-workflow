@@ -107,7 +107,8 @@ def assess_once(posting, background, name, run):
         start = time.perf_counter()               # time only the attempt that counts
         try:
             assessment, usage = ask_model(user_message, cfg["provider"], cfg["model"], cfg["effort"])
-            gap = location_gap(posting.get("office_presence"), posting.get("locations") or [])
+            gap = location_gap(posting.get("office_presence"), posting.get("locations") or [],
+                               posting.get("presence_confidence"))
             result, error = compute_verdict(assessment, background, gap), None
             break
         except Exception as e:                    # noqa: BLE001  (any failure is recorded, not hidden)

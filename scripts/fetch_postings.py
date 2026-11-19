@@ -41,7 +41,7 @@ from job_fit.title_filter import genai_signals, title_status         # noqa: E40
 
 BATCHES = ROOT / "data" / "batches"
 SET_FIELDS = ("refnr", "title", "firma", "ort", "description", "locations",
-              "target_probability", "main_focus", "office_presence")
+              "target_probability", "main_focus", "office_presence", "presence_confidence", "relevance_error")
 
 
 def already_seen() -> set[str]:
@@ -91,7 +91,7 @@ def main():
                 rel = check_relevance(title, text)
                 relevance_tokens += rel.pop("input_tokens")
                 row.update(rel)
-                row["location_gap"] = location_gap(rel["office_presence"], locations)
+                row["location_gap"] = location_gap(rel["office_presence"], locations, rel["presence_confidence"])
             except Exception as e:                                      # noqa: BLE001
                 row["relevance_error"] = f"{type(e).__name__}: {e}"[:300]
         batch.append(row)
@@ -103,7 +103,8 @@ def main():
             note = (f"target {row['target_probability']:.2f} {str(row['main_focus']):15} "
                     f"presence {row['office_presence']}{('  LOCATION ' + row['location_gap']['kind'].upper()) if row['location_gap'] else ''}")
         print(f"[{i}/{min(len(passed), args.max)}] {title[:55]:55} {note}")
-        if row.get("is_target_role"):
+        # a posting whose relevance call failed goes through anyway: Haiku costs less than a missed job
+        if row.get("is_target_role") or "relevance_error" in row:
             final_set.append({k: row.get(k) for k in SET_FIELDS})
 
     today = date.today().isoformat()
