@@ -45,9 +45,21 @@ def main():
         if r["config"] == args.config and not r["error"] and r["refnr"] in postings:
             latest[r["refnr"]] = r["result"]
     items = [(postings[ref], result, None) for ref, result in latest.items()]
-    sent = send_alerts(items, note=f"Preview from {results_file.name}", limit=args.limit,
-                       summarize=lambda title, text, rows: summarize(title, text, rows)[0])
+    tokens = {"input": 0, "output": 0, "calls": 0}
+
+    def summarize_and_count(title, text, rows):
+        summary, usage = summarize(title, text, rows)
+        tokens["input"] += usage["input"]
+        tokens["output"] += usage["output"]
+        tokens["calls"] += 1
+        return summary
+
+    sent = send_alerts(items, note=f"Preview from {results_file.name}", limit=args.limit, summarize=summarize_and_count)
+    cost = (tokens["input"] * 0.10 + tokens["output"] * 0.50) / 1_000_000          # Haiku 5.5 prices per token
     print(f"Sent the summary and {sent} posting messages ({len(items)} results in the file).")
+    if tokens["calls"]:
+        print(f"Summaries: {tokens['calls']} calls, {tokens['output']} output tokens, ${cost:.4f} "
+              f"(${cost / tokens['calls']:.4f} per posting)")
 
 
 if __name__ == "__main__":

@@ -15,7 +15,9 @@ What gets sent:
 - each posting message is short: verdict, distance, title, company, the job type (🎓 WS Werkstudent,
   🧪 Intern, 📝 Thesis, 🏢 Job) with one line on the role, and the gaps
   as short labels; the collapsed box you tap to open lists every requirement, most important first,
-  with a dot (green met, yellow partial, red missing, white not stated) and a short reason for each gap
+  with a dot (green met, yellow partial, red missing, white not stated), a short reason for each gap, and
+  related items under one heading (for example "Practical experience:")
+- a German posting is marked 🇩🇪 German in the first line, since it usually means German every day
 - every posting message has an "Open posting" button that opens it on the Arbeitsagentur website
 """
 
@@ -46,6 +48,10 @@ JOB_TYPES = ((re.compile(r"werkstudent|working student|studentische", re.IGNOREC
              (re.compile(r"praktik|internship|\bintern\b|trainee", re.IGNORECASE), "🧪 Intern"),
              (re.compile(r"abschlussarbeit|masterarbeit|bachelorarbeit|thesis", re.IGNORECASE), "📝 Thesis"))
 MAX_LISTED = 8             # requirements shown in the collapsed box (gaps are always shown)
+GERMAN_WORDS = {"und", "der", "die", "das", "mit", "für", "wir", "sie", "ist", "von", "zu", "bei", "auf", "oder",
+                "eine", "ein", "du", "dich", "dein", "deine", "ihre", "unser", "unsere", "kenntnisse"}
+ENGLISH_WORDS = {"and", "the", "with", "for", "we", "you", "is", "of", "to", "at", "on", "or", "an", "your", "our",
+                 "skills", "experience"}
 
 
 # ---------------------------------------------------------------- sending
@@ -115,6 +121,15 @@ def job_type(title: str) -> str:
     return "🏢 Job"
 
 
+def posting_language(text: str) -> str:
+    """"de" or "en", by counting common German and English words. A German posting usually means German
+    is used every day at work, whatever the posting says about language levels."""
+    words = re.findall(r"[a-zäöüß]+", (text or "").lower())
+    german = sum(w in GERMAN_WORDS for w in words)
+    english = sum(w in ENGLISH_WORDS for w in words)
+    return "de" if german > english else "en"
+
+
 def requirement_rows(result: dict) -> list[dict]:
     """The skills and eligibility requirements of one result, in the order summary.py numbers them."""
     return [{"text": r["requirement_text"], "match_result": r["match_result"], "match_reason": r["match_reason"],
@@ -141,24 +156,37 @@ def location_lines(result: dict) -> list[str]:
     return lines + ([result["location_note"]] if result.get("location_note") else [])
 
 
-def cut(text: str, limit: int) -> str:
-    return text if len(text) <= limit else text[: limit - 1].rstrip() + "…"
-
-
 def ranked_requirements(result: dict, summary=None) -> list[dict]:
-    """Every requirement with a short label and reason, most important first. Uses summary.py's ranking
-    when there is one; otherwise critical before standard, with the texts cut short."""
+    """Every requirement with a short English label, a short reason and a group heading, most important first,
+    from summary.py. Without a summary (the call failed twice), only the gaps, with their full texts, so
+    nothing is cut in the middle of a word."""
     rows = requirement_rows(result)
+    if not summary:
+        gaps = gap_kinds(result)
+        return [r | {"label": r["text"], "reason": r["match_reason"], "group": ""} for r in rows if r["text"] in gaps]
     ranked, used = [], set()
-    if summary:
-        for item in summary.requirements:
-            if 1 <= item.number <= len(rows) and item.number not in used:
-                used.add(item.number)
-                ranked.append(rows[item.number - 1] | {"label": item.label, "reason": item.short_reason})
+    for item in summary.requirements:
+        if 1 <= item.number <= len(rows) and item.number not in used:
+            used.add(item.number)
+            ranked.append(rows[item.number - 1] | {"label": item.label, "reason": item.short_reason,
+                                                   "group": item.group.strip()})
     rest = [r for i, r in enumerate(rows, 1) if i not in used]          # anything the summary left out
     rest.sort(key=lambda r: r["importance"] != "critical")
-    ranked += [r | {"label": cut(r["text"], 32), "reason": cut(r["match_reason"], 60)} for r in rest]
-    return ranked
+    return ranked + [r | {"label": r["text"], "reason": r["match_reason"], "group": ""} for r in rest]
+
+
+def grouped(items: list[dict]) -> list[tuple[str, list[dict]]]:
+    """Keeps items with the same group heading together, at the place of the group's first (most important) item."""
+    out, seen = [], {}
+    for item in items:
+        group = item["group"]
+        if group and group in seen:
+            out[seen[group]][1].append(item)
+        else:
+            if group:
+                seen[group] = len(out)
+            out.append((group, [item]))
+    return out
 
 
 def posting_message(posting: dict, result: dict, published=None, summary=None) -> str:
@@ -174,6 +202,8 @@ def posting_message(posting: dict, result: dict, published=None, summary=None) -
     if presence != "remote" and closest:
         head.append(f"{closest[0]:.0f} km")
     head.append(PRESENCE_SHORT.get(presence, "office days?"))
+    if posting_language(posting.get("description") or "") == "de":
+        head.append("🇩🇪 German")
     place = " · ".join(x for x in (posting.get("firma"), city) if x) + (f" (+{n_other} more)" if n_other else "")
     lines = [" · ".join(head), f"<b>{esc(posting.get('title') or '')}</b>", esc(place), ""]
 
@@ -190,7 +220,7 @@ def posting_message(posting: dict, result: dict, published=None, summary=None) -
     short = []
     for kind, dot, extra in (("hard_gap", "🔴", ""), ("partial", "🟡", ""), ("language", "🟡", " (not counted)"),
                              ("eligibility", "⚪", " (not in your background)")):
-        short += [f"{dot} {esc(label_of.get(text, cut(text, 32)))}{extra}" for text, k in kinds.items() if k == kind]
+        short += [f"{dot} {esc(label_of.get(text, text))}{extra}" for text, k in kinds.items() if k == kind]
     if location_lines(result):
         short.append("📍 check the location")
     lines.append("   ".join(short) if short else "🟢 No gaps")
@@ -198,13 +228,17 @@ def posting_message(posting: dict, result: dict, published=None, summary=None) -
     # the collapsed box: every requirement, most important first, with a coloured dot and the reason for gaps
     listed = [r for i, r in enumerate(ranked) if i < MAX_LISTED or r["text"] in kinds]
     more = []
-    for r in listed:
-        line = f"{DOTS.get(r['match_result'], '•')} {esc(r['label'])}"
-        if kinds.get(r["text"]) == "language":
-            line += " (not counted)"
-        if r["match_result"] in ("partial", "hard_gap") and r.get("reason"):
-            line += f" · <i>{esc(r['reason'])}</i>"
-        more.append(line)
+    for group, members in grouped(listed):
+        if group and len(members) > 1:
+            more.append(f"<b>{esc(group)}:</b>")
+        indent = "    " if group and len(members) > 1 else ""
+        for r in members:
+            line = f"{indent}{DOTS.get(r['match_result'], '•')} {esc(r['label'])}"
+            if kinds.get(r["text"]) == "language":
+                line += " (not counted)"
+            if r["match_result"] in ("partial", "hard_gap") and r.get("reason"):
+                line += f" · <i>{esc(r['reason'])}</i>"
+            more.append(line)
     more += [f"📍 {esc(text)}" for text in location_lines(result)]
     if more:
         lines.append("<blockquote expandable>" + "\n".join(more) + "</blockquote>")
@@ -228,7 +262,8 @@ def send_alerts(items: list[tuple[dict, dict, object]], note: str = "", limit: i
                 summarize=None) -> int:
     """items: [(posting, result, published), ...]. Sends the summary, then the postings in order.
     summarize: a function (title, description, requirement rows) -> PostingSummary, called only for postings
-    that get sent; if it fails, the message goes out without the role line and with cut-off labels.
+    that get sent, with one retry; if both tries fail, the message goes out without the role line and
+    lists only the gaps, in the posting's own words.
     Returns how many postings were sent."""
     send_message(summary_message([r for _, r, _ in items], note=note))
     to_send = sorted((i for i in items if i[1]["code_verdict"] in SENT_VERDICTS),
@@ -236,12 +271,13 @@ def send_alerts(items: list[tuple[dict, dict, object]], note: str = "", limit: i
                                     nearest_km(i[0].get("locations") or []) or 9999))
     for posting, result, published in to_send[:limit]:
         summary = None
-        if summarize:
+        for attempt in (1, 2) if summarize else ():             # one retry: most failures are passing ones
             try:
                 summary = summarize(posting.get("title") or "", posting.get("description") or "",
                                     requirement_rows(result))
+                break
             except Exception as e:                                  # noqa: BLE001
-                print(f"Summary failed for {posting['refnr']}: {type(e).__name__}: {e}"[:200])
+                print(f"Summary failed for {posting['refnr']} (try {attempt} of 2): {type(e).__name__}: {e}"[:300])
         send_message(posting_message(posting, result, published, summary),
                      [("Open posting ↗", POSTING_URL.format(refnr=posting["refnr"]))])
         time.sleep(1)                                          # Telegram allows about one message a second per chat

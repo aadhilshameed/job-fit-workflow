@@ -3,7 +3,7 @@ with a short label, ranked by how much the role depends on it, so the message st
 
 A separate small call, so the frozen assessment prompt (prompt.py) stays untouched. It does not judge the fit:
 it gets each requirement's status (met, partial, missing) from the assessment and only shortens and ranks.
-Only postings that get sent are summarised (not skips). Cost: about 0.05 cents per posting.
+Only postings that get sent are summarised (not skips). The preview prints what the summaries cost.
 """
 
 from pydantic import BaseModel
@@ -11,6 +11,7 @@ from pydantic import BaseModel
 from job_fit.llm import _client
 
 SUMMARY_MODEL = "claude-haiku-5-5"
+SUMMARY_EFFORT = "high"    # low was cheaper, but failed on a long posting (20 Nov); high costs about 0.1 cent more
 
 SUMMARY_PROMPT = """You shorten a job posting for a student who decides whether to open it.
 The posting may be in German or English. Always answer in plain English. No full stops.
@@ -24,9 +25,16 @@ requirements: you get a numbered list of requirements from the posting, each wit
 (met, partial, missing, not stated) and, for partial and missing ones, the reason. Return every number
 exactly once, ordered from the most to the least important for this role (what the posting stresses
 most comes first).
-- label: 1 to 4 words in English. Keep combined items together ("Power BI and Power Automate" stays one item).
-- short_reason: for partial and missing items only, at most 8 words on what is lacking, taken from the
-  given reason. Empty for the others.
+- label: 1 to 4 words, always in English, even when the posting is German. Name the thing itself,
+  without the heading words ("Idealerweise praktische Erfahrung mit LangGraph" becomes "LangGraph").
+  Keep combined items together ("Power BI and Power Automate" stays one item).
+- group: when several requirements share a heading, give them the same short English heading of 1 to 3
+  words, for example "Practical experience" or "Languages". Empty for a requirement that stands alone.
+- short_reason: for partial and missing items only, at most 8 words in English on what is lacking,
+  taken from the given reason. Empty for the others.
+
+Every label and reason must be complete words and a complete thought: shorten by choosing fewer words,
+never by cutting a sentence off.
 
 Only shorten and rank. Do not change any status and do not judge the fit."""
 
@@ -36,6 +44,7 @@ STATUS_WORDS = {"match": "met", "partial": "partial", "hard_gap": "missing", "no
 class RankedRequirement(BaseModel):
     number: int
     label: str
+    group: str
     short_reason: str
 
 
@@ -54,13 +63,13 @@ def summarize(title: str, description: str, requirements: list[dict]) -> tuple[P
         lines.append(f"{i}. [{status}] {r['text']}{reason}")
     response = _client("anthropic").messages.parse(
         model=SUMMARY_MODEL,
-        max_tokens=1500,
-        timeout=120,
+        max_tokens=16000,        # thinking counts toward this ceiling; it is not a spend
+        timeout=300,
         system=SUMMARY_PROMPT,
         messages=[{"role": "user", "content": f"<title>{title}</title>\n<job posting>\n{description}\n</job posting>\n"
                                               f"<requirements>\n{chr(10).join(lines) or '(none)'}\n</requirements>"}],
         output_format=PostingSummary,
-        output_config={"effort": "low"},     # a summary needs no deep thinking
+        output_config={"effort": SUMMARY_EFFORT},
     )
     if response.parsed_output is None:
         raise ValueError(f"No structured summary (stop_reason={response.stop_reason})")
