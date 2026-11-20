@@ -6,10 +6,14 @@ v2 (19 Nov 2026): v1 plus a work-location rule. Haiku then marked presence requi
 v3 (19 Nov 2026): location is taken out of the prompt completely. The relevance call asks how often the
     office needs you, and location.py decides in code.
 
+v4 (20 Nov 2026): prompt text unchanged. The version moves because the inputs changed: the background
+    got an INTERESTS line, a clearer Office line and the workflow-versus-agent line, and the verdict code
+    stopped counting language partials. Results of v3 and v4 must not be mixed.
+
 Any change gets a new version number, and the labelled postings are re-run as a regression test.
 """
 
-PROMPT_VERSION = "v3"
+PROMPT_VERSION = "v4"
 
 SYSTEM_PROMPT = """You are assessing whether a candidate is a good fit for a job posting. You will receive the job posting and the candidate's background, and you will work through the steps below. In short: extract the requirements from the posting, classify each one, compare each one against the background, and give a verdict.
 

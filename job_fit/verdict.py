@@ -11,6 +11,15 @@ import re
 
 from .schema import Assessment
 
+# a requirement about a spoken language (German, English, ...). Its partial never counts towards the
+# two-partial limit, because a lower language level alone should never stop an application (19 Nov 2026)
+LANGUAGE = re.compile(r"deutsch|german|englisch|english|französisch|french|spanisch|spanish|"
+                      r"sprachkenntnis|language skill|\b(a1|a2|b1|b2|c1|c2)\b", re.IGNORECASE)
+
+
+def is_language(requirement_text: str) -> bool:
+    return LANGUAGE.search(requirement_text) is not None
+
 
 def _clean(text: str) -> str:
     """Lower case, and every run of spaces or line breaks becomes one space."""
@@ -51,7 +60,8 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
                        if r.requirement_type == "technical_skill" and r.importance == "critical"]
     # a critical technical skill marked not_stated is treated as a gap (the prompt forbids that label for skills)
     hard_gaps = [r for r in critical_skills if r.match_result in ("hard_gap", "not_stated")]
-    partials = [r for r in critical_skills if r.match_result == "partial"]
+    partials = [r for r in critical_skills if r.match_result == "partial" and not is_language(r.requirement_text)]
+    language_partials = [r for r in critical_skills if r.match_result == "partial" and is_language(r.requirement_text)]
     critical_eligibility = [r for r in requirements
                             if r.requirement_type == "eligibility" and r.importance == "critical"]
     eligibility_gaps = [r for r in critical_eligibility if r.match_result == "hard_gap"]
@@ -76,7 +86,8 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
         "model_verdict_reason": assessment.model_verdict_reason,
         "role_focus": assessment.role_focus[:3],
         "critical_gaps": ([f"location ({location_gap['kind']}): {location_gap['reason']}"] if location_gap else [])
-                         + [f"{r.match_result}: {r.requirement_text}" for r in eligibility_gaps + hard_gaps + partials],
+                         + [f"{r.match_result}: {r.requirement_text}" for r in eligibility_gaps + hard_gaps + partials]
+                         + [f"partial (language, not counted): {r.requirement_text}" for r in language_partials],
         "location_gap": location_gap,
         "missing_eligibility": [r.requirement_text for r in missing_eligibility],
         "unverified_quotes": [r.requirement_text for r in requirements

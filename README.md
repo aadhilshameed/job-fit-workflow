@@ -11,13 +11,14 @@ Language rule (kept from n8n on purpose): a language at any lower level is parti
 
 | Path | What it is |
 | --- | --- |
-| `job_fit/prompt.py` | The frozen assessment prompt (`SYSTEM_PROMPT`, version v1) |
+| `job_fit/prompt.py` | The assessment prompt (`SYSTEM_PROMPT`; the version is `PROMPT_VERSION`, see the version log) |
 | `job_fit/schema.py` | The response schema every model must fill (Pydantic) |
 | `job_fit/llm.py` | One function per provider (Gemini, OpenAI, Anthropic), same answer shape for all |
 | `job_fit/verdict.py` | Quote check and the verdict rules, in code |
 | `job_fit/arbeitsagentur.py` | Search and detail calls to the Arbeitsagentur API |
 | `job_fit/title_filter.py` | The free two-stage keyword filter from n8n (title, then description) |
 | `job_fit/relevance.py` | The relevance question (OpenAI Decisions API): is this hands-on AI building work? |
+| `job_fit/snapshot.py` | Saves the exact prompt, background and verdict code behind every run in `results/snapshots/` |
 | `scripts/fetch_postings.py` | Fresh postings through search, filter, details and relevance, saved in `data/batches/` |
 | `scripts/compare_models.py` | Runs every config on a set of postings and scores it (`--set` picks the set) |
 | `scripts/report.py` | Builds the side-by-side comparison page |
@@ -61,3 +62,26 @@ python -m scripts.compare_models report                            # results/com
 - Terra high and Sonnet dropped: too expensive to ever be the pick.
 - 5 postings removed from the set because today's filter would not let them through.
 - New: fresh intake and a relevance check before the assessment, so off-target roles never reach Haiku.
+
+## Version log
+
+| Version | Date | Prompt text | Background | Verdict code |
+| --- | --- | --- | --- | --- |
+| v1 | 19 Nov 2026 | n8n prompt, implied-skill rule shortened | as in n8n | as in n8n |
+| v2 | 19 Nov 2026 | + location rule | travel limits added | same |
+| v3 | 19 Nov 2026 | location rule removed, "do not extract location" | travel lines removed | + location decided in code, empty posting = lack_of_info |
+| v4 | 20 Nov 2026 | **unchanged** | + INTERESTS, Office line, workflow-versus-agent line | language partials do not count towards the two-partial limit |
+
+Results of different versions are saved in separate files (`results/<set>_<version>.jsonl`) and never mixed.
+
+From v4 on, every result row also carries a snapshot id. The snapshot (`results/snapshots/<id>.json`) holds the full
+prompt, the full background, the verdict code and the git commit the row was made with. The id changes whenever any
+of them changes, and the report warns if one results file holds more than one id. To see what changed between two runs:
+
+```
+python -m job_fit.snapshot list
+python -m job_fit.snapshot diff <old id> <new id>
+```
+
+Snapshots stay out of Git, like the background they contain. The prompts of v1 to v3 can be read in the Git history;
+the backgrounds of v1 to v3 were not saved, so the table above is the only record of how they differed.

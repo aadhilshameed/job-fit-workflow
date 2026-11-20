@@ -1,0 +1,720 @@
+[
+ {
+  "refnr": "12706-44582607-1118-S",
+  "title": "Werkstudent KI (m/w/d)",
+  "firma": "Amprion GmbH",
+  "ort": "Dortmund",
+  "description": "Amprion verbindet. Unser Übertragungsnetz transportiert Strom für 29 Millionen Menschen in einem Gebiet von der Nordsee bis zu den Alpen. Dort wird ein Drittel der deutschen Wirtschaftsleistung erzeugt. Unsere Leitungen sind Lebensadern der Gesellschaft. Wir halten unser Netz stabil und sicher - und bereiten den Weg für die Energiewende: Wir bauen unser Netz aus und arbeiten an neuen Ideen für ein klimaverträgliches, sicheres und effizientes Energiesystem.\nDEINE AUFGABEN:\n  *  Unterstützung bei der Planung und Steuerung von KI-Umsetzungsprojekten (Umfang, Zeitplan, Qualität)\n  *  selbstständige Umsetzung erster Prototypen von KI-Agenten\n  *  Implementierung von Retrieval-Augmented-Generation (RAG) mit Azure AI Search/Vectorstore\n  *  Pflege von Projektplänen, Meilensteinen, Backlogs und Abhängigkeiten; Nachhalten von Aufgaben\n  *  Erstellung von Statusberichten, Roadmaps und Entscheidungsunterlagen für das Management\n  *  Abstimmung mit Fachbereichen, IT, Recht/Compliance, Einkauf und externen Partnern\n  *  Unterstützung im Anforderungsmanagement: Use-Case-Steckbriefe, Erfolgskriterien, Abnahmekriterien\n\n\n\nDEIN PROFIL:\n  *  laufendes Studium (Bachelor/Master) in Wirtschaftsinformatik, BWL, Informatik, Data Science, Wirtschaftsingenieurwesen oder vergleichbar\n  *  ausgeprägtes Interesse an KI: ChatGPT, Claude, Gemini, etc.\n  *  Erfahrung im Scripting mit KI in Python (z. B. Arbeit mit LLM-/ML-APIs, Datenaufbereitung, Automationsskripte)\n  *  Erfahrung mit KI-Workflow-Tools wie n8n (Orchestrierung von Integrationen, Triggern und Datenflüssen) sind ein Plus\n  *  strukturierte, sorgfältige und eigenständige Arbeitsweise; Freude an Organisation und Dokumentation\n  *  sehr gute Kommunikations- und Teamfähigkeiten; sicheres Stakeholder-Management\n  *  analytische Denkweise, schnelle Auffassungsgabe und pragmatische Umsetzungsstärke\n  *  sehr gute Deutsch- und gute Englischkenntnisse\n  *  Verfügbarkeit idealerweise 15-20 Stunden pro Woche über mehrere Monate\n\nDEINE AUFGABEN:\n  *  Unterstützung bei der Planung und Steuerung von KI-Umsetzungsprojekten (Umfang, Zeitplan, Qualität)\n  *  selbstständige Umsetzung erster Prototypen von KI-Agenten\n  *  Implementierung von Retrieval-Augmented-Generation (RAG) mit Azure AI Search/Vectorstore\n  *  Pflege von Projektplänen, Meilensteinen, Backlogs und Abhängigkeiten; Nachhalten von Aufgaben\n  *  Erstellung von Statusberichten, Roadmaps und Entscheidungsunterlagen für das Management\n  *  Abstimmung mit Fachbereichen, IT, Recht/Compliance, Einkauf und externen Partnern\n  *  Unterstützung im Anforderungsmanagement: Use-Case-Steckbriefe, Erfolgskriterien, Abnahmekriterien\n\nWAS WIR BIETEN:\n  *  Entwicklungsmöglichkeiten\n  *  Studierenden-Bindungsprogramm\n  *  Familie & Beruf\n  *  Sport & Gesundheit\n  *  Mitarbeitendenrabatte\n  *  kostenlose Stellplätze\n\nFiliz Türkmen\nRecruiting Studierende\n\nstudents@amprion.net",
+  "locations": [
+   {
+    "city": "Dortmund",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.487616331,
+    "lon": 7.498367336
+   }
+  ],
+  "target_probability": 0.76,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ },
+ {
+  "refnr": "13635-3a4332b9_JB5282037-S",
+  "title": "Werkstudent KI & Automatisierung (m/w/d)",
+  "firma": "Deag Deutsche Entertainment AG",
+  "ort": "Berlin",
+  "description": "Aufgaben\n • Du unterstützt uns dabei, Arbeitsabläufe in der Holding und unseren Tochtergesellschaften zu verstehen und herauszufinden, wo KI und Automatisierung den Alltag erleichtern können.\n • Du bereitest Gespräche mit Mitarbeitenden vor, sammelst Anforderungen und hilfst, aus ersten Ideen konkrete Anwendungsfälle zu entwickeln.\n • Du entwickelst gemeinsam mit unserem Manager KI & Automatisierung Prototypen und kleinere Lösungen – zum Beispiel mit Python, APIs, Automatisierungstools und LLMs.\n • Du unterstützt dabei, Daten aufzubereiten, Anwendungen miteinander zu verbinden und wiederkehrende Aufgaben zu automatisieren.\n • Du testest Lösungen mit den Kolleginnen und Kollegen, holst Feedback ein und hilfst, sie Schritt für Schritt zu verbessern.\n • Du hältst Ergebnisse fest und erstellst verständliche Anleitungen, damit unsere Lösungen auch im Alltag gut genutzt werden können.\n • Du probierst neue KI-Tools und Funktionen aus und bringst eigene Vorschläge ein, was davon für uns sinnvoll sein könnte.\n\nProfil\n • Du hast bereits eigene KI-Anwendungen oder Agenten entwickelt, m Studium, in einem Job oder aus eigenem Interesse und kannst uns zeigen, wie sie funktionieren und welche Entscheidungen dahinterstecken.\n • Du hast praktische Erfahrung mit LLM-APIs, RAG und dem Einsatz von Tools innerhalb von Agenten. Du weißt, wie man Datenquellen einbindet, Kontext bereitstellt und Ergebnisse überprüft.\n • Du nutzt KI-gestützte Entwicklungswerkzeuge selbstverständlich und hast damit bereits eigene Anwendungen oder Agenten umgesetzt. Gleichzeitig bringst du idealerweise ausreichende Programmierkenntnisse, insbesondere in Python, mit, um den erzeugten Code zu verstehen, zu prüfen und eigenständig weiterzuentwickeln.\n • Du kennst die typischen Herausforderungen von KI-Anwendungen: unzuverlässige Antworten, unpassende Suchergebnisse, Grenzen des Kontextfensters sowie Kosten und Laufzeiten. Du hast bereits daran gearbeitet, solche Probleme zu lösen.\n • Du bleibst bei neuen KI-Entwicklungen am Ball und probierst selbst aus, was neue Modelle, Frameworks und Tools tatsächlich leisten. Deine Erkenntnisse und Ideen bringst du aktiv ins Team ein.\n • Du kannst einschätzen, wann ein Agent sinnvoll ist und wann eine einfache Automatisierung die bessere Lösung bietet.\n • Du arbeitest eigenständig, sprichst offene Fragen früh an und kannst technische Zusammenhänge verständlich erklären.\n • Du gehst sorgfältig mit Daten und vertraulichen Informationen um und verfügst über sehr gute Deutschkenntnisse sowie sicheres Englisch für technische Dokumentation und Recherche.\n\nZeig uns, was du gebaut hast: Ein GitHub-Repository, eine kurze Demo oder eine nachvollziehbare Projektbeschreibung sagt uns mehr als eine Liste von Tools. Uns interessiert, welches Problem du gelöst hast, welchen Anteil du selbst umgesetzt hast und was du beim nächsten Mal anders machen würdest. Erfahrung mit lokal betriebenen Modellen ist ein zusätzliches Plus.\n\nWarum wir?Die DEAG FYUSION GmbH ist die zentrale Einheit der DEAG Unternehmensgruppe für Datenschutz, Daten, KI und digitale Prozesse. Wir unterstützen die Gesellschaften der Gruppe dabei, regulatorische Anforderungen sicher und pragmatisch umzusetzen und moderne Technologien sinnvoll zu nutzen.\n\nBei uns entsteht gerade viel Neues. Wir entwickeln KI-Anwendungen, verbinden Systeme und vereinfachen Arbeitsabläufe. Dafür suchen wir jemanden, der neugierig ist, gerne mitdenkt und Lust hat, gemeinsam mit uns Lösungen zu bauen, die im Alltag helfen.\n\nWas dich erwartet:\n • Praktische KI- und Automatisierungsprojekte in einer der größten europäischen Unternehmensgruppen im Live Entertainment.\n • Ein kleines, spezialisiertes Team, in dem du Fragen stellen, Ideen einbringen und schnell Verantwortung für eigene Aufgaben übernehmen kannst.\n • Enge Zusammenarbeit mit unserem Manager KI & Automatisierung, der dich fachlich begleitet und mit dir Lösungen weiterentwickelt.\n • Eigene Teilprojekte, bei denen du von der ersten Idee bis zum Einsatz dabei bist.\n • Einblicke in unterschiedliche Gesellschaften und Fachbereiche – und direkten Kontakt zu den Menschen, die deine Lösungen nutzen.\n • Raum, um neue Technologien auszuprobieren und deine Kenntnisse gezielt zu vertiefen.\n • Hybrides Arbeiten mit persönlicher Zusammenarbeit im Herzen Berlins und einer Homeoffice-Option.\n • Abstimmung deiner Arbeitszeiten auf dein Studium und deine Prüfungsphasen.\n • Einblicke in die Welt der Konzerte, Festivals und Live-Events.\n\nDie Rahmenbedingungen:\n\nStart: Ab sofort.\nArbeitsort: Berlin, hybrides Arbeiten mit Homeoffice-Option.\nArbeitszeit: 20 Stunden pro Woche; nach Absprache (während der Semesterferien) auch mehr möglich.\nVergütung: 16 € brutto pro Stunde.\n\nDu erfüllst ungefähr 80 % der Anforderungen und hast Lust auf die spannenden Aufgaben? Dann bewirb dich gern! Wir freuen uns auf Dich!\n\nÜber unsDie DEAG Deutsche Entertainment AG, gegründet 1978 in Berlin, ist ein führender Anbieter für Live-Entertainment, Ticketing und Entertainment-Services in Europa. Mit 25 Standorten in Deutschland, Großbritannien, Irland, der Schweiz, Dänemark, Spanien und Italien verfügt die DEAG über umfassende Expertise in der Konzeption, Organisation, Vermarktung und Durchführung von Live-Events. Das Unternehmen deckt ein breites Spektrum an Musikgenres (Rock/Pop, Urban, Electronic Dance Music, Classics & Jazz) sowie Non-Music-Events (Spoken Word, Literary Events, Family-Entertainment) ab. Jährlich organisiert die DEAG über 6.000 Veranstaltungen aller Genres und Größenordnungen und setzt mehr als 10 Millionen Tickets um.",
+  "locations": [
+   {
+    "city": "Berlin",
+    "region": "BERLIN",
+    "lat": 52.506327,
+    "lon": 13.3650884
+   }
+  ],
+  "target_probability": 0.95,
+  "main_focus": "ai_automation",
+  "office_presence": "occasional",
+  "presence_confidence": 0.89,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12117-YF-53146-YF-S",
+  "title": "Werkstudent KI & Prozessautomatisierung Einkauf (m/w/d)",
+  "firma": "Hans Segmüller Polstermöbelfabrik GmbH & Co. KG",
+  "ort": "Friedberg, Bayern",
+  "description": "Werkstudent KI & Prozessautomatisierung Einkauf (m/w/d) Zum Glück gibt's Segmüller \n\nSEGMÜLLER steht für Einrichtungshäuser der Extraklasse und ist einer der Top-Ten-Möbelhändler in Deutschland. Unser Familienunternehmen mit über 100-jähriger Firmengeschichte zeichnet sich durch erstklassige Beratung, ausgezeichneten Service und exklusive Qualität aus. Dahinter stehen rund 4.000 Mitarbeitende in unseren 7 Einrichtungshäusern, 5 Logistikzentren, der eigenen Polstermöbelproduktion und im Onlineshop, die mit ihrem Einsatz täglich zum Glück unserer Kund:innen beitragen. \n \nWir suchen dich als Werkstudenten (m/w/d) im Einkauf mit Fokus auf die Bereiche KI & Prozessautomatisierung an unserem Standort in Friedberg bei Augsburg. \n\nDeine Aufgaben \n\n * Entwicklung und Implementierung von KI-Lösungen für einzelne Geschäftsprozesse im Einkauf \n * Konzeption und Aufbau von KI-Agenten zur Unterstützung und Automatisierung von Arbeitsabläufen \n * Mitwirkung bei der Weiterentwicklung unserer digitalen Einkaufssteuerung \n * Einsatz moderner Microsoft-Technologien wie Copilot, Power Platform und KI-Agenten \n * Entwicklung und Pflege relevanter Steuerungskennzahlen zur Erfolgsmessung von Einkaufsaktivitäten \n * Identifikation von Optimierungs- und Automatisierungspotenzialen in Einkaufsprozessen \n\nDas bringst du mit \n * Immatrikulierter Student (m/w/d) im Bereich Wirtschaftsinformatik, Informatik, Data Science, Betriebswirtschaft oder ähnliches \n * Unterstützung für mindestens 2 Semester (bevorzugt 20 Stunden/Woche, in den Semesterferien ist optional auch Vollzeit möglich) \n * Erste praktische Kenntnisse in den Bereichen KI-Management, Data Analytics oder Business Intelligence \n * Idealerweise Erfahrung im Prompt Engineering sowie im Umgang mit generativen KI-Anwendungen \n * Interesse an Prozessautomatisierung und modernen Microsoft-Lösungen wie Copilot und Power Platform \n * Analytische Denkweise sowie Freude daran, komplexe Fragestellungen datenbasiert zu lösen \n * Selbstständige, strukturierte und eigenverantwortliche Arbeitsweise \n * Ausgeprägte Kommunikations- und Teamfähigkeiten \n * Sehr gute Deutschkenntnisse sowie ein gutes Sprachgefühl \n * Sicherer Umgang mit MS-Office (Word, Excel und PowerPoint) \n\nDarauf kannst du dich bei uns freuen \n * Spannende und abwechslungsreiche Aufgaben mit viel Eigenverantwortung \n * Flache Hierarchien und das Arbeiten in einem motivierten, engagierten Team \n * Auf deine Vorkenntnisse zugeschnittene, individuelle Einarbeitung \n * Flexible Arbeitszeiten je nach Studienplan / Semesterferien \n * Mitarbeiterrabatte (bei SEGMÜLLER und Corporate Benefits) \n * Verpflegung im Mitarbeiterrestaurant zu ermäßigten Preisen \n * Kostenloser Mitarbeiterparkplatz \n\nBereit ein Glücksbringer zu werden? \n\nWir freuen uns auf deine Bewerbung online, über jobs@segmueller.de oder WhatsApp.",
+  "locations": [
+   {
+    "city": "Friedberg, Bayern",
+    "region": "BAYERN",
+    "lat": 48.3606898,
+    "lon": 10.9973729
+   }
+  ],
+  "target_probability": 0.86,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.56,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1004018125-S",
+  "title": "Werkstudent*in (m/w/d) Erforschung KI-Anwendungen",
+  "firma": "Lovion GmbH",
+  "ort": "Dortmund",
+  "description": "Willkommen bei der **ITS Gruppe**, einem Unternehmen mit **über 600 Mitarbeitenden** an Bord und 20 Standorten in Deutschland und weltweit. Wir sind bekannt für unsere führende Rolle in Sachen Software und Services und sind die Wegbereiter für die Veränderungen von morgen. Unsere Kundinnen und Kunden im Bereich der Netzbetreiber setzen schon heute auf unsere Lösungen im Bereich Geographische Informationssysteme (GIS) und Betriebsinformationssysteme (BIS).\n\n**Aber jetzt zu Dir**: Bist Du bereit, Teil eines engagierten und qualifizierten Teams zu werden, das nicht nur zusammenarbeitet, sondern auch gemeinsam Großes erreichen möchte? Bei uns geht es nicht nur um Karriere, sondern auch um die Möglichkeit, Deinen eigenen Weg zu gestalten.\n\n**Bei uns steht der Mensch im Mittelpunkt.**\n\nWir glauben fest daran, dass Vielfalt die Grundlage für Innovation und Erfolg ist. Deshalb fördern wir ein offenes, respektvolles Arbeitsumfeld, in dem sich jede Person unabhängig von Herkunft, Geschlecht, Alter, sexueller Orientierung oder individuellen Lebenswegen entfalten kann. Unsere Unternehmenskultur zeichnet sich durch Zusammenarbeit, gegenseitige Unterstützung und einen starken Teamgeist aus. Wir bieten Dir die Flexibilität, Beruf- und Privatleben in Einklang zu bringen, und schaffen Raum für persönliche und berufliche Weiterentwicklung. Gemeinsam gestalten wir die digitale Zukunft – und dabei zählt jede Meinung.\n\nZur Verstärkung unseres Teams suchen wir aktuell einen\n\n**Werkstudent\\*in (m/w/d) Erforschung KI-Anwendungen** \n\nfür unseren Hauptsitz direkt am Dortmunder Phoenixsee.\n\nSchon in der Abschlussphase? Kein Problem! Gern stellen wir auch Themen für\n\n**Abschlussarbeiten (Bachelor/Master)**\n\nzur Verfügung und begleiten Dich bis zum Abschluss und darüber hinaus.\n\n**Darum geht's:**\n\n- Du unterstützt bei der Forschung, Konzeption und Weiterentwicklung von Anwendungen und Lösungskonzepten im Umfeld Künstlicher Intelligenz\n- Die Recherche, Erprobung und Bewertung von KI-Modellen und Tools für unterschiedliche Anwendungsfälle gehören zu Deinen Aufgaben\n- Bei der prototypischen Umsetzung von KI-Anwendungen wirkst Du mit und begleitest die Weiterentwicklung\n- Dabei arbeitest Du eng mit Entwicklerteams, Fachbereichen sowie KI-Expertinnen und -Experten innerhalb der Unternehmensgruppe zusammen\n- Zudem beobachtest Du aktuelle Entwicklungen im Bereich Künstliche Intelligenz und bringst neue Ideen und Impulse für potenzielle Anwendungsfälle ein\n\n**Das bringst Du mit:**\n\n- Du befindest Dich in einem Studium der Informatik, Künstlichen Intelligenz, Data Science, Wirtschaftsinformatik oder eines vergleichbaren Studiengangs\n- Interesse an aktuellen Entwicklungen und Technologien im Bereich Künstliche Intelligenz zeichnet Dich aus\n- Erste praktische Erfahrungen in der Softwareentwicklung sind von Vorteil\n- Eine strukturierte und eigenständige Arbeitsweise bringst Du ebenso mit wie Freude an der Zusammenarbeit im Team\n- Außerdem hast Du Interesse an der Energie- und Netzwirtschaftsbranche\n- Sichere Deutschkenntnisse in Wort und Schrift runden Dein Profil ab\n- Neugier, Lernbereitschaft und die Motivation, neue Technologien kennenzulernen und anzuwenden, vervollständigen Dein Profil\n\nWir sind Marktführer im Bereich der raumbezogenen Datenverarbeitung für die Energieversorgung in Deutschland. Wenn Du an der Zukunft unserer Infrastruktur mitarbeiten möchtest und Dir die einfache Informatik zu langweilig ist, dann bewirb Dich jetzt.\n\n**Entdecke die fantastischen Benefits, die auf Dich warten:**\n\n- Ein sechsmonatiges Schulungsprogramm, das nicht nur Wissen, sondern auch Leidenschaft vermittelt.\n- Gestalte Deine Arbeitszeit wie Du es willst! Mit unseren flexiblen Arbeitszeiten, individuellen Auszeit-Modelle und Remote Work Möglichkeiten, stehst Du bei uns im Vordergrund.\n- Weiterbildungsmöglichkeiten, damit Du immer am Puls der Zeit bist.\n- Eine attraktive Vergütung, die Deine Leistungen wertschätzt.\n- Gemeinsame sportliche Events, um nicht nur das Team zu stärken, sondern auch miteinander Spaß zu haben.\n- Tutorinnen und Tutoren und Mentorinnen und Mentoren, die Dir den Rücken stärken und mit Rat und Tat zur Seite stehen.\n- Zusammenarbeit in starken, dynamischen Teams mit flachen Hierarchien und einem Arbeitsumfeld auf Augenhöhe.\n- Von inspirierenden Gesundheitstagen über gemeinsame Workouts bis hin zu ergonomischen Arbeitsplätzen – wir fördern nicht nur die körperliche Fitness, sondern auch das Teamgefühl und die Produktivität!\n- Entdecke eine Welt voller Vorteile mit Corporate Benefits! Exklusive Angebote, Rabatte und besondere Extras warten auf Dich!\n- Kleine Gesten, die Großes bewirken – Mit einer Auswahl an ausgewählten Geschenken und Prämien feiern wir Deine Meilensteine im Leben. \n- Ein sicherer Arbeitsplatz in einer zukunftsorientierten Branche – mit Deinen Fähigkeiten trägst Du dazu bei, die Welt der Netzbetreibenden digital am Laufen zu halten.\n\nBereit, mit uns gemeinsam Großes zu erreichen? Wir freuen uns darauf, mit Dir die nächsten Erfolge zu feiern!",
+  "locations": [
+   {
+    "city": "Dortmund",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.48888483200005,
+    "lon": 7.508767846000069
+   }
+  ],
+  "target_probability": 0.79,
+  "main_focus": "other",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.33,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12951-266dd1bb-f9c0-47fb--S",
+  "title": "Werkstudent KI & Prozessautomatisierung Einkauf (m/w/d)",
+  "firma": "Hans Segmüller Polstermöbelfabrik GmbH & Co. KG",
+  "ort": "Friedberg, Bayern",
+  "description": "Zum Glück gibt's SegmüllerSEGMÜLLER steht für Einrichtungshäuser der Extraklasse und ist einer der Top-Ten-Möbelhändler in Deutschland. Unser Familienunternehmen mit über 100-jähriger Firmengeschichte zeichnet sich durch erstklassige Beratung, ausgezeichneten Service und exklusive Qualität aus. Dahinter stehen rund 4.000 Mitarbeitende in unseren 7 Einrichtungshäusern, 5 Logistikzentren, der eigenen Polstermöbelproduktion und im Onlineshop, die mit ihrem Einsatz täglich zum Glück unserer Kund:innen beitragen. Wir suchen dich als Werkstudenten (m/w/d) im Einkauf mit Fokus auf die Bereiche KI und Prozessautomatisierung an unserem Standort in Friedberg bei Augsburg.Deine Aufgaben✓ Entwicklung und Implementierung von KI-Lösungen für einzelne Geschäftsprozesse im Einkauf✓ Konzeption und Aufbau von KI-Agenten zur Unterstützung und Automatisierung von Arbeitsabläufen✓ Mitwirkung bei der Weiterentwicklung unserer digitalen Einkaufssteuerung✓ Einsatz moderner Microsoft-Technologien wie Copilot, Power Platform und KI-Agenten✓ Entwicklung und Pflege relevanter Steuerungskennzahlen zur Erfolgsmessung von Einkaufsaktivitäten✓ Identifikation von Optimierungs- und Automatisierungspotenzialen in Einkaufsprozessen\nDas bringst du mit✓ Immatrikulierter Student (m/w/d) im Bereich Wirtschaftsinformatik, Informatik, Data Science, Betriebswirtschaft oder ähnliches✓ Unterstützung für mindestens 2 Semester (bevorzugt 20 Stunden/Woche, in den Semesterferien ist optional auch Vollzeit möglich)✓ Erste praktische Kenntnisse in den Bereichen KI-Management, Data Analytics oder Business Intelligence✓ Idealerweise Erfahrung im Prompt Engineering sowie im Umgang mit generativen KI-Anwendungen✓ Interesse an Prozessautomatisierung und modernen Microsoft-Lösungen wie Copilot und Power Platform✓ Analytische Denkweise sowie Freude daran, komplexe Fragestellungen datenbasiert zu lösen✓ Selbstständige, strukturierte und eigenverantwortliche Arbeitsweise✓ Ausgeprägte Kommunikations- und Teamfähigkeiten✓ Sehr gute Deutschkenntnisse sowie ein gutes Sprachgefühl✓ Sicherer Umgang mit MS-Office (Word, Excel und PowerPoint)\nDarauf kannst du dich bei uns freuen✓ Spannende und abwechslungsreiche Aufgaben mit viel Eigenverantwortung ✓ Flache Hierarchien und das Arbeiten in einem motivierten, engagierten Team✓ Auf deine Vorkenntnisse zugeschnittene, individuelle Einarbeitung✓ Flexible Arbeitszeiten je nach Studienplan / Semesterferien✓ Mitarbeiterrabatte (bei SEGMÜLLER und Corporate Benefits)✓ Verpflegung im Mitarbeiterrestaurant zu ermäßigten Preisen✓ Kostenloser Mitarbeiterparkplatz\nBereit ein Glücksbringer zu werden?Wir freuen uns auf deine Bewerbung online!",
+  "locations": [
+   {
+    "city": "Friedberg, Bayern",
+    "region": "BAYERN",
+    "lat": 48.351798,
+    "lon": 10.987713
+   }
+  ],
+  "target_probability": 0.86,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.84,
+  "relevance_error": null
+ },
+ {
+  "refnr": "13635-11ee6672_JB5302127-S",
+  "title": "Werkstudent:in Softwareentwicklung & KI-Automatisierung (m/w/d)",
+  "firma": "Pleil GmbH",
+  "ort": "Fürstenfeldbruck",
+  "description": "Deine Aufgaben Hybrid (Fürstenfeldbruck) | 15-20 Stunden pro Woche Du begeisterst dich für Softwareentwicklung, künstliche Intelligenz und smarte Automatisierungen? Du möchtest nicht nur theoretisch an innovativen Technologien arbeiten, sondern eigene Ideen entwickeln und direkt in die Praxis umsetzen?Dann bist du bei uns genau richtig!\nWir sind ein familiengeführtes Unternehmen mit langjähriger Tradition in der Gesundheitsbranche. Gleichzeitig haben wir große Lust, unsere internen Prozesse mit modernen Technologien weiterzuentwickeln.\n\nDafür suchen wir ein:e engagierte:n Werkstudent:in, der oder die gemeinsam mit uns herausfindet, wie wir KI und Automatisierung sinnvoll einsetzen können und die passenden Lösungen direkt mitentwickelt.\n\nDas erwartet dich bei uns:\n • KI & Automatisierung: Du entwickelst und testest KI-gestützte Anwendungen und Automatisierungen, die unseren Arbeitsalltag einfacher und effizienter machen.\n • Softwareentwicklung: Du unterstützt bei der Entwicklung kleinerer Anwendungen, Tools und technischer Schnittstellen.\n • Prozessoptimierung: Gemeinsam mit unseren Fachabteilungen analysierst du bestehende Abläufe und identifizierst Digitalisierungspotenziale.\n • Eigene Projekte: Du übernimmst Verantwortung für kleinere Digitalisierungsprojekte, von der ersten Idee über den Prototyp bis zur Umsetzung.\n • ERP & Systemintegration: Du unterstützt uns bei der Einführung eines neuen ERP-Systems und der Anbindung bestehender Anwendungen.\n • Datenanalyse: Du hilfst dabei, Daten auszuwerten und daraus konkrete Verbesserungsvorschläge abzuleiten.\n • Zusammenarbeit auf Augenhöhe: Du arbeitest eng mit unserer Geschäftsführung und den Fachabteilungen zusammen und kannst deine eigenen Ideen aktiv einbringen.\n\nDein Profil\n • Du bist eingeschrieben/e Student:in der Informatik, Wirtschaftsinformatik oder eines vergleichbaren Studiengangs.\n • Du hast erste praktische Erfahrungen in der Softwareentwicklung gesammelt, beispielsweise durch eigene Projekte, Praktika oder Werkstudententätigkeiten.\n • Du bringst Programmierkenntnisse mit, idealerweise in Python, JavaScript oder TypeScript.\n • Du interessierst dich für künstliche Intelligenz, insbesondere Large Language Models (LLMs), KI-Tools und Automatisierungsmöglichkeiten.\n • Idealerweise hast du bereits mit APIs, Datenbanken oder Automatisierungstools gearbeitet.\n • Begriffe wie RAG, Vektordatenbanken oder KI-Agenten sind dir vielleicht schon begegnet.\n • Du denkst analytisch, arbeitest strukturiert und hast Freude daran, technische Lösungen für praktische Herausforderungen zu entwickeln.\n • Du arbeitest gerne eigenständig, bist kommunikativ und scheust dich nicht davor, Fragen zu stellen und eigene Ideen einzubringen.\n\nDu musst noch nicht alles können! Viel wichtiger sind uns deine Neugier, dein technisches Verständnis und deine Motivation, gemeinsam mit uns etwas zu bewegen.\n\nWarum wir?Wir wissen, dass ein angenehmes Arbeitsumfeld zu besseren Leistungen führt und sind überzeugt, dass ein Job zu deinem Leben passen soll, nicht umgekehrt:\n • Zuschuss für deine Fahrtkosten\n • Mitarbeiterrabatte in unseren Sanitätshäusern (u.a. zwei Mal im Jahr maßgefertigte Einlagen)\n • Gutscheinsystem (Urban Sports, Tankgutschein uvm.)\n • Direkter Draht zur Geschäftsführung: Kurze Entscheidungswege, offene Kommunikation und die Möglichkeit, eigene Impulse einzubringen.\n • Spannende Technologien: Sammle praktische Erfahrungen mit KI, Automatisierung und modernen Softwarelösungen.\n • Viel Gestaltungsspielraum: Wir befinden uns mitten in der digitalen Weiterentwicklung. Du kannst diesen Prozess aktiv mitgestalten.\n\nÜber unsWir sind ein wachsendes Unternehmen im Bereich Orthopädie und Sanitätsfachhandel. Mit fachlicher Expertise, persönlicher Beratung und individuell angepassten Hilfsmitteln unterstützen wir Menschen dabei, mobil zu bleiben und ihren Alltag selbstbestimmt zu gestalten.Dabei verbinden wir die Erfahrung eines etablierten Gesundheitsunternehmens mit dem Anspruch, uns kontinuierlich weiterzuentwickeln. Wir setzen auf kurze Entscheidungswege, Zusammenarbeit auf Augenhöhe und Mitarbeitende, die Verantwortung übernehmen und etwas bewegen möchten.\nUnser Anspruch: Wir möchten „Magic Moments“ schaffen – besondere Momente, in denen unsere Kundinnen und Kunden spüren, dass wir nicht nur ihre Bedürfnisse verstehen, sondern mit unserer Arbeit einen echten Unterschied machen. Das gilt auch für unsere Mitarbeitenden, die diesen Anspruch jeden Tag mit Leben füllen.",
+  "locations": [
+   {
+    "city": "Fürstenfeldbruck",
+    "region": "BAYERN",
+    "lat": 48.1795771,
+    "lon": 11.2372801
+   }
+  ],
+  "target_probability": 0.82,
+  "main_focus": "ai_automation",
+  "office_presence": "occasional",
+  "presence_confidence": 0.55,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1004032978-S",
+  "title": "Werkstudent (m/w/d) Digitalisierung, KI & Automatisierung",
+  "firma": "ZV Komm. Verkehrssicherheit",
+  "ort": "Amberg, Oberpfalz",
+  "description": "# Werkstudent (m/w/d) Digitalisierung, KI & Automatisierung\n\n**Dein Studium steckt voller Ideen. Unsere Verwaltung voller Möglichkeiten.**\n\nDu siehst einen umständlichen Ablauf und denkst: „Das müsste doch automatisch gehen“? Du probierst mit ChatGPT mehr aus als die nächste Hausarbeit und würdest mit n8n am liebsten gleich einen Workflow bauen? Dann haben wir ab sofort ein paar ziemlich spannende Aufgaben für Dich.\n\nBeim **Zweckverband Kommunale Verkehrssicherheit Oberpfalz in Amberg** unterstützt Du die Geschäftsführung dabei, Verwaltung neu zu denken: digitaler, einfacher und intelligenter. Mit echten Projekten, Raum zum Ausprobieren und Ergebnissen, die Deinen Kolleginnen und Kollegen den Arbeitsalltag erleichtern.\n\n**Wer wir sind**\n\nWir kümmern uns für rund 170 Kommunen um die Verkehrssicherheit. Dahinter stecken viele wiederkehrende Abläufe, große Datenmengen und jede Menge Potenzial für clevere Lösungen. Genau dort setzen wir an: von der Bearbeitung von Ordnungswidrigkeiten bis zu unseren internen Prozessen.\n\n## Unsere Anforderungen\n\n- Du studierst beispielsweise Informatik, Wirtschaftsinformatik, Künstliche Intelligenz, Digital Business oder einen vergleichbaren Studiengang.\n- Du kennst Dich mit Microsoft 365 aus und hast erste praktische Erfahrungen mit KI-Anwendungen und Large Language Models.\n- RPA ist für Dich kein Fremdwort. Tools wie n8n oder Power Automate hast Du vielleicht schon ausprobiert – oder möchtest endlich ein echtes Projekt damit umsetzen.\n- Du interessierst Dich für Cloud-Technologien, Schnittstellen und das Zusammenspiel verschiedener Anwendungen.\n- Du denkst strukturiert, fragst nach und hast den Mut, etwas anzupacken. Dabei gehst Du sorgfältig mit Daten um und behältst im Blick, wer mit Deiner Lösung arbeiten soll.\n\n**Du musst nicht unsere komplette Tool-Liste beherrschen.** Uns interessieren Dein technisches Verständnis, Deine Neugier und Deine Lust, Dich in neue Themen einzuarbeiten. Ein eigenes kleines Projekt kann dabei genauso spannend sein wie eine gute Studienleistung.\n\n## Ihre Aufgaben\n\n**Aus „Das machen wir immer so“ wird „Das geht auch einfacher“.**\n\n- **Digitalisierung mitgestalten:** Du unterstützt die Geschäftsführung dabei, Abläufe zu hinterfragen, Verbesserungen zu entwickeln und praktisch umzusetzen.\n- **Automatisierungen bauen:** Du verbindest Anwendungen, reduzierst manuelle Arbeitsschritte und erprobst Workflows – beispielsweise mit Power Automate, n8n oder RPA.\n- **KI sinnvoll einsetzen:** Du testest, wie uns Large Language Models wie GPT und Anwendungen wie Microsoft Copilot bei konkreten Aufgaben unterstützen können.\n- **Microsoft 365 weiterdenken:** Du hilfst uns, die Möglichkeiten von Microsoft 365, Cloud-Diensten und gegebenenfalls Microsoft Azure besser zu nutzen.\n- **Daten verständlich machen:** Du entwickelst Auswertungen und Dashboards, etwa mit Power BI, die aus Zahlen hilfreiche Entscheidungsgrundlagen machen.\n- **Von der Idee in den Alltag kommen:** Du baust Prototypen, testest sie gemeinsam mit den Beschäftigten und hilfst dabei, funktionierende Lösungen verständlich zu dokumentieren.\n\nMögliche Projekte? Dienst- und Einsatzplanung, digitale Beschaffungsabläufe, Unterstützung bei Tages- und Jahresabschlüssen oder standardisierte Prozesse in der Ordnungswidrigkeitenbearbeitung. Gemeinsam wählen wir aus, wo Du mit Deinen Stärken am meisten bewegen kannst.\n\n## Wir bieten\n\nDu möchtest neben dem Studium praktische Erfahrungen sammeln, eigene Ideen verwirklichen und dabei gutes Geld verdienen? Bei uns kannst du im Rahmen von 4 – 20 Stunden pro Woche austoben – und das für 18 Euro die Stunde!\n\n- **Praxis direkt vor der Tür:** Dein Arbeitsplatz ist in Amberg – ideal, wenn Du hier studierst.\n- **Flexibilität fürs Studium:** Wir stimmen Deine Arbeitszeiten auf Vorlesungen und Prüfungsphasen ab. Arbeiten ist im Büro und im Homeoffice möglich.\n- **Ausstattung, die zu Dir passt:** Du kannst Deine technische Arbeitsausstattung mit auswählen.\n- **Direkten Austausch mit der Geschäftsführung:** Deine Ideen kommen dort an, wo Entscheidungen getroffen werden.\n- **Platz zum Experimentieren:** Du kannst Lösungen ausprobieren, dazulernen und eigene Vorschläge einbringen.\n- **Sichtbare Ergebnisse:** Was Du entwickelst, soll genutzt werden und im Alltag etwas verbessern.\n- **Ein Team mit Fachwissen:** Unsere Beschäftigten kennen die Praxis. Du bringst den frischen technischen Blick mit. Gemeinsam machen wir daraus gute Lösungen.\n\n## Weitere Informationen\n\n**Klingt nach Deinem nächsten Praxisprojekt?**\n\nDann bewirb Dich über unser Stellenportal. Zeig uns gerne, womit Du Dich schon beschäftigt hast: ein Studienprojekt, ein GitHub-Repository, einen selbst gebauten Workflow oder eine Idee, die Du bei uns ausprobieren möchtest.\n\n**Mach aus Deinem Wissen etwas, das funktioniert. Und aus Verwaltung etwas, das weiterkommt.**\n\nBitte reiche Deine aussagekräftigen Bewerbungsunterlagen bis spätestens\n\n**11. DEZEMBER 2026**\n\nüber das Online-Formular ein.\n\nNähere Auskünfte erteilt Dir unsere Personalabteilung unter der Telefonnummer **09621 76916-11**.\n\nInformationen zum Zweckverband findest Du unter www.zv-kvs.de.\n\nKein Anschreiben nötig! Schick uns einfach deinen Lebenslauf und erzähl uns in drei Sätzen, warum du Lust auf Digitalisierung, KI & Automatisierung hast. Ferner benötigen wir noch deine Immatrikulationsbescheinigung.\n\nBei Vorliegen einer Schwerbehinderung ist die Kopie des Schwerbehindertenausweises oder bei einem Grad der Behinderung von weniger als 50 v. H. der Gleichstellungsbescheid nach § 68 Abs. 2 Sozialgesetzbuch IX erforderlich. Schwerbehinderte Bewerber werden bei gleicher Eignung und Berücksichtigung aller Umstände des Einzelfalls bevorzugt berücksichtigt.\n\nDer Zweckverband fördert aktiv die Gleichstellung aller Mitarbeiter. Wir begrüßen deshalb Bewerber, unabhängig von deren kulturellen und sozialen Herkunft, Alter, Religion, Weltanschauung, Behinderung oder sexueller Identität.\n\nWir sichern Dir zu, die von Dir übersandten Daten vertraulich zu behandeln. Im Übrigen dürfen wir auf die Datenschutzerklärung auf unserer Homepage verweisen.\n\n\\*Grafik mit Hilfe von KI erstellt; Bild mit KI nachbearbeitet\n\n## Hinweise zur Bewerbung\n\nBitte bewirb Dich ausschließlich über unser Stellenportal.",
+  "locations": [
+   {
+    "city": "Amberg, Oberpfalz",
+    "region": "BAYERN",
+    "lat": 49.4455715,
+    "lon": 11.8688041
+   }
+  ],
+  "target_probability": 0.74,
+  "main_focus": "ai_automation",
+  "office_presence": "occasional",
+  "presence_confidence": 0.91,
+  "relevance_error": null
+ },
+ {
+  "refnr": "15986-REF300188Y-0f90b83-S",
+  "title": "Werkstudent KI & Digitale Lernplattformen (w/m/div.)",
+  "firma": "Robert Bosch GmbH",
+  "ort": "Ulm, Donau",
+  "description": "Job Title: Werkstudent KI & Digitale Lernplattformen (w/m/div.)\\n\\nJob Description:\n\nIn der Bosch Rexroth Academy entwickeln wir KI-gestützte Tools und digitale Plattformen, die das Lernen sowie Arbeiten im industriellen Umfeld revolutionieren. Dazu gehören KI-Assistenten, digitale Zwillinge unserer Lernfabrik und intelligente Trainingsplattformen für Hydraulik sowie Automatisierung. Du wirst Teil eines kleinen, dynamischen Teams, in dem du direkt an echten Projekten arbeitest.\n\n• Während deiner Werkstudententätigkeit entwickelst und implementierst du innovative KI-Anwendungen, von LLM-basierten Assistenten über Retrieval-Augmented Generation (RAG)-Systeme bis hin zu fortschrittlichen Computer-Vision-Modellen sowie bringst diese vom Prototyp zur produktiven Lösung.\n• Du wirkst bei der Gestaltung unserer digitalen Lernplattformen aktiv mit, indem du neue Features entwickelst – sei es im Frontend, Backend oder als Full-Stack-Entwickler:in, ganz nach deinen individuellen Stärken.\n• Darüber hinaus bist du für die Integration moderner Software in industrielle Systeme und Datenquellen verantwortlich. Dazu realisierst du Schnittstellen über OPC UA, REST-APIs oder Azure Cloud Services und schlägst so die Brücke zwischen IT und OT.\n• Des Weiteren testest, evaluierst und dokumentierst du deine entwickelten Lösungen direkt mit Anwender:innen aus Training sowie Produktion. So stellst du eine herausragende User Experience (UX) sicher und lässt kontinuierliches Feedback einfließen.\n• Nicht zuletzt bringst du eigene Ideen proaktiv ein: Du erkennst Optimierungspotenziale, entwickelst eigenständig Prototypen für bessere Lösungswege und präsentierst diese überzeugend im Team.\n\nQualifications:\n\n• Ausbildung: Studium im Bereich Informatik, Data Science, Elektrotechnik, Mechatronik oder vergleichbar\n• Erfahrungen und Know-how: solide Programmierkenntnisse, z.B. in Python; erste Erfahrungen mit Web-Frameworks (z.B. React) oder AI/ML-Frameworks (z.B. PyTorch) von Vorteil\n• Persönlichkeit und Arbeitsweise: du strukturierst unklare Herausforderungen selbstständig und gibst bei der ersten Fehlermeldung nicht gleich auf; du bist neugierig sowie packst gerne an\n• Arbeitsalltag: teilweise mobiles Arbeiten möglich\n• Begeisterung: Freude daran, eigenen geschriebenen Code im echten Einsatz zu sehen\n• Sprachen: gutes Englisch und Grundkenntnisse in Deutsch\n\nAdditional Information:\n\nBeginn: nach Absprache\nDauer: 12 Monate – 15h/Woche\nArbeitsort: Ulm oder Würzburg möglich\n\nVoraussetzung für die Werkstudententätigkeit ist die Immatrikulation an einer Hochschule. Bitte füge deiner Bewerbung deinen Lebenslauf, deinen aktuellen Notenspiegel, eine aktuelle Immatrikulationsbescheinigung sowie ggf. eine gültige Arbeits- und Aufenthaltserlaubnis bei.\n\nAls global agierendes Unternehmen sind wir gesetzlich verpflichtet, die geltenden EU- und US-(Re-)Exportkontroll- und Sanktionsbestimmungen einzuhalten. Das bedeutet: Auf bestimmten, besonders sensiblen Stellen dürfen wir nur Personen beschäftigen, die eine zusätzliche gesetzliche Prüfung durchlaufen haben. Bei dieser Position handelt es sich um eine solche sensible Stelle. Wir werden dich daher im weiteren Verlauf des Prozesses um weitere, für diese zusätzliche Prüfung erforderliche Angaben bitten. Informationen zur Verarbeitung deiner Daten findest du in unseren Datenschutzhinweisen für den Bewerbungsprozess.\n\nVielfalt und Inklusion sind für uns keine Trends, sondern fest verankert in unserer Unternehmenskultur. Daher freuen wir uns über alle Bewerbungen: unabhängig von Geschlecht, Alter, Behinderung, Religion, ethnischer Herkunft oder sexueller Identität.\n\nDu hast fachliche Fragen zum Job?\nMartin Opitz (Fachabteilung)\n+49 935 2182908\n\nWeitere Informationen zu uns findest du auch auf www.boschrexroth.de/karriere sowie auf unseren Social Media Kanälen, beispielsweise Instagram.\n\nMove with us. Win together.\n\nStreet Address:\n\nLise-Meitner-Straße 2\\n\\n---\\n Video zur Stelle: https://www.youtube.com/watch?v=A5HoNtFi7N8",
+  "locations": [
+   {
+    "city": "Ulm, Donau",
+    "region": "BADEN_WUERTTEMBERG",
+    "lat": 48.3906475,
+    "lon": 9.9558042
+   }
+  ],
+  "target_probability": 0.93,
+  "main_focus": "ai_engineering",
+  "office_presence": "occasional",
+  "presence_confidence": 0.96,
+  "relevance_error": null
+ },
+ {
+  "refnr": "19376-44552790-114-S",
+  "title": "Werkstudent:in Robotics & KI‑Automatisierung",
+  "firma": "HDI AG",
+  "ort": "Hilden",
+  "description": "HDI AG\nDeine Aufgaben\n\n  *  Unterstützung bei der Umsetzung und Weiterentwicklung von Automatisierungsprozessen (RPA & KI‑unterstützte Workflows)\n  *  Mitarbeit bei der Datenaufbereitung, Analyse und Qualitätssicherung (Pflege von Listen, Durchführung von Auswertungen und Fehlerprüfung)\n  *  Begleitung technischer Tests sowie Dokumentation der Ergebnisse\n  *  Unterstützung bei Prozessanalysen, Prozessdesign und Strukturierung der Inputdaten\n  *  Enge Zusammenarbeit mit Fachbereichen zur Klärung von Anforderungen sowie mit dem Automatisierungs‑Team bei der Umsetzung\n  *  Möglichkeit individueller Schwerpunkte, abhängig vom Skillset: z. B. Python‑Skripting, technische Validierungen, Unterstützung bei KI‑Modellen oder Monitoring\n\n\nDein Profil\n\n  *  Laufendes Studium im Bereich Informatik, Wirtschaftsinformatik, Data Science, Mathematik oder in einem vergleichbaren Studiengang\n  *  Grundkenntnisse in Python oder die Bereitschaft, sich schnell in neue Programmiersprachen und Technologien einzuarbeiten \n  *  Ausgeprägtes Interesse an Themen wie Prozessautomatisierung, Datenqualität, Künstliche Intelligenz und modernen, digitalen Workflows\n  *  Analytische, strukturierte und eigenverantwortliche Arbeitsweise\n  *  Zuverlässigkeit und Freude daran, Aufgaben gewissenhaft abzuschließen\n  *  Nice to have: Erfahrung mit RPA‑Tools (z. B. Blue Prism, UiPath), Kenntnisse im Umgang mit Excel/PowerQuery/SQL, Grundverständnis von Geschäftsprozessen\n  *  Sehr gute Deutschkenntnisse in Wort und Schrift (mind. C1)",
+  "locations": [
+   {
+    "city": "Hilden",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.1703281,
+    "lon": 6.9170333
+   }
+  ],
+  "target_probability": 0.53,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1003946149-S",
+  "title": "Werkstudent KI-Anwendungen (15-20 Wochenstunden) (m/w/d)",
+  "firma": "Rechenzentrum Hartmann GmbH & Co. KG",
+  "ort": "Mönchengladbach",
+  "description": "Du kennst dich mit KI-Tools aus und hast Freude daran, Prompts so zu formulieren, dass sie verlässlich funktionieren? Du möchtest mitgestalten, wie unser HR-Service künstliche Intelligenz im Alltag sinnvoll einsetzt, und dabei auch Themen wie Abrechnung und Entgelt im Blick behalten? Dann freuen wir uns auf dich als Werkstudent:in KI-Anwendungen (m/w/d).\n\nKünstliche Intelligenz entfaltet nur dann Wirkung, wenn sie zum Arbeitsalltag passt. Unser HR-Service braucht Lösungen, die Anliegen zuverlässig verstehen, sauber weitergeben und dabei Datenschutz und Informationssicherheit wahren. Du arbeitest an der Schnittstelle zwischen Fachbereich und IT, bringst Anforderungen aus dem Arbeitsalltag ein und sorgst gemeinsam mit unserem KI-Team dafür, dass KI bei uns sicher, nachvollziehbar und praxistauglich eingesetzt wird. Werde Teil eines innovativen, familiären Unternehmens in Mönchengladbach.\n\n## Deine Aufgaben bei uns\n\n- Du entwickelst, testest und verbesserst KI-gestützte Hilfen für typische Anfragen im HR-Service, auch rund um Abrechnung und Entgelt.\n- Du erprobst und konzipierst KI-Anwendungen mit Langdock oder vergleichbaren Werkzeugen, von der ersten Idee bis zum praxistauglichen Einsatz.\n- Du unterstützt dabei, Anliegen im Ticketsystem einfacher zu erfassen, zuzuordnen und zu bearbeiten.\n- Du arbeitest eng mit HR-Service, Fachbereichen und IT zusammen und übersetzt fachliche Anforderungen in verständliche, umsetzbare Lösungen.\n- Du achtest von Beginn an auf Datenschutz und Informationssicherheit, z. B. bei Datenminimierung und der Auswahl geeigneter Informationen.\n- Du dokumentierst Vorgehen und Ergebnisse nachvollziehbar und unterstützt die Qualitätssicherung und Weiterentwicklung.\n- Gemeinsam mit einem KI-Team bist du für den unternehmensweiten Einsatz von KI mitverantwortlich.\n\n## Damit begeisterst du uns\n\n- Du bist eingeschriebene:r Student:in, idealerweise in Informatik, Wirtschaftsinformatik, Wirtschaftswissenschaften, Personalmanagement oder einem vergleichbaren Studiengang.\n- Du hast erste Erfahrung im Umgang mit KI-Werkzeugen und Freude daran, Anfragen so zu formulieren, dass sie verlässliche Ergebnisse liefern.\n- Du hast bereits erste Erfahrungen durch Praktika in einem Unternehmensumfeld gesammelt\n- Du hast ein Grundverständnis für digitale Abläufe und Systeme, Programmierkenntnisse sind von Vorteil, aber keine Voraussetzung.\n- Du hast ein gutes Verständnis für Datenschutz (DSGVO) und Informationssicherheit im Umgang mit KI\n- Du arbeitest strukturiert und sorgfältig und behältst auch bei komplexen Aufgaben den Überblick.\n- Du bist teamfähig, kommunizierst gern mit Fachbereichen und hast Freude daran, Neues auszuprobieren.\n\n**Was dich bei uns erwartet**\n\n- Freie Zeiteinteilung rund um Vorlesungen und Prüfungen\n- Mehr Stunden in der vorlesungsfreien Zeit, weniger in der Klausurphase\n- Möglichkeit, die Bachelor- oder Masterarbeit im Unternehmen zu schreiben\n- Übernahmeperspektive nach dem Studium, auch als Trainee oder Direkteinstieg\n- Bike-Leasing & Corporate Benefits\n- 50 € Sachgutschein zu Geburtstag und Weihnachten\n- Gesundheitsangebote, z. B. ergonomisches Rückencoaching\n- Sommerfest, Neujahrsessen und weitere gemeinsame Events\n- Raum für Dart, Kicker und Tischtennis\n- Hunde willkommen",
+  "locations": [
+   {
+    "city": "Mönchengladbach",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.194178,
+    "lon": 6.4515195
+   }
+  ],
+  "target_probability": 0.73,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12465-1646595-2-S",
+  "title": "Werkstudent (w/m/d) KI-gestützte Software- und Plattformentwicklung",
+  "firma": "Siemens AG",
+  "ort": "Braunschweig",
+  "description": "**Gemeinsam machen wir den Unterschied**\n\n**Siemens Mobility** ist ein eigenständig geführtes Unternehmen der Siemens AG und seit über 160 Jahren ein führender Anbieter im Bereich Mobilität. Zu unserem Kerngeschäft gehören Schienenfahrzeuge, Bahnautomatisierungs- und Elektrifizierungslösungen, schlüsselfertige Systeme sowie die dazugehörigen Serviceleistungen. Wir waren schon immer sehr innovativ, um Reisen schneller, sicherer und komfortabler zu machen. Heute brauchen wir neue Lösungen für neue Herausforderungen wie den Klimawandel und weltweit steigende Bevölkerungszahlen. Das ist es, was uns antreibt. Deshalb gestalten wir Mobilität mit Leidenschaft und sind immer einen Schritt voraus. Durch Digitalisierung machen wir Infrastrukturen intelligent und schaffen Möglichkeiten, die uns nachhaltig und nahtlos von A nach B bringen. Unsere über 40.000 Mitarbeitenden sind Pioniere im Mobilitätswesen, die dabei helfen, die Welt in Bewegung zu halten.\n\n\n**Was trägst Du bei?**\n\nDu möchtest neben dem Studium einen Einblick in ein Entwicklungs- und Plattformteam gewinnen und herausfinden, wie KI sinnvoll für die Entwicklung in großen Organisationen eingesetzt werden kann? In unserem Team arbeitest du an der Weiterentwicklung von Anwendungen und Services im Bereich Softwareentwicklung und KI. Dabei kannst du eigene Ideen einbringen und bekommst viele Gelegenheiten, Dich auch mit KI, DevOps und Cloud-Technologien zu beschäftigen.\n\nHierfür suchen wir einen Werkstudenten (w/m/d) für den Standort Braunschweig und einen Werkstudenten (w/m/d) für den Standort Berlin.\n\n\n- Bei uns entwickelst und pflegst Du Software- und Plattformkomponenten. Dabei arbeitest du hauptsächlich mit Rust oder Python, gegebenenfalls auch mit anderen Sprachen wie Go oder JavaScript.\n- Du unterstützt bei der Konzeption und Umsetzung neuer Funktionen sowie bei der Behebung von Fehlern.\n- Du lernst, Systeme zu entwickeln und KI-Agenten für die Softwareentwicklung zu orchestrieren.\n- Du tauschst Dich im Team über technische Ansätze aus und bringst Verbesserungsvorschläge ein.\n- Je nach Interesse und Projektbedarf wirkst Du an KI-Anwendungen, automatisierten Entwicklungsabläufen oder Cloud-Themen mit.\n\n\n**Was bringst Du mit?**\n\n\n- Du studierst Informatik oder Software-Engineering und kannst uns längerfristig unterstützen.\n- Du hast praktische Erfahrung in der Softwareentwicklung mit Rust oder Python, zum Beispiel durch Projekte, Praktika oder Deine bisherige Arbeit. Alternativ kannst Du sehr gute Kenntnisse in einer anderen Programmiersprache vorweisen.\n- Du hast erste Berührungspunkte mit DevOps-Techniken, zum Beispiel CI/CD, Containerisierung oder Automatisierung gesammelt.\n- Vorteilhaft sind zudem erste Erfahrungen mit den gängigen KI-Anwendungen, etwa mit Machine Learning, Sprachmodellen und KI-APIs.\n- Des Weiteren sind Kenntnisse in Cloud-Technologien, insbesondere im Open-Source-Bereich (z.B. Kubernetes, Docker, GitLab und Terraform/OpenTofu), ein Plus.\n- Gute Deutsch- und sehr gute Englischkenntnisse runden Dein Profil ab.\n\n\n**Was bieten wir Dir?**\n\nInklusion & Vielfalt\n\nBei Siemens Mobility setzen wir uns engagiert für Gerechtigkeit und Gleichberechtigung ein. Vielfalt bereichert unser Team und fördert innovative Lösungen. Wir freuen uns über [Bewerbungen von Menschen mit Behinderung](https://www.siemens.com/de/de/home/unternehmen/jobs/arbeiten-bei-siemens/jobs-ohne-barrieren.html).\n\nPurpose\n\nWir sind Pioniere der Mobilität. Bei uns trägst Du in einem Zukunftsmarkt aktiv zu Verkehrswende und Klimaschutz bei, weil unsere Transportlösungen in aller Welt den CO2-Ausstoß verringern.\n\nMobiles Arbeiten /Remote Working\n\nBei uns hast Du die Möglichkeit, hybrid zu arbeiten. Das bedeutet, dass Du zu einem erheblichen Anteil mobil tätig sein kannst. Dies haben wir durch eine Betriebsvereinbarung offiziell geregelt.\n\nAttraktive Konditionen\n\nBei uns erhältst Du eine attraktive Vergütung. Du startest mit circa 15 € je Stunde und erhältst ab dem 7. Monat circa 19 €.\n\nEine Übersicht über unsere Benefits findest Du [hier](https://new.siemens.com/de/de/unternehmen/jobs/benefits-was-wir-bieten.html).\n\n\n**Wie trittst Du mit uns in Kontakt?**\n\n**www.siemens.de/mobility**\nwenn Du vor Deiner Bewerbung mehr über Siemens Mobility erfahren möchtest.\n[**www.siemens.com/de/de/unternehmen/jobs/faq.html**](http://www.siemens.com/de/de/unternehmen/jobs/faq.html)\nwenn Du Informationen rund um das Thema Bewerbung mittels unseres FAQ’s einholen möchtest.\n**+49 (9131) 17 5243-0**\nwenn Du über unsere Bewerberhotline weitere Fragen zur Stelle klären möchtest.\n[**www.siemens.com/mobility-jobs**](http://www.siemens.com/mobility-jobs)\nwenn Du mehr Informationen zu Jobs & Karriere bei Siemens erhalten möchtest.\n\nWir legen Wert auf Chancengleichheit und freuen uns über [Bewerbungen von Menschen mit Behinderung](https://www.siemens.com/de/de/home/unternehmen/jobs/arbeiten-bei-siemens/jobs-ohne-barrieren.html).\n\nAnsprechpartner für diese Stellenausschreibung ist Frau Christin Hitz.",
+  "locations": [
+   {
+    "city": "Braunschweig",
+    "region": "NIEDERSACHSEN",
+    "lat": 52.2641006,
+    "lon": 10.5232561
+   }
+  ],
+  "target_probability": 0.69,
+  "main_focus": "other",
+  "office_presence": "occasional",
+  "presence_confidence": 0.98,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12811-2356493-S",
+  "title": "Werkstudent (m/w/d) KI & Automatisierung, Waltenhofen",
+  "firma": "Wilhelm Geiger GmbH & Co. KG",
+  "ort": "Waltenhofen, Allgäu",
+  "description": "Geiger bringt Menschen zusammen, die eines verbindet: eine große Leidenschaft für das, was sie tun. Egal, ob am Anfang der Berufslaufbahn oder erfahren. Egal, ob jung oder alt. Egal, ob von weit her oder aus der Familie - bei Geiger ist für Jeden etwas dabei. Wir bieten vielfältige Berufs- und Karrieremöglichkeiten an mehr als 100 Standorten in mehr als 20 verschiedenen Geschäftsfeldern. Aufgaben bei Geiger Unser KI-Team setzt neue Tools, neue Agentensysteme, neue Frameworks und ständig neue Möglichkeiten in den Geschäften von Geiger um. Genau hier kommst du ins Spiel Du beschäftigst dich mit aktuellen Entwicklungen rund um Künstliche Intelligenz, Large Language Models und KI-Agenten und prüfst, welche Technologien für Geiger wirklich relevant sein können Du testest moderne KI-Tools, Agenten-Frameworks und Open-Source-Lösungen wie beispielsweise LangChain, AutoGen, CrewAI, OpenClaw, NemoGuardrails oder vergleichbare neue Technologien Du baust erste Prototypen und kleine Demonstratoren, um neue Ideen praktisch erlebbar zu machen Du bewertest neue Technologien nicht nur technisch, sondern auch mit Blick auf den möglichen Nutzen im Unternehmensalltag Du bereitest deine Erkenntnisse verständlich auf und stellst sie unserem KI- und Automatisierungsteam vor Du bringst eigene Ideen ein und bekommst den Freiraum, neue Ansätze auszuprobieren, auch außerhalb unserer bestehenden Systemlandschaft Darauf freuen wir uns Du bist immatrikulierter Student (m/w/d) im Bereich (Wirtschafts-)Informatik, Data Science, Künstliche Intelligenz oder in einem vergleichbaren Studiengang Du hast großes Interesse an aktuellen KI-Trends, Large Language Models, KI-Agenten und neuen Technologien Du probierst gerne neue Tools aus und möchtest nicht nur theoretisch über KI sprechen, sondern praktisch damit arbeiten Idealerweise hast du erste Kenntnisse in Python, APIs, Automatisierung oder im Umgang mit KI-Frameworks Du arbeitest selbstständig, neugierig und strukturiert Du kannst technische Inhalte verständlich erklären und hast Freude daran, deine Erkenntnisse mit anderen zu teilen Du hast Lust mit deinen Ideen konkrete Impulse für die digitale Transformation zu geben Gute Gründe für Geiger Flexible Arbeitszeiten Mobile Arbeitsplätze Moderne Arbeitsmittel Jetzt mitreißen lassen und bewerben. Noch Fragen?",
+  "locations": [
+   {
+    "city": "Waltenhofen, Allgäu",
+    "region": "BAYERN",
+    "lat": 47.644497,
+    "lon": 10.2919815
+   }
+  ],
+  "target_probability": 0.92,
+  "main_focus": "agentic_ai",
+  "office_presence": "occasional",
+  "presence_confidence": 0.43,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12462-1648388-1-S",
+  "title": "Werkstudent Prozessautomatisierung und KI für ConnectedRide (w/m/x)",
+  "firma": "BMW AG",
+  "ort": "München",
+  "description": "Stellenreferenz: 197309\n\n\nMit unseren Marken BMW, MINI, Rolls-Royce und BMW Motorrad sind wir einer der weltweit führenden Premium-Hersteller von Automobilen sowie Motorrädern und darüber hinaus Anbieter von Premium-Finanz- und Mobilitätsdienstleistungen.\n\n\nEIN GUTES PRAKTIKUM IST PRAKTISCH NIE THEORETISCH.\n\nTEILE DEINE LEIDENSCHAFT.\n\nErfolg ist Teamarbeit. Nur wenn Expert:innen ihr Fachwissen und ihre Begeisterung teilen, entsteht ein Workflow, in dem Ideen fließen. Das nennen wir Innovationskultur. Deshalb geben wir Studierenden bei uns nicht nur die Gelegenheit zum Zuhören, sondern vor allem auch zum Mitreden und Weiterdenken.\n\nUnser Team bei BMW Motorrad ConnectedRide treibt die kontinuierliche Verbesserung der Prozesse rund um unsere ConnectedRide Produkte voran. Ein zentraler Hebel ist dabei die Agentisierung und Automatisierung von End-to-End-Prozessen mit modernen Tools und KI – wir entwickeln uns zunehmend in Richtung AI Native, mit konkreten AI-Native-Setups, Ingest-Flows und dem Betrieb lokaler LLMs. Im Rahmen deines Werkstudiums unterstützt du als aktive Schnittstelle zwischen Fachbereichen und IT und trägst zur engen Zusammenarbeit mit Product Ownern sowie Business- und Operations-Teams bei.\n\n\nWas erwartet dich?\n\n- Du unterstützt bei der Analyse und Optimierung bestehender Prozesse im ConnectedRide-Umfeld.\n- Außerdem wirkst du mit bei der Konzeption und Umsetzung von Agentisierungslösungen (z. B. n8n oder Power Automate) sowie bei konkreten AI-Native-Setups und Ingest-Flows.\n- Darüber hinaus unterstützt du beim Aufsetzen und Betrieb lokaler LLMs im Linux-Umfeld (Self-Hosting).\n- Zudem trägst du zum AI-Native-Resetup von Workflows bei, zum Beispiel bei Genehmigungsprozessen, Reporting und Datenflüssen.\n- Außerdem wirkst du mit bei der Schnittstellenarbeit zwischen Business Development, Operations und Product Ownern.\n- Ergänzend hilfst du bei der Identifikation von Effizienzpotenzialen durch den Einsatz von KI und Automatisierung.\n- Zudem unterstützt du bei der Strukturierung und Dokumentation von Prozessen.\n\n\nWas bringst du mit?\n\n- Studium der (Wirtschafts-)Informatik, BWL mit IT-Bezug oder vergleichbar.\n- Interesse an Digitalisierung, Prozessmanagement und Automatisierung, insbesondere an AI-Native-Ansätzen und Agentisierung statt klassischer Digitalisierung.\n- Erste Erfahrungen mit Tools wie n8n oder Power Automate sowie mit AI-Native-Setups, Ingest-Flows oder lokalen LLMs im Linux-Umfeld von Vorteil.\n- Strukturierte und analytische Vorgehensweise.\n- Verständnis für organisatorische Abläufe und Schnittstellenarbeit.\n- Teamfähigkeit, Eigeninitiative und Anwesenheit vor Ort in München.\n- Sehr gute Deutsch- und Englischkenntnisse.\n\n\nDu bringst Begeisterung für neue Technologien und ein innovatives Umfeld mit? Dann bewirb dich jetzt!\n\n\nWas bieten wir dir?\n\n- Umfassendes Mentoring & Onboarding.\n- Persönliche & fachliche Weiterentwicklung.\n- Flexible Arbeitszeiten.\n- Mobilarbeit.\n- Attraktive & faire Vergütung.\n- Apartments für Studierende (nach Verfügbarkeit & nur am Standort München).\n- Und vieles mehr siehebmw.jobs/waswirbieten  .\n\n\nStartdatum: ab frühestens 01.12.2026\n\nDauer: 12 Monate\n\nArbeitszeit: Teilzeit\n\n\nHilfreiche Tipps zu deiner Bewerbung und dem Bewerbungsprozess findest duhier  .\n\n\nWir bei der BMW Group legen großen Wert auf Gleichbehandlung und Chancengleichheit. Unsere Recruiting-Entscheidungen basieren auf der Persönlichkeit, den Erfahrungen und Fähigkeiten der Bewerber:innen. Mehr dazuhier  .\n\n\nBitte bewirb dich ausschließlich online über unser Karriereportal. Bewerbungen auf anderen Kanälen (insb. E-Mails) können nicht berücksichtigt werden.\n\n\n1",
+  "locations": [
+   {
+    "city": "München",
+    "region": "BAYERN",
+    "lat": 48.1794094,
+    "lon": 11.5532293
+   }
+  ],
+  "target_probability": 0.86,
+  "main_focus": "ai_automation",
+  "office_presence": "weekly",
+  "presence_confidence": 0.39,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12462-1647922-1-S",
+  "title": "Werkstudent Generative KI für Fahrzeugfunktionen (w/m/x)",
+  "firma": "BMW AG",
+  "ort": "München",
+  "description": "Stellenreferenz: 198674\n\n\nMit unseren Marken BMW, MINI, Rolls-Royce und BMW Motorrad sind wir einer der weltweit führenden Premium-Hersteller von Automobilen sowie Motorrädern und darüber hinaus Anbieter von Premium-Finanz- und Mobilitätsdienstleistungen.\n\n\nEIN GUTES PRAKTIKUM IST PRAKTISCH NIE THEORETISCH.\n\nTEILE DEINE LEIDENSCHAFT.\n\nErfolg ist Teamarbeit. Nur wenn Expert:innen ihr Fachwissen und ihre Begeisterung teilen, entsteht ein Workflow, in dem Ideen fließen. Das nennen wir Innovationskultur. Deshalb geben wir Studierenden bei uns nicht nur die Gelegenheit zum Zuhören, sondern vor allem auch zum Mitreden und Weiterdenken.\n\nUnser Team bei der BMW Group revolutioniert die Art, wie Fahrzeuge gesteuert werden. Wir setzen auf virtuelle und innovative Algorithmen wie Generative Künstliche Intelligenz (GenAI) im Fahrzeug, um die digitale Transformation der Automobilindustrie voranzutreiben. Im Rahmen deines Werkstudiums gestaltest du die Zukunft der Mobilität aktiv mit.\n\n\nWas erwartet dich?\n\n- Du unterstützt bei der Gestaltung von Algorithmen für Fahrzeugfunktionen und erhältst Einblick in die Fahrzeugentwicklung.\n- Außerdem wirkst du an einem eigenen Projekt mit und bringst deine Ideen in einem hoch motivierten Team ein, das mit Begeisterung GenAI-Algorithmen entwickelt.\n- Darüber hinaus wirkst du mit in einem internationalen Team und erhältst spannende Aufgaben innerhalb unseres interdisziplinären Projektumfelds.\n- Zudem unterstützt du bei der eigenständigen Bearbeitung von Aufgaben und erhältst regelmäßig Feedback von deinem Mentor.\n\n\nWas bringst du mit?\n\n- Studium der Informatik, Software-Entwicklung oder vergleichbare MINT-Studiengänge (Master oder fortgeschrittenes Bachelor-Studium).\n- Interesse an Fahrzeugen und Motivation, die Mobilität von morgen zu prägen.\n- Fähigkeit zur Strukturierung komplexer Zusammenhänge und Prozesse.\n- Sehr gute Kenntnisse in Python und Erfahrung mit der Implementierung von Generative AI Modellen (LLMs, VLMs).\n- Fundiertes Wissen über gängige KI-Methoden und starkes Interesse am Themenfeld GenAI.\n- Strukturierte Herangehensweise, sicheres Auftreten und sicherer Umgang mit MS Office.\n- Gute Deutsch- und Englischkenntnisse.\n\n\nBringst du Begeisterung für neue Technologien und ein innovatives Umfeld mit? Dann bewirb dich jetzt!\n\n\nWas bieten wir dir?\n\n- Umfassendes Mentoring & Onboarding.\n- Persönliche & fachliche Weiterentwicklung.\n- Flexible Arbeitszeiten.\n- Mobilarbeit.\n- Attraktive & faire Vergütung.\n- Apartments für Studierende (nach Verfügbarkeit & nur am Standort München).\n- Und vieles mehr siehebmw.jobs/waswirbieten  .\n\n\nStartdatum: ab frühestens 23.11.2026\n\nDauer: 12 Monate\n\nArbeitszeit: Teilzeit\n\n\nHilfreiche Tipps zu deiner Bewerbung und dem Bewerbungsprozess findest duhier  .\n\n\nWir bei der BMW Group legen großen Wert auf Gleichbehandlung und Chancengleichheit. Unsere Recruiting-Entscheidungen basieren auf der Persönlichkeit, den Erfahrungen und Fähigkeiten der Bewerber:innen. Mehr dazuhier  .\n\n\nBitte bewirb dich ausschließlich online über unser Karriereportal. Bewerbungen auf anderen Kanälen (insb. E-Mails) können nicht berücksichtigt werden.\n\n\n1",
+  "locations": [
+   {
+    "city": "München",
+    "region": "BAYERN",
+    "lat": 48.1794094,
+    "lon": 11.5532293
+   }
+  ],
+  "target_probability": 0.8,
+  "main_focus": "ai_engineering",
+  "office_presence": "occasional",
+  "presence_confidence": 0.34,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12951-dd7f044e-709a-4c72--S",
+  "title": "Werkstudent (g*) für KI-Agenten & Workflows",
+  "firma": "ARI-Armaturen Albert Richter GmbH & Co. KG",
+  "ort": "Schloß Holte-Stukenbrock",
+  "description": "Werkstudent (g*) für KI-Agenten und Workflows \n\nDu möchtest neben Deinem Studium praktische Erfahrungen mit Künstlicher Intelligenz sammeln und aktiv an der Entwicklung moderner digitaler Lösungen mitwirken? Dann bist Du bei ARI genau richtig!\nDie Produktion von Industrie- und Schwerarmaturen bietet vielfältige Möglichkeiten, technische und kaufmännische Prozesse mithilfe neuer Technologien weiterzuentwickeln. Als Werkstudent (g*) unterstützt Du uns dabei, KI-Agenten zu konzipieren, zu erstellen und in der betrieblichen Praxis zu erproben. Wir sehen uns als solides, mittelständisches Unternehmen, das Tradition und Innovation miteinander verbindet. Für unser Team am Standort Schloß Holte-Stukenbrock suchen wir zum nächstmöglichen Zeitpunkt Unterstützung im Bereich KI-Agenten und Workflows.\nDeine Aufgaben\n✓ Identifikation und Bewertung geeigneter Anwendungsfälle für KI-Agenten\n✓ Unterstützung bei der Konzeption und Erstellung von KI-gestützten Assistenten und automatisierten Arbeitsabläufen\n✓ Aufbereitung und Einbindung von Unternehmenswissen und relevanten Datenquellen\n✓ Erstellung und Optimierung von Prompts sowie Agenten-Workflows\n✓ Durchführung strukturierter Tests und Bewertung der Ergebnisse\n✓ Dokumentation der entwickelten Lösungen und Unterstützung bei deren Einführung\n✓ Austausch mit den beteiligten Fachbereichen und Aufnahme ihrer Anforderungen\n✓ Beobachtung aktueller Entwicklungen im Bereich generativer KI und Ableitung möglicher Einsatzfelder für ARI\n\nDas bringst Du mit\n✓ Laufendes Studium, beispielsweise der Wirtschaftsinformatik, Informatik, des Wirtschaftsingenieurwesens, der Betriebswirtschaftslehre mit digitalem Schwerpunkt oder eines vergleichbaren Studiengangs\n✓ Großes Interesse an Künstlicher Intelligenz, insbesondere an generativer KI und großen Sprachmodellen\n✓ Ausgeprägtes Verständnis für Prozesse und digitale Zusammenhänge\n✓ Erste Erfahrungen mit KI-Tools undAutomatisierungsplattformen\n✓ Grundlegende Kenntnisse zu APIs oder Programmiersprachen wie Python sind von Vorteil, jedoch nicht zwingend erforderlich\n✓ Analytische, strukturierte und selbstständige Arbeitsweise\n✓ Freude daran, neue Technologien auszuprobieren und praktische Lösungen zu entwickeln\n✓ Kommunikationsstärke und Teamfähigkeit\n✓ Gute Deutsch- und Englischkenntnisse\n\nWas wir bieten\n✓ Mitarbeit in jungem, motiviertem Team sowie an zukunftsweisenden KI-Projekten mit direktem Praxisbezug\n✓ Spannende Einblicke in unterschiedliche technische und kaufmännische Unternehmensbereiche\n✓ Freiraum, eigene Ideen einzubringen und neue Technologien auszuprobieren\n✓ Flexible Arbeitszeiten, die sich mit Deinem Studium vereinbaren lassen\n✓ Persönliche und fachliche Weiterentwicklung\n✓ Perspektive für eine weiterführende Zusammenarbeit, beispielsweise im Rahmen einer Abschlussarbeit oder eines späteren Berufseinstiegs",
+  "locations": [
+   {
+    "city": "Schloß Holte-Stukenbrock",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.8910347,
+    "lon": 8.6358082
+   }
+  ],
+  "target_probability": 0.95,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.76,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12465-1653661-1-S",
+  "title": "Werkstudent (w/m/d) für KI-Assistenten & Generative KI in der elektrotechnischen Entwicklung",
+  "firma": "Siemens AG",
+  "ort": "Regensburg",
+  "description": "**Art der Anstellung:** Befristet / Teilzeit; (15-20 Stunden / Woche)\n\n\nTauche als Werkstudent (w/m/d) für KI-Assistenten und Generative KI in der elektrotechnischen Entwicklung am Standort Regensburg in die Welt modernster Technologien ein und gestalte gemeinsam mit uns den R&D-Alltag von morgen! Nutze deine Ideen und dein Know-how, um mit SiemensGPT und smarten Tools innovative KI-Lösungen zu entwickeln, die unsere Ingenieur*innen begeistern.\nWerde Teil unseres Working Student Network – einer Community, die dir Austausch, Unterstützung und wertvolle Kontakte bei Siemens bietet.\n**Verändere die Welt von morgen:**\n- Du unterstützt unsere Entwicklungsingenieur*innen bei der Identifikation und Konzeption praxisnaher KI- und Automatisierungs-Use-Cases für den R&D-Alltag- Anschließend wirkst du bei der prototypischen Umsetzung intelligenter KI-Assistenten, autonomer Workflows und Agenten mit, indem du moderne Entwicklungsframeworks wie Python, APIs oder unsere Enterprise-Plattform SiemensGPT nutzt- Darauf aufbauend evaluierst und erprobst du neue Ansätze wie RAG, Tool-Calling oder automatisierte Datenanalysen und verbesserst bestehende Anwendungen kontinuierlich- Im Rahmen deiner Tätigkeit erhältst du spannende Einblicke in unsere Entwicklungsprozesse und kannst im Labor dein theoretisches Wissen direkt in die Praxis übertragen- Abschließend untersuchst du, wie KI unsere Entwicklungsarbeit gezielt unterstützen und effizienter gestalten kann\n\n**So überzeugst du uns:**\n- **Ausbildung**: Du studierst derzeit erfolgreich Elektrotechnik, technische Informatik, Mechatronik oder einen vergleichbaren ingenieurwissenschaftlichen Studiengang- **Erfahrungen und Kenntnisse**:- Idealerweise hast du bereits praktische Erfahrungen mit generativer KI, Large Language Models (LLMs), Prompt Engineering sowie modernen Konzepten wie KI-Agenten, RAG oder Tool-Integration- Erste Berührungspunkte mit Enterprise-KI-Lösungen (wie SiemensGPT oder Microsoft 365 Copilot) sind ein Plus- Kenntnisse in Python, Datenaufbereitung, APIs oder Automatisierung sind von Vorteil\n\n- **Arbeitsweise**: Du arbeitest strukturiert, lernst schnell und überzeugst durch Teamfähigkeit- **Sprachkenntnisse**: Sehr gute Deutsch- und gute Englischkenntnisse in Wort und Schrift\n\n\nDu bist viel mehr als deine Qualifikationen und wir glauben an das Potential jeder einzelnen Person. Wir freuen uns darauf, dich kennenzulernen!\nBei Siemens sind wir überzeugt: Wer sich wertgeschätzt und zugehörig fühlt, kann das eigene Potenzial voll entwickeln. Deshalb schaffen wir ein inklusives Arbeitsumfeld, in dem jede Person ein Gefühl der Zugehörigkeit erfährt und in dem individuelle Perspektiven und Erfahrungen geschätzt werden. Unser Engagement für Fairness und Respekt gilt für alle Bewerbenden.\nWir legen Wert auf [Chancengleichheit ](https://www.siemens.com/de/de/unternehmen/jobs/arbeiten-bei-siemens/inklusion.html)und freuen uns über Bewerbungen von Menschen mit unterschiedlichen Hintergründen, ausdrücklich auch von Menschen mit Behinderung.\n\n**Über Uns**Stell dir vor, du könntest deine Ideen in die DNA von Gebäuden und Infrastrukturen einfließen lassen!\nWir, das Team von Siemens im Bereich Smart Infrastructure Electrical Products, haben uns zum Ziel gesetzt, modernste Technologien für Gebäude zu entwickeln, die sowohl der Gesellschaft als auch der Umwelt zugutekommen. Klingt das nach einem Plan, den du mit uns verfolgen möchtest?\nMehr Informationen zum Bereich und den Produkten findest du hier: https://www.siemens.com/de/de/unternehmen/themenfelder/smart-infrastructure.html\n\n[www.siemens.de/karriere](https://www.siemens.com/de-de/company/jobs/) – wenn du mehr Informationen zu Jobs & Karriere bei Siemens erhalten möchtest.\n[FAQ ](https://www.siemens.com/de-de/company/jobs/faq/)– wenn du eine Frage zum Thema Bewerbung bei Siemens hast.\nWenn du darüber hinaus noch Fragen hast, wende dich gerne an uns: [www.siemens.de/fragenzurbewerbung](http://www.siemens.com/fragenzurbewerbung/)\n\n#sagworkingstudent",
+  "locations": [
+   {
+    "city": "Regensburg",
+    "region": "BAYERN",
+    "lat": 49.0169021,
+    "lon": 12.0963197
+   }
+  ],
+  "target_probability": 0.95,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "14922-146208-S",
+  "title": "Werkstudent Generative KI – KI Lösungen & Prototypenentwicklung (m/w/d)",
+  "firma": "SGP Schneider Geiwitz & Partner",
+  "ort": "Ulm, Donau",
+  "description": "SGP Schneider Geiwitz & Partner\n\nWerden Sie Teil eines interdisziplinären Teams, das gemeinsam die nachhaltige Weiterentwicklung von Unternehmen gestaltet.\n\nWir suchen engagierte Persönlichkeiten, die Verantwortung übernehmen und die Zukunft aktiv mitprägen wollen. Bei SGP Schneider Geiwitz fördern wir Ihr Potenzial – und schaffen gemeinsam echten Mehrwert. Wir entwickeln KI-gestützte Lösungen auf Basis generativer Modelle und nutzen dafür eine leistungsfähige No-Code/Low-Code-Plattform. Wir suchen eine:n technisch interessierte:n Werkstudent:in, der/die Freude daran hat, Anwendungsfälle in Prototypen zu übersetzen und technische Strukturen aufzubauen (15-20 Stunden pro Woche).\n\nIhre Rolle\n\n- Einarbeitung in unsere No-Code/Low-Code-Plattform\n- Aufbau und Weiterentwicklung von Prototypen für KI-gestützte Anwendungsfälle (z. B. Dokumentensuche, Chatbots, Automatisierungsabläufen)\n- Konfiguration von Datenquellen, Workflows und Integrationen\n- Entwicklung und Optimierung von KI-Workflows und Agenten\n- Automatisierung von Prozessen durch API-Anbindungen und Workflow-Logiken\n- Entwicklung kleiner Python-Skripte zur Erweiterung und Integration von Lösungen\n- Erarbeitung und testen von Prompts für unterschiedliche Anwendungsfälle\n- Qualitätssicherung und iterative Verbesserung von Ergebnissen\n- Abstimmung mit Fachbereichen zur Identifikation und Umsetzung von Anwendungsfällen\n- Vorbereitung von Demos, Präsentationen und einfachen Schulungsformaten\n\nIhre Qualifikation\n\nWerden Sie mit Ihren Qualifikationen Teil eines interdisziplinären Teams, das sich gemeinsam für die nachhaltige Verbesserung von Unternehmen einsetzt.\n\n- Eine interessante und abwechslungsreiche Tätigkeit in einem von interdisziplinärer Zusammenarbeit geprägten Kanzleiverbund\n- Direkte Mitarbeit an einem strategisch wichtigen KI-Projekt\n- Möglichkeit, echte Prototypen und produktionsnahe Lösungen aufzubauen\n- Fachliche Begleitung und starke Lernkurve in KI-Plattformen\n- Gestaltungsspielraum für eigene Ideen\n- Faire Work-Life-Balance durch flexible Arbeitszeiten und eigenverantwortliches Arbeiten\n- Kostenlose Getränke, frische Obstkörbe und Köstlichkeiten unserer Espresso-Bar mit Terrasse zur Donau\n- Gesundheit und Wohlbefinden am Arbeitsplatz und im Privaten durch den EGYM Wellpass und das umfassende Angebot des neuen SGP Campus\n\nUnser Angebot\n\nHier finden Sie alles - eine innovative Teamkultur, kontinuierliche Weiterentwicklung und spürbare Benefits.\n\n- Eine interessante und abwechslungsreiche Tätigkeit in einem von interdisziplinärer Zusammenarbeit geprägten Kanzleiverbund\n- Direkte Mitarbeit an einem strategisch wichtigen KI-Projekt\n- Möglichkeit, echte Prototypen und produktionsnahe Lösungen aufzubauen\n- Fachliche Begleitung und starke Lernkurve in KI-Plattformen\n- Gestaltungsspielraum für eigene Ideen\n- Faire Work-Life-Balance durch flexible Arbeitszeiten und eigenverantwortliches Arbeiten\n- Kostenlose Getränke, frische Obstkörbe und Köstlichkeiten unserer Espresso-Bar mit Terrasse zur Donau\n- Gesundheit und Wohlbefinden am Arbeitsplatz und im Privaten durch den EGYM Wellpass und das umfassende Angebot des neuen SGP Campus",
+  "locations": [
+   {
+    "city": "Ulm, Donau",
+    "region": "BADEN_WUERTTEMBERG",
+    "lat": 48.3919865,
+    "lon": 9.966891
+   }
+  ],
+  "target_probability": 0.96,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "13635-eaa09236_JB5283763-S",
+  "title": "Werkstudent/in AI-Engineering (w/m/d)",
+  "firma": "Stiftung Polytechnische Gesellschaft",
+  "ort": "Frankfurt am Main",
+  "description": "Ihre Aufgaben\n • Unterstützung beim laufenden Betrieb und bei der Weiterentwicklung der cloudbasierten KI-Wissensplattform, insbesondere bei der Integration weiterer Wissensquellen\n • Optimierung der RAG-Pipeline im Hinblick auf Qualität, Zuverlässigkeit und Geschwindigkeit\n • Evaluierung und Weiterentwicklung von KI-Agenten und Integrationen, beispielsweise mit MCP und A2A\n • Entwicklung und Wartung von Backend-APIs und Schnittstellen auf Basis von FastAPI\n\nIhr Profil\n • Laufende Immatrikulation in einem Bachelor- oder Masterstudiengang; die Fachrichtung ist zweitrangig\n • Gute Python-Kenntnisse, idealerweise ergänzt durch Erfahrung mit FastAPI\n • Technisches Grundverständnis von LLMs, RAG-Architekturen, Vektordatenbanken, Prompting sowie KI-Agenten und deren Tool-Nutzung\n • Erfahrung im Umgang mit REST-APIs und Git\n • Grundverständnis von cloudbasierten Systemen und Erfahrung im Umgang mit containerisierten Anwendungen mit Docker oder die Bereitschaft, sich darin einzuarbeiten\n • Strukturierte, selbstständige und verantwortungsbewusste Arbeitsweise\n • Von Vorteil, aber nicht erforderlich: Frontend-Erfahrung mit TypeScript und Kenntnisse in Microsoft SharePoint.\n\nWarum wir?\n • Mitarbeit an einem zukunftsweisenden KI-Projekt mit hoher Praxisrelevanz\n • Einblick in die digitale Transformation einer traditionsreichen Stiftung\n • Flexible Arbeitszeiten, die sich gut mit Ihrem Studium vereinbaren lassen\n\nÜber unsWir, die Stiftung Polytechnische Gesellschaft Frankfurt am Main, sind eine der größten privaten gemeinnützigen Bildungsstiftungen in Deutschland. Seit unserer Gründung 2005 setzen wir uns als Impulsgeber für die Stadtgesellschaft in Frankfurt am Main ein. Wir fördern Bildung und Kompetenzen für den gesellschaftlichen Zusammenhalt in Form von Bürgerengagement, Sprachbildung sowie Demokratie-, kultureller und auch beruflicher Bildung. Zudem begleiten wir junge Menschen auf ihrem Weg in die Welt der Naturwissenschaft und Technik. Programme zur Stärkung des Sozialen und Karitativen runden unser Tätigkeitsspektrum ab. Das übergeordnete Ziel all unserer Programme: Persönlichkeitsentwicklung sowie gesellschaftliche Teilhabe und Teilgabe durch Spitzen- wie Breitenförderung ermöglichen.",
+  "locations": [
+   {
+    "city": "Frankfurt am Main",
+    "region": "HESSEN",
+    "lat": 50.1186835,
+    "lon": 8.639339
+   }
+  ],
+  "target_probability": 0.98,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1003916890-S",
+  "title": "Werkstudent:in AI Solution Architecture & KI-Produktentwicklung (m/w/d)",
+  "firma": "Merentis GmbH",
+  "ort": "Bremen",
+  "description": "*Bremen | 15-20 Stunden / Woche*\n\n**Gestalte KI-Lösungen mit uns von der ersten Idee bis zum Prototypen**\n\nDu beschäftigst dich im Studium mit IT, Softwareentwicklung oder Künstlicher Intelligenz und möchtest nicht nur darüber lesen, sondern erleben, wie daraus echte Lösungen und Produkte entstehen?\n\nDann werde Teil unseres M/Teams und arbeite gemeinsam mit uns an innovativen KI-Lösungen. Bei uns bekommst du die Möglichkeit, moderne Technologien auszuprobieren, eigene Ideen einzubringen und Schritt für Schritt Verantwortung für eigene Themen zu übernehmen.\n\n## Deine Aufgaben\n\n- **AI Solution Architecture:** Du unterstützt uns bei der Konzeption von KI-Lösungen und technischen Architekturen und lernst, wie KI sinnvoll in bestehende Systeme und Prozesse integriert werden kann.\n- **KI-Entwicklung & Prototyping:** Gemeinsam mit dem Team entwickelst du KI-Anwendungen, Proof of Concepts und Demonstratoren und setzt dabei moderne Entwicklungswerkzeuge ein.\n- **Innovation & Technologieevaluierung:** Du beschäftigst dich mit neuen KI-Modellen, Agentensystemen und Frameworks, probierst sie selbst aus und bewertest gemeinsam mit uns mögliche Einsatzbereiche.\n- **Produktmanagement & Projektarbeit:** Du unterstützt bei der Planung und Weiterentwicklung unserer KI-Produkte und übernimmst mit wachsender Erfahrung eigene Aufgaben und Themen.\n- **Consulting & Kundenprojekte:** Du hilfst dabei, Kundenanforderungen zu verstehen und daraus passende Lösungsideen zu entwickeln. Perspektivisch kannst du auch bei Workshops und Präsentationen dabei sein und eigene Themen vorstellen.\n\n## Dein Profil\n\nUns ist nicht wichtig, dass du schon alles kannst. Viel wichtiger ist uns, dass du Lust hast, dich intensiv mit neuen Technologien auseinanderzusetzen und gemeinsam mit uns zu lernen.\n\n- Du studierst in einem **technischen** oder **IT-nahen Studiengang**, zum Beispiel Informatik, Wirtschaftsinformatik, Data Science, KI oder etwas Vergleichbarem.\n- Du hattest bereits erste Berührungspunkte mit **Softwareentwicklung, IT-Systemen** oder **KI-Anwendungen**.\n- Themen wie **LLMs, KI-Agenten** und **KI-gestützte Softwareentwicklung** machen dich neugierig.\n- Du probierst gerne neue Technologien aus und hast Spaß daran, dich selbstständig in neue Themen einzuarbeiten.\n- Du denkst analytisch und möchtest verstehen, wie komplexe Probleme technisch gelöst werden können.\n- Du kannst deine Gedanken und Ideen verständlich vermitteln, vertrittst deine eigene Meinung und bist gleichzeitig offen für Feedback.\n- Du arbeitest gerne im Team und hast Lust, mit wachsender Erfahrung zunehmend Verantwortung zu übernehmen.\n \n**Nice to have aber kein Muss**\n\nVielleicht hast du schon erste Erfahrungen mit **Python, JavaScript oder TypeScript, Git** oder **APIs** gesammelt. Auch Berührungspunkte mit KI-Entwicklungstools wie **Cursor** oder **Claude Code** sowie Themen wie **RAG** oder **KI-Agentensysteme** sind willkommen.\n\n**Das alles ist aber keine Voraussetzung.** Entscheidend sind für uns deine Lernbereitschaft, dein technisches Interesse und deine Motivation, dich weiterzuentwickeln und Verantwortung zu übernehmen.\n\n## Deine Benefits im M/Team\n\n- **Große Entwicklungschancen:** Arbeite in einem technologischen Zukunftsfeld und entwickle dein Know-how gemeinsam mit uns weiter.\n- **Flexible Arbeitszeiten:** Wir stimmen deine Arbeitszeiten so ab, dass sie zu deinem Studium passen.\n- **Remotearbeit:** Je nach Aufgaben und Abstimmung kannst du auch remote arbeiten.\n- **Mobile Hardware:** Du bekommst von uns die technische Ausstattung, die du für deine Arbeit brauchst.\n- **EGYM Wellpass:** Nutze ein vielfältiges Sport- und Fitnessangebot.\n- **SpenditCard:** Freu dich über einen zusätzlichen Benefit für deinen Alltag.",
+  "locations": [
+   {
+    "city": "Bremen",
+    "region": "BREMEN",
+    "lat": 53.082918,
+    "lon": 8.8687125
+   },
+   {
+    "city": "Bremen",
+    "region": "BREMEN",
+    "lat": 53.108964,
+    "lon": 8.8627815
+   }
+  ],
+  "target_probability": 0.86,
+  "main_focus": "ai_engineering",
+  "office_presence": "occasional",
+  "presence_confidence": 0.93,
+  "relevance_error": null
+ },
+ {
+  "refnr": "13635-5205ad40_JB5300978-S",
+  "title": "Werkstudent Automatisierung, KI & Workflows im Enterprise Risk Management (m/w/d)",
+  "firma": "auxmoney",
+  "ort": "Düsseldorf",
+  "description": "Dein neues Team:Du willst verstehen, wie ein modernes FinTech Risiken steuert und gleichzeitig mit Automatisierung und KI echte Prozessverbesserungen bauen? Im Enterprise Risk Management von auxmoney arbeitest Du in unserer GRC-Plattform (OneTrust) an Workflows, Integrationen und smarten, KI-gestützten Abläufen, die Risikomanagement effizienter und transparenter machen.Wir berichten direkt an den CFO und bündeln Themen wie Internes Kontrollsystem, operationelle Risiken, Incidents, Drittparteien sowie wiederkehrende Bestätigungen der Fachbereiche an einem zentralen Ort. Du arbeitest eng mit unserem Team und den Fachbereichen zusammen, übernimmst früh Verantwortung und sorgst dafür, dass Informationen strukturiert erfasst, Aufgaben sauber verteilt und Statusdaten ohne manuelles Nachfassen ins Reporting fließen.\nDas erwartet Dich:\n • Workflows konfigurieren: Du entwickelst Workflows in unserer GRC-Software OneTrust, von der Analyse des Ablaufs bis zur fertigen Konfiguration mit Datenfeldern, Statuslogiken, Verantwortlichkeiten, Eskalationen und automatischen Benachrichtigungen.\n • Systeme integrieren: Du verbindest OneTrust über Schnittstellen und moderne Workflow-Tools mit weiteren Systemen bei auxmoney, zum Beispiel Slack, SharePoint oder Outlook, damit Fachbereiche Statusupdates dort liefern können, wo sie ohnehin arbeiten.\n • Automatisierungen aufbauen: Du identifizierst wiederkehrende Handgriffe und ersetzt sie durch Automatisierungen, die Informationen anfordern, Aufgaben verteilen, Fristen überwachen und Folgeaktivitäten auslösen, etwa bei regelmäßigen Bestätigungen der Fachbereiche oder bei der Überprüfung unserer Dienstleister.\n • KI sinnvoll einsetzen: Du baust mit unseren KI-Bausteinen konkrete Lösungen für das Risikomanagement, zum Beispiel zur Strukturierung von Informationen, zur Vorbereitung von Bewertungen, zum Erkennen fehlender Angaben oder zum Zusammenfassen von Berichten, und achtest dabei auf Nachvollziehbarkeit und Qualität.\n • Qualität absichern: Du entwickelst Testfälle, prüfst Workflow-Logiken und KI-Lösungen vor dem Einsatz und dokumentierst Konfigurationen, Schnittstellen und Abhängigkeiten so, dass andere darauf aufbauen können.\n • Reporting verbessern: Du sorgst dafür, dass Informationen vollständig und strukturiert erfasst werden, und überführst Statusdaten automatisiert in klare Übersichten für Management und Board.\n • Flexibel arbeiten: Du arbeitest flexibel aus dem Homeoffice. Wenn Du in der Nähe von Düsseldorf studierst, triffst Du Dein Team einmal pro Woche im Büro, ansonsten sehen wir uns regelmäßig digital und zu gemeinsamen Team-Tagen vor Ort.\n\nDas bringst Du mit:\n • Immatrikulation und Praxis: Du bist in (Wirtschafts-)Informatik, Data Science, Business Analytics, Wirtschaftswissenschaften oder einem vergleichbaren Studiengang immatrikuliert und hast bereits praktisch mit Software, Automatisierungen oder Daten gearbeitet, zum Beispiel im Studium, im Nebenjob oder in eigenen Projekten.\n • Technisches Verständnis: Du hast Freude daran, neue Software zu verstehen, Workflows zu konfigurieren und technische Zusammenhänge zu durchdringen. Plus: Erfahrung mit Workflow-, Low-Code/No-Code-, Ticket- oder GRC-Systemen.\n • Automatisierung und KI-Mindset: Du möchtest herausfinden, wie KI-Anwendungen und automatisierte Workflows das Risikomanagement verbessern, und hinterfragst Ergebnisse kritisch, statt Dich blind auf Vorschläge zu verlassen.\n • Daten und Schnittstellen: Du denkst in Datenstrukturen und verstehst, wie Systeme über Schnittstellen miteinander sprechen. Plus: erste Kenntnisse in Excel, SQL, APIs oder Prozessmodellierung.\n • Strukturiertes Arbeiten: Du zerlegst komplexe Abläufe in klare Prozessschritte, arbeitest lösungsorientiert und bleibst auch bei vielen Details sorgfältig und zuverlässig.\n • Stakeholder-Kommunikation: Du stimmst Dich gerne mit unterschiedlichen Fachbereichen ab, erklärst technische Sachverhalte verständlich und kommunizierst sicher auf Deutsch und Englisch.\n\nDas bringen wir mit: \n • Flexible Arbeitszeiten : Gestalte Deinen Arbeitstag so, dass er optimal zu Deinem Studium passt – wir unterstützen Deine individuellen Bedürfnisse!\n • Möglichkeit zur Arbeit im Homeoffice : Arbeite dort, wo Du Dich am wohlsten fühlst. Ob im Büro oder von zu Hause – Du entscheidest!\n • Flache Hierarchien : Bei uns wird Teamarbeit großgeschrieben! Du hast direkten Kontakt zu Entscheidungsträgern und kannst Deine Ideen einbringen.\n • Vielfältige Gestaltungs- und Entwicklungsmöglichkeiten : Du hast die Chance, Deine eigenen Projekte zu leiten und Deine Fähigkeiten in einem dynamischen Umfeld weiterzuentwickeln.\n • Zahlreiche bereichsübergreifende Events : Knüpfe wertvolle Kontakte und erlebe unser Team bei spannenden Veranstaltungen und Teamevents.\n • Vergünstigte Mitgliedschaft bei Fitness First oder Urban Sports Club : Bleib fit und gesund – wir fördern Dein Wohlbefinden mit attraktiven Fitnessangeboten!\n • Täglich frisches Obst, endlos Kaffee, Tee und Wasser : Genieße eine gesunde Snack- und Getränkebar, die Dir hilft, energisch durch den Tag zu kommen.\n • Rabatte über Corporate Benefits : Profitiere von exklusiven Angeboten und Rabatten auf zahlreiche Produkte und Dienstleistungen – ein zusätzliches Plus für Deinen Geldbeutel!\n\nSchließe Dich unserem Team an und bewirb Dich noch heute! Vergiss nicht, uns Dein voraussichtliches Ende des Studiums, Deinen gewünschten Stundenlohn sowie Dein nächstmögliches Startdatum mitzuteilen. Wir freuen uns darauf, Deine Bewerbung zu erhalten! Für uns als Arbeitgeber sind Chancengleichheit und Diversität besonders wichtig. Daher freuen wir uns auf Bewerbungen von Müttern, Vätern, Menschen mit Behinderungen und Menschen aus der LGBTQIA+ Community. Bitte teile uns gerne mit, wenn wir z.B. ein geschlechtsneutrales Pronomen verwenden sollen, Du einen barrierefreien Zugang zu unserem Büro benötigst oder wir mehr Zeit für den Bewerbungsprozess einplanen sollen.\n\nÜber unsDu arbeitest leidenschaftlich gern agil und möchtest jede",
+  "locations": [
+   {
+    "city": "Düsseldorf",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.2234468,
+    "lon": 6.7731433
+   }
+  ],
+  "target_probability": 0.76,
+  "main_focus": "ai_automation",
+  "office_presence": "weekly",
+  "presence_confidence": 0.61,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1003971412-S",
+  "title": "Werkstudent (m/w/d) Künstliche Intelligenz & Automatisierung",
+  "firma": "Schlenotronic Computervertriebs GmbH",
+  "ort": "Frankenthal (Pfalz)",
+  "description": "**Über uns**\n\nDie Schlenotronic Computervertriebs GmbH ist seit über 30 Jahren der IT-Partner für mittelständische Unternehmen. Als herstellerunabhängiges Systemhaus übernehmen wir Managed Services, IT-Support, IT-Beschaffung, Microsoft 356, IT-Security und Schulungen, mit persönlichen Ansprechpartnern statt Hotline-Schleifen. Unsere Kunden vertrauen uns seit Jahren und fragen uns jetzt nach KI. Genau hier kommst **DU** ins Spiel.\n\nDu willst KI nicht nur nutzen, sondern ein Unternehmen damit voranbringen? Bei uns arbeitest du direkt mit der Geschäftsführung, gestaltest unsere interne KI-Strategie und baust ein neues Geschäftsfeld für KI-Beratung im Mittelstand auf. Viel Freiraum, echte Verantwortung und eine Vergütung, die mit deinem Erfolg wächst.\n\n**Deine Aufgaben**\n\n- Du findest gemeinsam mit der Geschäftsführung heraus, wo KI und Automatisierung unsere Abläufe besser machen und setzt die Lösungen um.\n- Du baust Dashboards und Kennzahlen-Cockpits als Steuerungstool für die Geschäftsführung.\n- Du entwickelst standardisierte KI-Produkte für Kunden: Setups, Workshops und Beratungspakete, z.B. rund um Microsoft Copilot, ChatGPT, Claude und Automatisierungsplattformen.\n- Du erstellst Demos und Leitfäden, begleitest Kundentermine und berichtest regelmäßig über Ergebnisse.\n\n**Das bringst du mit**\n\n- Eingeschriebenes Studium, z.B. (Wirtschaft-)Informatik, Wirtschaftsingenieurwesen, Data Science oder BWL mit Digitalfokus.\n- Begeisterung für KI und praktische Erfahrung mit KI-Tools, gern aus eigenen Projekten.\n- Erste Erfahrung mit Automatisierung\n- Unternehmerisches Denken, Zuverlässigkeit und Freude an klarer Kommunikation.\n- Sehr gute Deutschkenntnisse, gute Englischkenntnisse.\n\n**Das bieten wir**\n\n- 15 bis 20 € pro Stunde plus erfolgsbasierte Prämien für Projekte und gewonnene Aufträge, nach oben offen.\n- Direkte Zusammenarbeit mit der Geschäftsführung und Verantwortung ab Tag 1.\n- Zugang zu aktuellen KI Tools.\n- Flexible Arbeitszeiten passend zum Semester und hybrides Arbeiten.\n- Klare Perspektive: Übernahme nach dem Studium in eine Schlüsselrolle im KI-Bereich.\n\n**Bewirb dich jetzt!**\n\nSchick uns deinen Lebenslauf und ein paar Sätze, warum KI dein Thema ist. Am meisten überzeugt uns ein Beispiel: ein Projekt, eine Automatisierung oder ein Workflow, den du gebaut hast.",
+  "locations": [
+   {
+    "city": "Frankenthal (Pfalz)",
+    "region": "RHEINLAND_PFALZ",
+    "lat": 49.545675,
+    "lon": 8.3393145
+   }
+  ],
+  "target_probability": 0.58,
+  "main_focus": "ai_automation",
+  "office_presence": "occasional",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12465-1652270-1-S",
+  "title": "Werkstudent (w/m/d) im Bereich Software-/KI-Entwicklung für Business Applikationen",
+  "firma": "Siemens AG",
+  "ort": "Leipzig",
+  "description": "**Art der Anstellung:** Befristet / max. 20 Stunden/Woche\n\nStarte deine Karriere bei Siemens als Werkstudent im Bereich Software- und KI-Entwicklung für Business Applikationen in Leipzig und bringe mit uns innovative KI-Lösungen in die Praxis! Entwickle smarte Tools, sichere die Qualität unserer KI-Agenten und arbeite in einem motivierten Team an der Zukunft der Industrie.\n\nWerde Teil unseres Working Student Network – einer Community, die dir Austausch, Unterstützung und wertvolle Kontakte bei Siemens bietet.\n\n**Verändere die Welt von morgen:**\n\n- Du unterstützt bei der Entwicklung und Dokumentation von Funktionen, mit denen KI-Agenten auf interne Datenbanken und Fertigungssysteme zugreifen können- Anschließend implementierst du MCP-Server (Model Context Protocol), um Daten und Workflows standardisiert für KI-Modelle bereitzustellen- Darauf aufbauend erstellst du Testfälle und Benchmarks, um die Antwortqualität, Zuverlässigkeit und Ausführungsgenauigkeit der Agenten systematisch zu überprüfen- Im Team nutzt du Git und GitLab für Versionsverwaltung, Code-Reviews und die Dokumentation, um einen reibungslosen Entwicklungsprozess sicherzustellen- Du studierst derzeit erfolgreich (Wirtschafts-)Informatik, Software Engineering oder einen vergleichbaren technischen Studiengang an einer deutschen Hochschule\n\n**So überzeugst du uns:**\n\n- **Ausbildung**: Du studierst derzeit erfolgreich (Wirtschafts-)Informatik, Software Engineering oder einen vergleichbaren technischen Studiengang an einer deutschen Hochschule\n-  **Erfahrungen und Kenntnisse**:- Grundlegendes Verständnis von REST-APIs und Datenaustauschformaten wie JSON- Gute Programmierkenntnisse in Python oder TypeScript sowie sicherer Umgang mit Versionsverwaltungssystemen wie Git- Erste praktische Berührungspunkte mit LLM-APIs, Function Calling oder dem Model Context Protocol (MCP) sind von Vorteil\n- **Arbeitsweise**: Du arbeitest strukturiert und analytisch und bringst eine hohe Eigenmotivation mit\n- **Sprachkenntnisse**: Fließende Deutschkenntnisse und gute Englischkenntnisse\n\nDu bist viel mehr als deine Qualifikationen und wir glauben an das Potential jeder einzelnen Person. Wir freuen uns darauf, dich kennenzulernen!\n\nBei Siemens sind wir überzeugt: Wer sich wertgeschätzt und zugehörig fühlt, kann das eigene Potenzial voll entwickeln. Deshalb schaffen wir ein inklusives Arbeitsumfeld, in dem jede Person ein Gefühl der Zugehörigkeit erfährt und in dem individuelle Perspektiven und Erfahrungen geschätzt werden. Unser Engagement für Fairness und Respekt gilt für alle Bewerbenden.\nWir legen Wert auf [Chancengleichheit ](https://www.siemens.com/de/de/unternehmen/jobs/arbeiten-bei-siemens/inklusion.html)und freuen uns über Bewerbungen von Menschen mit unterschiedlichen Hintergründen, ausdrücklich auch von Menschen mit Behinderung.\n\n**Über Uns**\nBist du bereit, die Energiewende voranzutreiben?\n\nUnsere Mission ist es, innovative und nachhaltige Lösungen zu entwickeln, die sowohl Energieeinsparungen ermöglichen als auch den CO₂-Fußabdruck von Gebäuden und Infrastrukturen reduzieren. Deshalb setzen wir bei Siemens im Bereich Smart Infrastructure Electrification & Automation alles daran, eine grünere Zukunft zu gestalten und unsere Lebens- und Arbeitsweise zu revolutionieren.\n\nMehr Informationen zum Bereich und den Produkten findest du hier: https://www.siemens.com/de/de/unternehmen/themenfelder/smart-infrastructure.html\n\n[www.siemens.de/karriere](https://www.siemens.com/de-de/company/jobs/) – wenn du mehr Informationen zu Jobs & Karriere bei Siemens erhalten möchtest.\n\n[FAQ ](https://www.siemens.com/de-de/company/jobs/faq/)– wenn du eine Frage zum Thema Bewerbung bei Siemens hast.\n\nWenn du darüber hinaus noch Fragen hast, wende dich gerne an uns: [www.siemens.de/fragenzurbewerbung ](http://www.siemens.com/fragenzurbewerbung/)\n\n#sagworkingstudent",
+  "locations": [
+   {
+    "city": "Leipzig",
+    "region": "SACHSEN",
+    "lat": 51.3318741,
+    "lon": 12.3925069
+   }
+  ],
+  "target_probability": 0.95,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12811-2372733-S",
+  "title": "Werkstudent (m/w/d) KI-Automatisierung, Prof. Schumann GmbH",
+  "firma": "SCHUMANN DE",
+  "ort": "Göttingen",
+  "description": "SCHUMANN entwickelt seit über 25 Jahren Softwarelösungen für das digitale Kreditrisikomanagement und beschäftigt heute über 230 Mitarbeitende. Für unsere Verwaltungs- und Supportbereichen suchen wir jemanden, der die effektive Nutzung von KI stärkt. Du gehst aktiv auf Menschen zu, hörst zu, verstehst die Arbeitsabläufe, identifizierst Wiederholaufgaben und manueller Aufwand - und baust dann eigenständig KI-Agenten und Automatisierungen, die den Arbeitsalltag erleichtern. Danach prüfst du gemeinsam mit den Anwendern, ob die gewünschte Erleichterung tatsächlich eintritt und justierst im Zweifel nach. All das tust du mit Unterstützung unserer Softwareentwickler, die sich darauf Fokussieren KI in unserem Produkt und bei der Softwareentwicklung bestmöglich zu integrieren.  In Göttingen für 15 - 20 Stunden pro Woche. Deine Aufgaben Use-Case-Discovery: Du führst Gespräche mit Kolleginnen und Kollegen aus Controlling, HR, Verwaltung und Sekretariat, machst dir Workflow-Probleme greifbar und identifizierst Automatisierungspotenzial. Beratung & Aufbereitung: Du erklärst komplexe KI-Konzepte adressatengerecht für Nicht-IT-ler - verständlich, ohne Fachchinesisch, mit Fokus auf konkreten Mehrwert. Agenten-Entwicklung: Du baust eigenständig KI-Agenten und Automatisierungsworkflows, erprobst diese und iterierst auf Basis von Nutzerfeedback. Nutzervalidierung: Du prüfst mit den Anwendern vor Ort, ob die gewünschte Arbeitserleichterung eintritt, und optimierst nach. Lokale Einrichtung: Du hilfst bei der lokalen Einrichtung von Tools und Workflows auf den Geräten der Nutzenden. Schulungen: Wenn du Lust hast hältst du Schulungen für kleinere Gruppen. Dein Profil Proaktive Kontaktfreude: Du hast keine Scheu, auf Kolleginnen und Kollegen zuzugehen, die du nicht kennst, und fragst nach ihren Herausforderungen und kannst komplexe Sachverhalte so erklären, dass sie jeder versteht. KI-Begeisterung & erste Praxis: Du liebst KI-Themen und hast selbst bereits erste Workflows und Automatisierungen erprobt - privat, im Studium oder in einem vorherigen Job. Du weißt, was ein Agent ist, was Prompting bedeutet und wo die Grenzen liegen. Selbstständiges Arbeiten: Du strukturierst dich selbst, denkst voraus und packst an. Technisches Grundverständnis: Du kennst dich mit lokalen IT-Umgebungen soweit aus, dass du Nutzern bei der Einrichtung von Tools helfen kannst. Studium: Du bist eingeschriebene*r Student*in, idealerweise in den Bereichen Wirtschaftsinformatik oder Informatik. Auch Mathematik, BWL oder vergleichbare Studiengänge sind spannend, wenn du Erfahrung mit KI mitbringst. Ort und Zeit: du arbeitest bei uns Vorort in Göttingen und möchtest ca. 15 - 20 Stunden pro Woche arbeiten. Unser Angebot Die möglichkeit mit Unterstützung und Förderung Verantwortung zu übernehmen und die perspektive auf eine Festanstellung nach dem Studium. Einen auf dich zugeschnittenen Einarbeitungsplan und ein motiviertes Team, dass dich herzlich aufnimmt Individuell abgestimmte, flexible Arbeitszeiten für die optimale Vereinbarkeit von Privatleben, Studium und Werkstudententätigkeit Ein eigener modern eingerichteter, ergonomischer Arbeitsplatz in unmittelbarer Nähe zur Uni Göttingen Getränke, Snacks und ausreichend Parkplätze stehen für dich in unseren Offices bereit Sommerfeste, After Work-Events, Betriebsportgruppen, Grillen auf der Dachterrasse und gemeinsames Kochen in unserer großen Küche Kontakt Du hast vorab Fragen zur Position? Ruf mich gerne an. Wenn ich nicht direkt erreichbar bin, melde ich mich zeitnah zurück. Ich freue mich auf deine Bewerbung über unser Portal. Janntje Quathamer HR Management 0551 383 15 600",
+  "locations": [
+   {
+    "city": "Göttingen",
+    "region": "NIEDERSACHSEN",
+    "lat": 51.54282,
+    "lon": 9.929403
+   }
+  ],
+  "target_probability": 0.93,
+  "main_focus": "ai_automation",
+  "office_presence": "weekly",
+  "presence_confidence": 0.96,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12465-1647590-1-S",
+  "title": "Werkstudent (w/m/d) Informatik mit Schwerpunkt Künstliche Intelligenz (KI) und EHS-Digitalisierung",
+  "firma": "Siemens AG",
+  "ort": "Wegberg",
+  "description": "**Gemeinsam machen wir den Unterschied**\n\n**Siemens Mobility** ist ein eigenständig geführtes Unternehmen der Siemens AG und seit über 160 Jahren ein führender Anbieter im Bereich Mobilität. Zu unserem Kerngeschäft gehören Schienenfahrzeuge, Bahnautomatisierungs- und Elektrifizierungslösungen, schlüsselfertige Systeme sowie die dazugehörigen Serviceleistungen. Wir waren schon immer sehr innovativ, um Reisen schneller, sicherer und komfortabler zu machen. Heute brauchen wir neue Lösungen für neue Herausforderungen wie den Klimawandel und weltweit steigende Bevölkerungszahlen. Das ist es, was uns antreibt. Deshalb gestalten wir Mobilität mit Leidenschaft und sind immer einen Schritt voraus. Durch Digitalisierung machen wir Infrastrukturen intelligent und schaffen Möglichkeiten, die uns nachhaltig und nahtlos von A nach B bringen. Unsere über 40.000 Mitarbeitenden sind Pioniere im Mobilitätswesen, die dabei helfen, die Welt in Bewegung zu halten.\n\n\n**Was trägst Du bei?**\n\nZur Unterstützung unseres Teams im Bereich Environment, Health & Safety (EHS) suchen wir ab sofort einen motivierten Werkstudenten (m/w/d) Informatik mit Schwerpunkt Künstliche Intelligenz. Du unterstützt die Digitalisierung und Automatisierung von EHS-, Nachhaltigkeits- und Compliance-Prozessen und arbeitest an innovativen KI-Anwendungen im industriellen Umfeld.\n\n\n- Hierbei bist Du beteiligt an der Entwicklung und der Optimierung von KI- und Machine-Learning-Anwendungen.\n- Du hilfst bei der Analyse, der Aufbereitung und der Visualisierung von Daten aus EHS- und Nachhaltigkeitsprozessen (Power BI).\n- Du entwickelst Prototypen zur Automatisierung von Reporting-, Dokumentations- und Compliance-Aufgaben (Power Automate).\n- Du unterstützt bei der Einführung von KI-Lösungen im Bereich Arbeitssicherheit, Umweltschutz und Nachhaltigkeit (Dify).\n- Hierbei nutzt Du moderne Tools für Datenanalyse, Large Language Models (LLMs) und Prompt Engineering.\n\n\n**Was bringst Du mit?**\n\n\n- Du studierst in einem fortgeschrittenen Semester Informatik, Data Science oder Wirtschaftsinformatik und stehst uns längerfristig für circa 20h/Woche zur Verfügung.\n- Du bist fit im Umgang mit den gängigen MS-Office-Anwendungen, insbesondere auch in Power BI und Power Automate.\n- Zudem hast Du gute Kenntnisse in KI-Frameworks, in Datenbanken und in der Datenanalyse.\n- Du verfügst über gute Kenntnisse in Python oder einer ähnlichen Programmiersprache.\n- Sehr gute Deutsch- und gute Englischkenntnisse runden Dein Profil ab.\n\n\n**Was bieten wir Dir?**\n\nInklusion & Vielfalt\n\nBei Siemens Mobility setzen wir uns engagiert für Gerechtigkeit und Gleichberechtigung ein. Vielfalt bereichert unser Team und fördert innovative Lösungen. Wir freuen uns über [Bewerbungen von Menschen mit Behinderung](https://www.siemens.com/de/de/home/unternehmen/jobs/arbeiten-bei-siemens/jobs-ohne-barrieren.html).\n\nPurpose\n\nWir sind Pioniere der Mobilität. Bei uns trägst Du in einem Zukunftsmarkt aktiv zu Verkehrswende und Klimaschutz bei, weil unsere Transportlösungen in aller Welt den CO2-Ausstoß verringern.\n\nMobiles Arbeiten /Remote Working\n\nBei uns hast Du die Möglichkeit, hybrid zu arbeiten. Das bedeutet, dass Du zu einem erheblichen Anteil mobil tätig sein kannst. Dies haben wir durch eine Betriebsvereinbarung offiziell geregelt.\n\nAttraktive Konditionen\n\nBei uns erhältst Du eine attraktive Vergütung. Du startest mit circa 15 € je Stunde und erhältst ab dem 7. Monat circa 19 €.\n\nEine Übersicht über unsere Benefits findest Du [hier](https://new.siemens.com/de/de/unternehmen/jobs/benefits-was-wir-bieten.html).\n\n\n**Wie trittst Du mit uns in Kontakt?**\n\n**www.siemens.de/mobility**\nwenn Du vor Deiner Bewerbung mehr über Siemens Mobility erfahren möchtest.\n[**www.siemens.com/de/de/unternehmen/jobs/faq.html**](http://www.siemens.com/de/de/unternehmen/jobs/faq.html)\nwenn Du Informationen rund um das Thema Bewerbung mittels unseres FAQ’s einholen möchtest.\n**+49 (9131) 17 5243-0**\nwenn Du über unsere Bewerberhotline weitere Fragen zur Stelle klären möchtest.\n[**www.siemens.com/mobility-jobs**](http://www.siemens.com/mobility-jobs)\nwenn Du mehr Informationen zu Jobs & Karriere bei Siemens erhalten möchtest.\n\nWir legen Wert auf Chancengleichheit und freuen uns über [Bewerbungen von Menschen mit Behinderung](https://www.siemens.com/de/de/home/unternehmen/jobs/arbeiten-bei-siemens/jobs-ohne-barrieren.html).\n\nAnsprechpartner für diese Stellenausschreibung ist Frau Christin Hitz.",
+  "locations": [
+   {
+    "city": "Wegberg",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.1411604,
+    "lon": 6.2575366
+   },
+   {
+    "city": "Erlangen",
+    "region": "BAYERN",
+    "lat": 49.5880258,
+    "lon": 11.0123432
+   },
+   {
+    "city": "Braunschweig",
+    "region": "NIEDERSACHSEN",
+    "lat": 52.2641006,
+    "lon": 10.5232561
+   }
+  ],
+  "target_probability": 0.75,
+  "main_focus": "ai_automation",
+  "office_presence": "occasional",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12951-23ae1766-dfde-4b1a--S",
+  "title": "Werkstudent KI-Entwicklung für Multi-Agenten-Systeme in der Triebwerkserprobung (all genders)",
+  "firma": "MTU Aero Engines AG",
+  "ort": "München",
+  "description": "Wir sind über 14.000. An 20 Standorten weltweit. Jedes dritte Flugzeug fliegt mit unserer Technologie.Immer effizienter, leiser, nachhaltiger. Wir gestalten die Zukunft der Luftfahrt. Was wir noch brauchen? Dich.\nIn der Abteilung Testing und Validation für Luftfahrtantriebe validieren wir die Triebwerke der nächsten Generation. Bei einem Testlauf entstehen tausende Datenströme pro Sekunde. Um diese Komplexität zu beherrschen, setzen wir auf Agentic AI. Wir entwickeln ein System aus spezialisierten KI-Agenten, die unsere Ingenieure dabei unterstützen auf vorhandenes Wissen zuzugreifen, Testdaten zu analysieren und die Fehlersuche zu erleichtern.STARKE AUFGABEN✓ \nEntwicklung und Implementierung von Multi-Agenten-Workflows (z. B. mit LangGraph oder LangChain) zur Übernahme spezifischer Rollen innerhalb des Testing-Prozesses✓ Konzeption und Entwicklung von Schnittstellen zur Anbindung von Testdatenbanken, Dokumentenmanagementsystemen sowie Spezifikationen und Konfigurationen✓ Evaluierung und Integration lokal betriebener Large Language Models unter Berücksichtigung von Datenschutz, Informationssicherheit, Leistungsfähigkeit und Betriebsanforderungen✓ Optimierung der agentenbasierten Entscheidungslogik zur Analyse komplexer physikalischer Zusammenhänge sowie zur Entwicklung logisch nachvollziehbarer Begründungen✓ Konzeption und Aufbau von Benchmarks zur Sicherstellung der Präzision, Zuverlässigkeit und Nachvollziehbarkeit der Agentenergebnisse in einer sicherheitskritischen Luftfahrtumgebung\nBESTE VORAUSSETZUNGEN✓ Studium in Informatik, Luft- und Raumfahrttechnik, Maschinenbaus, Physik oder einer vergleichbaren Studienrichtung✓ Sehr gute Kenntnisse in Python sowie idealerweise praktische Erfahrung mit asynchroner Programmierung, KI-Frameworks (z. B. LangChain, MCP, OpenAI API) und Linux-Umgebungen✓ Hohe Affinität zur Luftfahrttechnik sowie ausgeprägtes Interesse an der Anwendung künstlicher Intelligenz zur Lösung physikalischer Problemstellungen✓ Strukturierte und analytische Arbeitsweise sowie Begeisterung für die Auseinandersetzung mit aktuellen Forschungspublikationen und deren Überführung in funktionsfähige Implementierungen✓ Sehr gute Deutsch- und Englischkenntnisse\nAUSGEZEICHNETES UMFELD✓ Einblicke in die Luftfahrtbranche und Jobs mit Verantwortung✓ Teamspirit u.a. durch Studi-Netzwerk und Events✓ Mentoring und individuelle Betreuung✓ Flexible Arbeitszeitmodelle mit mobilem Arbeiten✓ Kantine, Cafébar und Verkaufsshops✓ Sportkooperation mit EGYM Wellpass und Betriebssportgruppen✓ Top-Anbindung durch Pendlerbus, Parkhaus, E-Ladestation\nStartklar?\nDann gib Deiner Bewerbung Schub und schick uns Deine Unterlagen (Lebenslauf, Notenübersicht der Hochschule, Schulabschlusszeugnis sowie eine aktuelle Immatrikulation) online. Gleich jetzt, gleich hier.\nWir freuen uns auf Dich!",
+  "locations": [
+   {
+    "city": "München",
+    "region": "BAYERN",
+    "lat": 48.2168132,
+    "lon": 11.5147165
+   }
+  ],
+  "target_probability": 0.98,
+  "main_focus": "agentic_ai",
+  "office_presence": "occasional",
+  "presence_confidence": 0.77,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1003935940-S",
+  "title": "Werkstudent (m/w/d) Künstliche Intelligenz (KI), Data Engineering & Digitalisierung / Student/in",
+  "firma": "EURO-LOCKS GMBH",
+  "ort": "Sulzbach, Saar",
+  "description": "Wir sind einer der führenden Hersteller und Entwickler von mechanischen und elektronischen Schließsystemen in Europa und gehören zur traditionsreichen Lowe & Fletcher Group, welche 1889 gegründet wurde und sich auch heute noch in Familienhand befindet. Wir entwickeln und produzieren mit hoher Fertigungstiefe ca. 80 Millionen Schlösser und elektronische Schließsysteme im Jahr an mehreren Standorten Europas, u. a. in Deutschland. Unsere weltweiten Kunden in der Möbelindustrie, Automobilzulieferer, Hersteller von Post- und Paketfachanlagen sowie weiteren Branchen schätzen unsere Qualität, Zuverlässigkeit und Innovationfähigkeit.\n\nWir besetzen folgende Position an unserem Standort Sulzbach in Teilzeit:\n\n**Werkstudent (m/w/d)**\n**Künstliche Intelligenz (KI), Data Engineering & Digitalisierung**\n\nSie berichten an die Vertriebsleitung, Marketingabteilung und arbeiten auch eng mit anderen Funktionen des Standortes zusammen.\n\nZu den wesentlichen Aufgaben gehören:\n\n- Konzeption und Aufbau einer strukturierten Zielkundendatenbank für Deutschland, Österreich und die Schweiz\n- Identifikation und Recherche relevanter Unternehmen, Branchen und Marktsegmente\n- Entwicklung automatisierter Prozesse zur Erfassung, Strukturierung und Aktualisierung von Unternehmensdaten\n- Einsatz von KI zur Auswertung, Segmentierung und Priorisierung potenzieller Kunden sowie Entwicklung und Erprobung KI-basierter Lösungen zur Unternehmensrecherche und Datenanalyse\n- Entwicklung eines möglichst automatisierten Systems, das neue potenzielle Geschäftskunden kontinuierlich identifiziert\n- Zusammenführung unterschiedlicher Datenquellen und Sicherstellung einer hohen Datenqualität\n- Berücksichtigung datenschutzrechtlicher und rechtlicher Anforderungen bei der Datenerhebung und -verarbeitung\n- Einsatz moderner KI-Technologien, APIs und Automatisierungstools\n- Optimierung bestehender Abläufe durch intelligente Datenverarbeitung\n- Möglichkeit bei weiteren Digitalisierungsprojekten mitzuwirken und eigene Ideen einzubringen.\n\nDie folgenden Qualifikationen und Erfahrungen bringen Sie idealerweise mit:\n\n- Laufendes Studium der Informatik, Wirtschaftsinformatik, Künstlichen Intelligenz, Data Science oder eines vergleichbaren Studiengangs\n- Idealerweise Spezialisierung oder großes Interesse an KI und Machine Learning\n- Erste Kenntnisse in Datenbanken (z. B. SQL, PostgreSQL) und Datenverarbeitung\n- Grundkenntnisse in Python oder vergleichbaren Programmiersprachen\n- Interesse an APIs, Web Scraping, Datenautomatisierung und modernen KI-Tools\n- Analytisches Denken und Freude daran, komplexe Aufgaben strukturiert zu lösen\n- Eigenständige, zuverlässige und ergebnisorientierte Arbeitsweise\n\n Wir bieten Ihnen:\n\n- Eine spannende und anspruchsvolle Aufgabe mit erheblichem Potenzial zur persönlichen Weiterentwicklung in unserer wachstumsorientierten Gruppe\n- Eine attraktive Möglichkeit als Mitglied eines dynamischen Teams in einem global agierenden Unternehmen\n- Optimale Vereinbarkeit mit Ihrem Studium durch flexible Zeiteinteilung\n- Homeoffice / Remote-Arbeit: Ortsunabhängiges Arbeiten möglich\n- Übernimm die technische Verantwortung für ein spannendes Datenbank- und KI-Projekt\n- Entwickle Lösungen, die direkt im Unternehmen eingesetzt werden\n- Wähle geeignete Technologien und bringe deine eigenen Ideen ein\n- Lerne die Einsatzmöglichkeiten von KI und Digitalisierung in einem Industrieunternehmen kennen\n- Möglichkeit zur weiteren Zusammenarbeit und persönlichen Entwicklung\n\nWenn Sie sich von den oben beschriebenen Aufgaben angesprochen fühlen und über die geforderten Qualifikationen und Erfahrungen verfügen, freuen wir uns über Ihre Bewerbung\n\n(Motivationsschreiben, Lebenslauf, Zeugnisse).\n\nDiese richten Sie bitte an unsere Personalabteilung, z. Hd. Herrn Björn Lenhof.\n\nDie Bewerbungsfrist läuft bis zum 30.11.2026.\n\nEURO-LOCKS Sicherheitseinrichtungen GmbH\n\nPersonalabteilung\n\nBjörn Lenhof\n\nAm Bruchwald 22                                           Tel.:    +49 (0)6897-9072-16/27\n\nD-66280 Sulzbach                                          E-Mail: personalwesen@euro-locks.de",
+  "locations": [
+   {
+    "city": "Sulzbach, Saar",
+    "region": "SAARLAND",
+    "lat": 49.289616,
+    "lon": 7.0830765
+   }
+  ],
+  "target_probability": 0.77,
+  "main_focus": "other",
+  "office_presence": "remote",
+  "presence_confidence": 0.89,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12465-1654131-1-S",
+  "title": "Werkstudent (w/m/d) AI Automation",
+  "firma": "Siemens AG",
+  "ort": "Karlsruhe, Baden",
+  "description": "**Art der Anstellung:** Befristet / max. 20 Stunden/Woche\nStarte als Werkstudent AI Automation (w/m/d) in Karlsruhe durch und tauche ein in die faszinierende Welt von Computer Vision, Robotik und echten Labor-Setups – deine Ideen und Neugier sind bei uns gefragt! Werde Teil unseres Teams und gestalte die Zukunft der AI-Automatisierung aktiv mit.\nWerde Teil unseres Working Student Network – einer Community, die dir Austausch, Unterstützung und wertvolle Kontakte bei Siemens bietet.\n**Verändere die Welt von morgen:**\n- Du validierst, bereinigst und labelst Computer-Vision-Datensätze, um die Grundlage für eine zuverlässige KI-Automatisierung zu schaffen- Anschließend testest und evaluierst du systematisch unsere AI-Automatisierungstools, wobei du Optimierungspotenziale identifizierst- Daraufhin unterstützt du das Team bei Frontend- und Backend-Verbesserungen unserer Tools, indem du deine technischen Kenntnisse einbringst- Im weiteren Verlauf führst du kleinere Forschungs- und Entwicklungsaufgaben im Bereich Computer Vision und Robotik durch- Abschließend erhältst du praxisnahe Einblicke in MLOps und agile Softwareentwicklung, indem du bei Laborinfrastruktur, Testnetzwerken und Hardware-Deployments für CV-Projekte mitwirkst\n\n**So überzeugst du uns:**\n- **Ausbildung**: Du studierst derzeit erfolgreich Informatik, Robotik, Elektrotechnik oder einen vergleichbaren Studiengang- **Erfahrungen und Kenntnisse**:- Du hast Interesse und eventuell erste Kenntnisse in den Bereichen Computer Vision, Künstliche Intelligenz und Robotik- Du bist idealerweise vertraut mit gängigen Programmiersprachen wie Python oder C++- Du hast bestenfalls Erfahrung im Umgang mit Datenvalidierung, Labeling und Testing von Softwaretools\n\n- **Arbeitsweise**: Du überzeugst durch eine strukturierte, eigenständige und genaue Arbeitsweise- **Sprachkenntnisse**: Du verfügst über fließende Deutsch- und Englischkenntnisse (mindestens B2)\n\n\nDu bist viel mehr als deine Qualifikationen und wir glauben an das Potential jeder einzelnen Person. Wir freuen uns darauf, dich kennenzulernen!\nBei Siemens sind wir überzeugt: Wer sich wertgeschätzt und zugehörig fühlt, kann das eigene Potenzial voll entwickeln. Deshalb schaffen wir ein inklusives Arbeitsumfeld, in dem jede Person ein Gefühl der Zugehörigkeit erfährt und in dem individuelle Perspektiven und Erfahrungen geschätzt werden. Unser Engagement für Fairness und Respekt gilt für alle Bewerbenden.\nWir legen Wert auf [Chancengleichheit ](https://www.siemens.com/de/de/unternehmen/jobs/arbeiten-bei-siemens/inklusion.html)und freuen uns über Bewerbungen von Menschen mit unterschiedlichen Hintergründen, ausdrücklich auch von Menschen mit Behinderung. Bei gleicher Qualifikation werden schwerbehinderte und gleichgestellte Bewerberinnen und Bewerber bevorzugt berücksichtigt.\n\n**Über Uns**Wir entwickeln Netzwerke, die unsere Städte schlauer mit Licht und Wärme versorgen und kennen uns in Sachen Automatisierung und Digitalisierung in der Prozess- und Fertigungsindustrie bestens aus. Dafür und für viele weitere Zukunftsprojekte brauchen wir kluge Köpfe, die ihr Können und ihre Kreativität aktiv einbringen. Menschen wie dich! Hilf uns dabei, die spannendsten Herausforderungen gemeinsam anzugehen und umzusetzen, worauf es ankommt. Was wir dir bieten, ist die Chance, wirklich etwas zu bewegen. Also worauf warten? Mach mit uns den nächsten Schritt in deiner Karriere!\n\n[www.siemens.de/karriere](https://www.siemens.com/de-de/company/jobs/) – wenn du mehr Informationen zu Jobs & Karriere bei Siemens erhalten möchtest.\n[FAQ ](https://www.siemens.com/de-de/company/jobs/faq/)– wenn du eine Frage zum Thema Bewerbung bei Siemens hast.\nWenn du darüber hinaus noch Fragen hast, wende dich gerne an uns: [www.siemens.de/fragenzurbewerbung](http://www.siemens.com/fragenzurbewerbung/)\n\n#sagworkingstudent",
+  "locations": [
+   {
+    "city": "Karlsruhe, Baden",
+    "region": "BADEN_WUERTTEMBERG",
+    "lat": 49.0238672,
+    "lon": 8.4248419
+   }
+  ],
+  "target_probability": 0.74,
+  "main_focus": "other",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "16604-976977-008-S",
+  "title": "Werkstudent AI Platform Builder",
+  "firma": "thyssenkrupp Bilstein GmbH",
+  "ort": "Essen, Ruhr",
+  "description": "\n# Unternehmen\nthyssenkrupp Bilstein steht weltweit für Innovation und High-Tech in der Fahrwerktechnik. Mit der Kompetenz für das gesamte Fahrwerk liefert das Unternehmen mit Produktionsstätten in Europa, Amerika und China Produkte für das komplette Dämpfungsspektrum. Darüber hinaus ist thyssenkrupp Bilstein seit vielen Jahren ein gefragter Partner im Motorsport und im Tuningbereich. thyssenkrupp Bilstein ist eine operative Geschäftseinheit des Business Segments Automotive Technology.\n            \n# Aufgaben\n- Verantwortung für unsere KI-Plattform übernehmen: Du steuerst die Weiterentwicklung des Aftermarket Assistant, der KI-Plattform der Aftermarket Group im Segment Automotive (bestehend aus den Aftermarket Einheiten von thyssenkrupp Bilstein und thyssenkrupp BERCO) und hast Nutzung, Kosten und Sicherheit fest im Griff.\n - Die richtigen Modelle wählen: Du testest neue KI-Modelle und Funktionen und entscheidest mit, was wir unseren Nutzerinnen und Nutzern bereitstellen.\n - Ideen in Features verwandeln: Du entwickelst neue Anwendungen und Schnittstellen zu anderen Systemen, ob klassisch programmiert oder mit KI-Coding-Tools.\n - Lösungen in den Alltag bringen: Du sammelst Feedback und Ideen aus dem Unternehmen, testest Neuerungen mit Nutzerinnen und Nutzern aus verschiedenen Fachbereichen und Ländern und begleitest den Rollout, bis sie fest im Arbeitsalltag verankert sind.\n - KI verständlich machen: Du gibst Trainings und schreibst Beiträge, die Kolleginnen und Kollegen zeigen, was neue Funktionen können und wie sie sie sinnvoll einsetzen.\n - Am Puls bleiben: Du verfolgst neue Entwicklungen, bringst sie ins IT-Team ein und zeigst, was uns wirklich weiterbringt, etwa KI, die technische Zeichnungen versteht, Chats mit direktem Zugriff auf Unternehmensdaten oder eine Sprachsteuerung.\n\n# Profil\n- Studium läuft: Du studierst Informatik, Data Science, Ingenieurwesen oder etwas Ähnliches. Anderes Fach, aber richtig tief in KI drin? Passt auch! Ab Januar 2027 hast du für mindestens zwei Semester 20 Stunden pro Woche Zeit.\n - KI im Alltag: KI-Tools sind fester Teil deines Alltags, und du hast damit schon Projekte umgesetzt, ob im Studium, im Nebenjob oder privat.\n - Verstehen statt kopieren: Du arbeitest dich selbstständig in Neues ein und übernimmst KI-Ergebnisse nicht blind, sondern verstehst, was dahintersteckt.\n - Gern unter Menschen: Du gehst offen auf Kolleginnen und Kollegen zu, hörst genau hin und erklärst Technik so, dass sie jeder versteht.\n\n# Das bieten wir\nKollegiale Zusammenarbeit und Respekt im Umgang miteinander - das finden Sie bei uns seit über 200 Jahren. Wenn Ihnen das genauso wichtig ist wie uns, dann bewerben Sie sich jetzt!\n\n \n\n# Wir wertschätzen Vielfalt\nWir wertschätzen Vielfalt und begrüßen daher alle Bewerbungen - unabhängig von Geschlecht, Nationalität, ethnischer und sozialer Herkunft, Religion/Weltanschauung, Behinderung, Alter sowie sexueller Orientierung und Identität.\n        ",
+  "locations": [
+   {
+    "city": "Essen, Ruhr",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.460954,
+    "lon": 6.9785051
+   }
+  ],
+  "target_probability": 0.81,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12336-a26f1156j0456906-S",
+  "title": "Werkstudent (m/w/d) AI & Analytics",
+  "firma": "Speira GmbH",
+  "ort": "Grevenbroich",
+  "description": "Als **Werkstudent AI & Analytics** konzipierst und implementierst du **KI Use Cases** und entwickelst bestehende KI-Anwendungen weiter. Du recherchierst Trends und unterstützt bei KI-Strategie. Gesucht: Studium in Informatik/Data Science sowie Kenntnisse in **Python und SQL**.",
+  "locations": [
+   {
+    "city": "Grevenbroich",
+    "region": "NORDRHEIN_WESTFALEN",
+    "lat": 51.0830719,
+    "lon": 6.5965473
+   }
+  ],
+  "target_probability": 0.72,
+  "main_focus": "other",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ },
+ {
+  "refnr": "20208-0b930b41674c496d9b4-S",
+  "title": "Werkstudent (m/w/d) Produktmanagement AI-Automation Mietwagen",
+  "firma": "CHECK24 Services Personal GmbH",
+  "ort": "Augsburg, Bayern",
+  "description": "Über diesen Job:\nCHECK24 ist das Vergleichsportal: Wir sind Marktführer und dynamisches Startup in einem. In agilen Teams treffen wir schnelle Entscheidungen und leben flache Hierarchien. Durch den gezielten Einsatz modernster Tools und Technologien sowie State-of-the-Art-Methoden der KI treiben wir datengetriebene Innovationen voran - immer mit Blick auf den Mehrwert für unsere Kunden. So arbeiten wir täglich in mehr als 50 Produkten daran, die User Experience unserer über 20 Millionen Kunden kontinuierlich zu verbessern.\nDer CHECK24 Mietwagenvergleich ist Marktführer und Testsieger bei Stiftung Warentest. Seit 2016 helfen wir von Augsburg aus Kunden jederzeit den passenden Mietwagen zum besten Preis zu finden und sind kompetenter Ansprechpartner bei allen Fragen und Problemen.\nWenn Du etwas bewegen willst, bist Du bei uns genau richtig! Erlebe die Dynamik des E-Commerce mit agilen Prozessen, kurzen Entscheidungswegen und einer steilen Entwicklungskurve in einem großartigen Team. Zur Verstärkung unseres Teams bei der CHECK24 Vergleichsportal Mietwagen GmbH suchen wir Dich als High-Potential Werkstudent (m/w/d) Produktmanagement AI-Automation. Wir freuen uns auf Deine Bewerbung!\n\nWas Du mitbringst:\n- Starker akademischer Background: Laufendes Hochschulstudium mit überdurchschnittlichen Leistungen, idealerweise mit wirtschaftlichem, technisch-analytischem oder IT-bezogenem Schwerpunkt (z. B. BWL, Wirtschaftsinformatik, -ingenieurwesen, -mathematik o. ä.)\n- Analytisches Denken und Zahlenaffinität: Du arbeitest strukturiert, denkst in Prozessen und KPIs und hast Freude daran, komplexe Abläufe datenbasiert zu analysieren und zu verbessern\n- Digitales Prozessdenken: Du analysierst komplexe Abläufe strukturiert, denkst in Prozessen und Systemen und entwickelst skalierbare Lösungen\n- Neugier auf AI-/LLM-Tools: Du beschäftigst Dich aktiv mit AI-/LLM-Technologien und probierst Tools wie ChatGPT, Gemini, Cursor, Lovable oder ähnliche Lösungen sowohl privat als auch im Studium aus\n- Drive und Kommunikation: Du arbeitest eigenständig, strukturiert und bringst Deine Ideen klar auf den Punkt, auch in der Abstimmung mit der IT und weiteren Stakeholdern\n- Sprachkenntnisse: Du verfügst über sehr gute Deutschkenntnisse in Wort und Schrift\n\nZu Deinen Aufgaben zählen:\n- Im Team arbeiten: Du bist von Tag eins fest im Automation-Team eingebunden und arbeitest eng mit AI-Experten, Entwicklern und Data Scientists zusammen\n- Prozesse AI-gestützt verbessern: Du untersuchst bestehende Abläufe im Produkt- und Operations-Umfeld, identifizierst manuelle oder ineffiziente Schritte, leitest datengetriebene Verbesserungsvorschläge ab und treibst Automatisierungspotenziale AI-gestützt voran\n- Entscheidungsgrundlagen schaffen: Du analysierst prozessbezogene Daten, strukturierst komplexe Sachverhalte und bereitest fundierte Entscheidungsgrundlagen für das Automation-Team auf\n- AI gezielt in der Automatisierung einsetzen: Du setzt AI-/LLM-Tools ein, um Klassifikationen, Entscheidungslogiken und Workflows zu verbessern und optimierst gleichzeitig Deine tägliche Arbeit durch den konsequenten Einsatz AI-basierter Tools\n- Qualität messen und sicherstellen: Du analysierst kontinuierlich Effizienz-Kennzahlen, wertest Automatisierungs- und Fehlerquoten aus und leitest aus den wichtigsten Erfolgsmetriken konkrete Handlungsempfehlungen ab\n\nWas wir Dir bieten:\n- Du kommst leicht zu uns: Zentraler Standort direkt am Augsburger Hauptbahnhof im HELIO (mit Einkaufsmöglichkeiten, Fitness und Kino direkt im Gebäude). Unser helles und modernes Büro bietet Raum für Kreativität, Arbeiten im Freien und Spaß beim Kicker oder Tischtennis.\n- Wir statten Dich aus: Leistungsstarker Laptop, zwei zusätzliche Bildschirme oder auf Wunsch einen Curved Monitor bekommst Du direkt am ersten Arbeitstag. Du wünschst Dir individuelles Equipment wie eine ergonomische Maus, Noise-Cancelling-Kopfhörer oder einen höhenverstellbaren Schreibtisch? Kein Problem!\n- Deine Ideen sind uns wichtig und werden schnell umgesetzt: Eigenverantwortliches und agiles Arbeiten unter Einbringung eigener Ideen. Kurze Entscheidungswege und Releasezyklen sind für uns selbstverständlich\n- Wir bringen Dich voran: Bei sehr guter Leistung Option auf Festeinstieg und steile Karriere-Chancen durch unser starkes und nachhaltiges Wachstum. Erfahrene Kollegen nehmen sich regelmäßig Zeit für Feedback, um Deine persönliche Entwicklung zu unterstützen\n- Bei uns kannst Du Dich wohlfühlen: Kostenlose Getränke gibt es gekühlt in jedem Büro. Kaffee, Kakao, Müsli und frisches Obst sind regional und bio. Kostenloses Mittagessen gibt es 5x pro Woche für das gesamte Team\n- Wir sind auch neben der Arbeit ein super Team: Bei uns herrscht ein kollegiales und freundschaftliches Miteinander. Bei Biergarten- und Plärrerbesuchen, Office Partys und legendären Sommer- und Weihnachtsfeiern feiern wir gemeinsam unsere Erfolge. Zudem bieten wir zahlreiche Teamevents und gemeinsame Sportrunden wie Fußball, Bouldern oder Yoga",
+  "locations": [
+   {
+    "city": "Augsburg, Bayern",
+    "region": "BAYERN",
+    "lat": 48.367202975,
+    "lon": 10.886053159
+   }
+  ],
+  "target_probability": 0.63,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.98,
+  "relevance_error": null
+ },
+ {
+  "refnr": "12951-9ae6af22-7ccc-45fb--S",
+  "title": "Werkstudent Commercial Enablement - AI & Automation (f/m/d)",
+  "firma": "Zenjob SE",
+  "ort": "Berlin",
+  "description": "Als Teil des Commercial Enablement Teams hilfst du unserem Sales und Account Management Team, unsere Kundenprozesse smarter, schneller und skalierbarer zu machen.\n\nMit AI und pragmatischen Workflow Tools unterstützt du dabei, Automatisierungspotenziale entlang unserer Go-to-Market-Prozesse von Lead bis Bestandskunde zu identifizieren und umzusetzen.\n\nRahmendaten\n✓ Arbeitszeit: 20 Stunden pro Woche während des Semesters\n✓ Standort: Berliner Büro, mit 2 Tagen pro Woche vor Ort\n✓ Dauer: Mindestlaufzeit von 12 Monaten\n\nDas bieten wir\n\n Umfassendes Onboarding: Unternehmens-Onboarding, regelmäßige Trainings und eine offene Feedbackkultur\n\n Ein hybrides Arbeitsmodell, das Arbeiten im Büro und remote ermöglicht, flexible Arbeitszeiten und die Möglichkeit, deinen Hund mit ins Büro zu bringen\n\n 30 € Zuschuss für den Urban Sports Club, 25 % Rabatt auf eine FitX-Mitgliedschaft\n\nVierteljährliche Team-Events, Winter- und Sommerfeste, Budget für Geburtstage und Jubiläen unserer Mitarbeitenden\nDeine Aufgaben\n✓ Unterstützung bei der Analyse von Sales und Commercial Operations Prozessen sowie der Identifikation von Effizienzpotenzialen\n✓ Mitarbeit beim Aufbau von Automatisierungen zur Reduktion operativer Ineffizienzen im Sales und Account Management Umfeld (z. B. mit n8n)\n✓ Unterstützung bei der Integration von AI in kommerzielle Prozesse, z. B. Lead Generation oder CRM Workflows (Salesforce)\n✓ Mitarbeit bei der Entwicklung pragmatischer Workflows und schneller Tests neuer Use Cases mit Hilfe von AI Tools wie ChatGPT, Gemini oder Claude\n✓ Unterstützung bei der Verbindung unserer Tools und Systeme über APIs, Webhooks oder No Code Plattformen\n✓ Enge Zusammenarbeit mit Sales, Account Management, Revenue Operations sowie Product und Engineering\n✓ Mitarbeit beim Testen, Optimieren und Weiterentwickeln funktionierender Lösungen\n\nDein Profil\n✓ Starkes Interesse daran, wie Sales und Go to Market Teams arbeiten\n✓ Strukturierte Denkweise und pragmatischer Lösungsansatz\n✓ Interesse an AI, Automatisierung und digitalen Geschäftsprozessen\n✓ Erste praktische Erfahrungen mit Tools, Automatisierungen oder digitalen Workflows von Vorteil\n✓ Grundverständnisse von Programmierung sowie grundlegenden Web und API Konzepten wünschenswert\n✓ Laufendes Studium mit technischem, digitalem oder wirtschaftsnahem Schwerpunkt\n✓ Deutsch auf C1 Niveaunniveau sowie gute Englischkenntnisse\n\n\nKlingt nach dir?\n\nDann bewirb dich und schicke uns deine Unterlagen. Wir freuen uns auf dich!",
+  "locations": [
+   {
+    "city": "Berlin",
+    "region": "BERLIN",
+    "lat": 52.530669,
+    "lon": 13.413114
+   }
+  ],
+  "target_probability": 0.85,
+  "main_focus": "ai_automation",
+  "office_presence": "weekly",
+  "presence_confidence": 0.79,
+  "relevance_error": null
+ },
+ {
+  "refnr": "16947-984545506-S",
+  "title": "Werkstudent  (w/m/d) A320 Family FCO AI Implementation & Process Automation",
+  "firma": "Airbus Operations GmbH Werk Bremen",
+  "ort": "Hamburg",
+  "description": "#### Über uns\n\nAirbus ist Pionier einer nachhaltigen Luft- und Raumfahrt für eine sichere und vereinte Welt. Das Unternehmen arbeitet ständig an Innovationen für effiziente und technologisch fortschrittliche Lösungen in den Bereichen Luft- und Raumfahrt, Verteidigung sowie vernetzte Dienstleistungen. Airbus bietet moderne und treibstoffeffiziente Verkehrsflugzeuge sowie dazugehörige Dienstleistungen an. Airbus ist auch führend in Europa im Bereich Verteidigung und Sicherheit und eines der größten Raumfahrtunternehmen der Welt. Im Bereich Hubschrauber stellt Airbus die weltweit effizientesten Lösungen und Dienstleistungen für zivile und militärische Hubschrauber bereit.\n\n#### Tätigkeitsbeschreibung\n\nZur Unterstützung im AI Implementation &amp; Process Automation Team, sucht Airbus Operations einen\n\n# **Werkstudenten (d/m/w) A320 Family FCO AI Implementation &amp; Process Automation**\n\nDu bist Vollzeitstudent (d/m/w), auf der Suche nach einer Werkstudentenstelle? Dann bewirb dich jetzt! Wir freuen uns, wenn du uns in der AI Implementation &amp; Process Automation Team, als Werkstudent (d/m/w) mit ca. 18 Stunden pro Woche unterstützt!\n\n- Standort: _Hamburg_\n- Start: _01.02.2027_\n- Dauer: _12 Monate_\n\nBei uns erhältst du ein tarifliches Entgelt je nach Tätigkeit von mindestens 18,53€  € pro Stunde. Hinzu kommen Sonderzahlungen wie beispielsweise Urlaubsgeld.\n\n## **Dein Standort: Hamburg Finkenwerder**\n\nDu arbeitest in der größten Produktionsstätte für zivile Flugzeuge in Hamburg. Durch die Lage am südlichen Elbufer besteht die Möglichkeit, mit der Fähre zu pendeln. Erlebe in deiner Freizeit das besondere Flair Hamburgs, wo pulsierende Weltstadtkultur auf nautisches Erbe trifft.\n\nIhr fragt euch, wie ihr eigentlich von der Uni zu Airbus kommt? Deine Werkstudentenstelle befindet sich auf dem Werk in Finkenwerder und du kannst vormittags und ab mittags mit der Fähre von Teufelsbrück zum Airbus Fähranleger und zurück zur Uni fahren. Alternativ nimmst du die Fähre bis Finkenwerder und fährst dann ca. 15 Minuten mit dem Fahrrad zum Haupteingang. \n\n## **Deine Vorteile**\n\n- Attraktive Vergütung und ausgeglichene Work-Life-Balance bei einer 18-Stunden-Woche (Gleitzeit).\n- Internationales Umfeld mit der Möglichkeit, Kontakte in die ganze Welt zu knüpfen.\n- Arbeit mit modernen/abwechslungsreichen Technologien.\n- Möglichkeit zur Teilnahme an der Generation Airbus Community zur Erweiterung des eigenen Netzwerks.\n\n## **Deine Mission in unserem Team**\n\nDu brennst für Künstliche Intelligenz und möchtest echte Veränderungen vorantreiben? Als Teil unseres Teams hilfst du uns dabei, unsere Arbeitsweise auf das nächste Level zu heben, indem du manuelle Routinen aufspürst und durch smarte KI-Lösungen ersetzt.\n\n## **Deine Aufgaben und Verantwortlichkeiten**\n\n- **Prozesse durchleuchten:** Du analysierst unsere täglichen und wöchentlichen operativen Abläufe und identifizierst gezielt Aufgaben, die sich für eine Automatisierung eignen.\n- **Ideen bündeln:** Du baust eine zentrale, strukturierte Datenbank auf, in der alle Ideen für Prozessverbesserungen und KI-Einsätze gesammelt und bewertet werden.\n- **Hands-on Umsetzung:** Du bleibst nicht in der Theorie stecken, sondern unterstützt uns aktiv bei der Entwicklung und Implementierung von konkreten KI-Agenten.\n- **Wissen teilen &amp; begeistern:** Du planst und moderierst \"Awareness Sessions\", um speziell unserer Version Management-Zielgruppe die Möglichkeiten von KI näherzubringen.\n- **Netzwerken:** Du fungierst als wichtiges Bindeglied zu unserem internen \"Customization AI Network\", tauschst Best Practices aus und bringst neue Impulse in unser Team.\n\n## **Erforderliche Kenntnisse und Qualifikationen**\n\n- Eingeschriebener Vollzeitstudent (w/m/d)  im Bereich Informatik, Wirtschaftsinformatik, Ingenieurwesen, Luft- und Raumfahrttechnik oder einem vergleichbaren Studiengang.\n- **KI- &amp; Automatisierungs-Affinität:** Großes Interesse an Künstlicher Intelligenz (insbesondere KI-Agenten/LLMs) sowie erste praktische Erfahrungen mit Automatisierungstools, Low-Code/No-Code-Plattformen oder Skriptsprachen (z. B. Python, Google Apps Script).\n- **Analytische Stärke:** Ausgeprägtes Prozessverständnis und die Fähigkeit, komplexe Abläufe schnell zu durchdringen sowie Optimierungspotenziale strukturiert aufzubereiten.\n- **Kommunikation &amp; Moderation:** Freude daran, Wissen zu teilen, Workshops/Sessions zu moderieren und komplexe technische Themen verständlich für verschiedene Zielgruppen aufzubereiten.\n- **Arbeitsweise:** Selbstständige, proaktive und strukturierte Arbeitsweise gepaart mit Hands-on-Mentalität und Teamgeist.\n- **Sprachkenntnisse:** Sehr gute Deutsch- und Englischkenntnisse in Wort und Schrift (für die internationale Zusammenarbeit im Luftfahrtumfeld).\n\nBitte lade folgende Unterlagen hoch: **Anschreiben, Lebenslauf, relevante Zeugnisse, Immatrikulationsbescheinigung.**\n\nKein 100%iges Match? Kein Grund zur Sorge! Airbus unterstützt deine persönliche Entwicklung.\n\nBring deine Karriere auf ein neues Level und bewirb dich jetzt [online](https://www.airbus.com/en/careers)!\n\nThis job requires an awareness of any potential compliance risks and a commitment to act with integrity, as the foundation for the Company’s success, reputation and sustainable growth\n\nBy submitting your CV or application you are consenting to Airbus using and storing information about you for monitoring purposes relating to your application or future employment. This information will only be used by Airbus.  \nAirbus is committed to achieving workforce diversity and creating an inclusive working environment. We welcome all applications irrespective of social and cultural background, age, gender, disability, sexual orientation or religious belief.\n\nAt Airbus, we support you to work, connect and collaborate more easily and flexibly. Wherever possible, we foster flexible working arrangements to stimulate innovative thinking.",
+  "locations": [
+   {
+    "city": "Hamburg",
+    "region": "HAMBURG",
+    "lat": 53.5212621,
+    "lon": 9.8558503
+   }
+  ],
+  "target_probability": 0.78,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.31,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1004003687-S",
+  "title": "Werkstudent (m/w/d) Künstliche Intelligenz & Digitalisierung",
+  "firma": "LMT Tool Systems GmbH & Co. KG",
+  "ort": "Schwarzenbek",
+  "description": "### Ihre Aufgaben\n\n- Analyse bestehender technischer und administrativer Prozesse hinsichtlich sinnvoller KI- und Automatisierungspotenziale\n- Entwicklung und Erprobung von KI-basierten Prototypen, kleinen Softwaretools und Proof-of-Concept-Anwendungen\n- Entwicklung smarter Lösungen für Angebots-, Engineering- und Entwicklungsprozesse\n- Strukturierung und Aufbereitung von technischem Wissen für KI-basierte Anwendungen\n- Bewertung der entwickelten Ansätze hinsichtlich Nutzen, Umsetzbarkeit und Integration in bestehende Prozesse\n- Zusammenarbeit mit Engineering, Entwicklung, Produktmanagement und Customer Service\n\n### Ihr Anforderungsprofil\n\n- Immatrikulierter Student (m/w/d) im Bereich Maschinenbau, Wirtschaftsingenieurwesen, Informatik, Data Science, Computational Engineering oder vergleichbar\n- Erste praktische Erfahrung in Programmierung, Datenanalyse, KI/LLMs oder Automatisierung von Vorteil; keine zwingende Berufserfahrung erforderlich\n- Grundkenntnisse in mindestens einer Programmiersprache, z. B. Python, C++ oder vergleichbar\n- Erste Berührungspunkte mit LLMs, APIs, Cloud- oder Low-Code-Plattformen von Vorteil\n- Interesse an KI-Anwendungen und digitalen Technologien\n- Gutes technisches Verständnis\n- Gute Deutsch- und Englischkenntnisse",
+  "locations": [
+   {
+    "city": "Schwarzenbek",
+    "region": "SCHLESWIG_HOLSTEIN",
+    "lat": 53.504253,
+    "lon": 10.492317
+   }
+  ],
+  "target_probability": 0.84,
+  "main_focus": "ai_automation",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.99,
+  "relevance_error": null
+ },
+ {
+  "refnr": "13151-1647543-1-S",
+  "title": "Werkstudent*in Softwareentwicklung Künstliche Intelligenz-Systeme",
+  "firma": "Mercedes-Benz Group AG",
+  "ort": "Sindelfingen",
+  "description": "Tätigkeitsbereich: Forschung & Entwicklung incl. Design\nFachabteilung: MB.OS Software Provisioning\nGesellschaft: Mercedes-Benz AG\nStandort: Sindelfingen\nStartdatum: 07.12.2026\nVeröffentlichungsdatum: 07.12.2026\nStellennummer: MER000492O\nArbeitszeit: Teilzeit\n\n\nAufgaben\n\nWir sind Teil der MB.OS (Mercedes-Benz Operating System) Developer Journey und entwickeln die PMT (Product Methods & Tools) Solution, die zentrale Plattform, die Fahrzeugentwickler*innen bei Mercedes-Benz die Prozesse, Methoden und Werkzeuge für ihre tägliche Arbeit bereitstellt.\n\nUnser Ziel ist es, komplexe Entwicklungsprozesse durch schlanke, toolgestützte Abläufe zu ersetzen und damit die Fahrzeugentwicklung effizienter zu gestalten.\n\nDafür suchen wir eine Person, die KI (Künstliche Intelligenz) nicht nur nutzt, sondern versteht.\n\nDiese Herausforderungen kommen u. a. auf Dich zu:\n\n- Entwicklung und Integration von KI (Künstliche Intelligenz) -Komponenten (LLM-Agents, RAG-Pipelines, API-Anbindungen) in bestehende Plattformen\n- Softwareentwicklung mit TypeScript in modernen Technologie-Stacks (NestJS, Vue 3) einschließlich Testing und Code Reviews\n- Eigenverantwortliche Umsetzung abgegrenzter Features vom technischen Design bis zum Deployment\n- Mitarbeit bei Architektur- und Technologieentscheidungen als vollwertiges Teammitglied\n\n\nDu arbeitest direkt im Produktteam, nicht in einer Sandbox – Dein Code geht in Produktion.\n\nWir erwarten, dass Du Entscheidungen begründen kannst, nicht nur prompten.\n\nDie Tätigkeit kann ab Dezember 2026 beginnen.\n\n\nQualifikationen\n\n- Studiengang im Bereich Informatik, Wirtschaftsinformatik, Data Science oder ein vergleichbarer Studiengang\n- Sichere Deutsch- und Englischkenntnisse in Wort und Schrift\n- Engagement und Teamfähigkeit\n- Analytische Denkweise und strategische Arbeitsweise\n- Solide TypeScript-Kenntnisse – Du weißt, was Du tust, auch ohne KI (Künstliche Intelligenz) -Assistent\n- Grundkenntnisse in mindestens einem KI ((Künstliche Intelligenz) -Framework oder einer KI (Künstliche Intelligenz)-API (Application Programming Interface) (z. B. OpenAI API, LangChain, Hugging Face)\n- Verständnis von Software-Engineering-Grundsätzen wie Testing, Clean Code und Git-Workflows\n\n\nZusätzliche Informationen:\n\nWir freuen uns auf Deine Online-Bewerbung mit Lebenslauf, Anschreiben, Zeugnissen, aktueller Immatrikulationsbescheinigung mit Angabe des Fachsemesters und Nachweis über die Regelstudienzeit. Bitte vergiss nicht im Online-Formular Deine Dokumente als \"relevant für diese Bewerbung\" zu markieren und beachte die maximale Dateigröße von 5 MB.\n\nWeiterführende Informationen zu den Einstellkriterien findest Duhier  .\n\nSchwerbehinderte und gleichgestellte Bewerbende sind herzlich willkommen! Die Schwerbehindertenvertretung (sbv-sindelfingen@mercedes-benz.com) unterstützt Dich gerne im Bewerbungsprozess.\n\nPeople Solutions hilft Dir bei Fragen zum Bewerbungsprozess gerne weiter. Du erreichst uns per E-Mail übermyhrservice@mercedes-benz.comoder telefonisch unter 0711/17-99000 (Mo-Fr 10-12 Uhr & 13-15 Uhr).\n\n\nBenefits\n\n\n- Barriere­frei­heit\n- Kantine, Café\n- Kinder­betreuung\n- Coaching\n- Betriebs­arzt\n- Mobilitäts­angebote\n- Mit­arbeiter Events\n- Mit­arbeiter­rabatte möglich\n- Mit­arbeiter­beteili­gung möglich\n- Mit­arbeiter­handy möglich\n- Essens­zulagen\n- Gesund­heits­maß­nahmen\n- Hybrides Arbeiten möglich\n- Betrieb­liche Alters­ver­sorgung\n- Park­platz\n- Gute An­bindung\n- Flexible Arbeits­zeit möglich\n\n\nKontakt\n\nCarmen Venninger-De Marco\nEmail: carmen.venninger-de_marco@mercedes-benz.com\n\n\nBenz-Str. Tor 16\n71063 Sindelfingen",
+  "locations": [
+   {
+    "city": "Sindelfingen",
+    "region": "BADEN_WUERTTEMBERG",
+    "lat": 48.7093407,
+    "lon": 8.9960969
+   }
+  ],
+  "target_probability": 0.95,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 0.35,
+  "relevance_error": null
+ },
+ {
+  "refnr": "10001-1003841532-S",
+  "title": "Werkstudent (m/w/d) – Künstliche Intelligenz & LLM/ Student/in",
+  "firma": "EUROKEY Software GmbH",
+  "ort": "Saarbrücken",
+  "description": "**Deine Aufgaben**\n\n- Aktuelle KI-Technologien recherchieren, bewerten und praxisnah aufbereiten\n- Chatbots, KI-Lösungen und innovative Workflows mitentwickeln\n- Prompts optimieren und verschiedene LLMs für konkrete Anwendungsfälle evaluieren\n- Kundenprojekte begleiten, Lösungen umsetzen und Ergebnisse dokumentieren\n\n**Dein Profil**\n\n- Laufendes Studium der Informatik oder eines vergleichbaren technischen bzw. mathematischen Studiengangs\n- Sehr gute Deutschkenntnisse (mindestens C1)\n- Selbstständige, strukturierte und zuverlässige Arbeitsweise\n- Grundlegende Programmierkenntnisse und Verständnis objektorientierter Konzepte\n- Erste Erfahrungen mit LLMs, KI-Tools oder Chatbots\n- Interesse an KI und Machine Learning durch entsprechende Lehrveranstaltungen\n- Sicherer Umgang mit MS Office, insbesondere PowerPoint und Excel\n\n**Wünschenswerte Qualifikationen**\n\n- Grundkenntnisse in Java, Git und SQL\n- Eigene KI-Projekte oder praktische Erfahrungen im KI-Umfeld\n\n**Das bieten wir dir**\n\n- Flexible, studienfreundliche Arbeitszeiten\n- Persönliche Betreuung, kurze Kommunikationswege und strukturierte Einarbeitung\n- Frühe Übernahme eigener Aufgaben und Verantwortung\n- Praxiserfahrung mit modernen KI-Technologien und realen Kundenprojekten\n- Perspektive auf langfristige Weiterbeschäftigung nach dem Studium",
+  "locations": [
+   {
+    "city": "Saarbrücken",
+    "region": "SAARLAND",
+    "lat": 49.288014,
+    "lon": 7.03206
+   }
+  ],
+  "target_probability": 0.82,
+  "main_focus": "ai_engineering",
+  "office_presence": "not_mentioned",
+  "presence_confidence": 1.0,
+  "relevance_error": null
+ }
+]

@@ -9,6 +9,8 @@ Run it from the repo folder:
 
 Same idea as the AI Project screening notebook: every answer is appended to a .jsonl file the moment it
 arrives, so a crash or Ctrl+C loses nothing, and running again only does what is missing.
+Every row also stores a snapshot id: the exact prompt, background and verdict code it was made with
+are saved in results/snapshots/ (see job_fit/snapshot.py).
 """
 
 try:
@@ -37,6 +39,7 @@ from job_fit.llm import ask_model                      # noqa: E402
 from job_fit.location import location_gap, location_note   # noqa: E402
 from job_fit.prompt import PROMPT_VERSION, build_user_message   # noqa: E402
 from job_fit.relevance import THRESHOLD                # noqa: E402
+from job_fit.snapshot import save_snapshot             # noqa: E402
 from job_fit.verdict import compute_verdict            # noqa: E402
 
 # ---------------------------------------------------------------- the frozen setup
@@ -49,6 +52,7 @@ CONFIGS = {
     # "terra-high":       {"provider": "openai",    "model": "gpt-6.1-terra",     "effort": "high"},
     # "sonnet-medium":    {"provider": "anthropic", "model": "claude-sonnet-5-5", "effort": "medium"},
     "haiku-high":       {"provider": "anthropic", "model": "claude-haiku-5-5",  "effort": "high"},
+    "haiku-medium":     {"provider": "anthropic", "model": "claude-haiku-5-5",  "effort": "medium"},   # faster, cheaper: test it
 }
 
 # dollars per 1 million tokens: (input, output). Thinking tokens are billed as output.
@@ -109,7 +113,7 @@ def load_rows():
 
 # ---------------------------------------------------------------- running
 
-def assess_once(posting, background, name, run):
+def assess_once(posting, background, name, run, snapshot):
     cfg = CONFIGS[name]
     user_message = build_user_message(posting["description"], background)
     error, result, usage, attempts = None, None, {"input": 0, "output": 0}, 0
@@ -119,23 +123,24 @@ def assess_once(posting, background, name, run):
         try:
             assessment, usage = ask_model(user_message, cfg["provider"], cfg["model"], cfg["effort"])
             presence, places = posting.get("office_presence"), posting.get("locations") or []
-            result, error = compute_verdict(assessment, background, location_gap(presence, places)), None
+            gap = location_gap(presence, places, posting.get("presence_confidence"))
+            result, error = compute_verdict(assessment, background, gap), None
             result["location_note"] = location_note(presence, places)
             break
         except Exception as e:                    # noqa: BLE001  (any failure is recorded, not hidden)
             error = f"{type(e).__name__}: {e}"[:500]
             time.sleep(10)
     seconds = time.perf_counter() - start
-    return {"config": name, "model": cfg["model"], "effort": cfg["effort"], "prompt": PROMPT_VERSION,
+    return {"config": name, "model": cfg["model"], "effort": cfg["effort"], "prompt": PROMPT_VERSION, "snapshot": snapshot,
             "refnr": posting["refnr"], "run": run, "attempts": attempts, "error": error,
             "result": result, "input_tokens": usage["input"], "output_tokens": usage["output"],
             "seconds": round(seconds, 2)}
 
 
-def run_config(name, postings, background, runs, done):
+def run_config(name, postings, background, runs, done, snapshot):
     todo = [(run, p) for run in range(1, runs + 1) for p in postings if (name, p["refnr"], run) not in done]
     for i, (run, posting) in enumerate(todo, 1):
-        row = assess_once(posting, background, name, run)
+        row = assess_once(posting, background, name, run, snapshot)
         with _write_lock:
             with open(RESULTS, "a", encoding="utf-8") as f:
                 f.write(json.dumps(row, ensure_ascii=False) + "\n")
@@ -152,10 +157,12 @@ def cmd_run(args):
     RESULTS.parent.mkdir(parents=True, exist_ok=True)
     done = {(r["config"], r["refnr"], r["run"]) for r in load_rows() if not r["error"]}
     names = args.only or list(CONFIGS)
-    print(f"{len(postings)} postings, {len(names)} configs, {args.runs} runs, prompt {PROMPT_VERSION}")
+    snapshot = save_snapshot(background)
+    print(f"{len(postings)} postings, {len(names)} configs, {args.runs} runs, prompt {PROMPT_VERSION}, "
+          f"snapshot {snapshot}")
     # one thread per config: configs run side by side, each one goes through its postings in order
     with ThreadPoolExecutor(max_workers=len(names)) as pool:
-        futures = [pool.submit(run_config, n, postings, background, args.runs, done) for n in names]
+        futures = [pool.submit(run_config, n, postings, background, args.runs, done, snapshot) for n in names]
         for f in futures:
             f.result()
     print("Done. Now run: python -m scripts.compare_models report")
@@ -248,11 +255,21 @@ def cmd_report(args):
               f"{s['p90_s']:5.1f}s  {'pass' if s['passes'] else 'fail'}")
     if len(labels) < len(postings):
         print(f"\nOnly {len(labels)} of {len(postings)} postings are labelled, so no config can pass yet.")
+    for s in summary:
+        per_run = {}
+        for r in rows:
+            if r["config"] == s["config"]:
+                per_run[r["run"]] = per_run.get(r["run"], 0) + cost(r, PRICES)
+        print(f"Spend per run, {s['config']}: " + ", ".join(f"run {k} ${v:.2f}" for k, v in sorted(per_run.items())))
     print(f"\nSpend: " + ", ".join(f"{s['config']} ${s['total_spend']:.2f}" for s in summary)
           + f"; total ${sum(s['total_spend'] for s in summary):.2f}")
     failed = [s for s in summary if s["errors"]]
     if failed:
         print("WARNING: failed calls: " + ", ".join(f"{s['config']} {s['errors']}" for s in failed))
+    snapshots = Counter(r.get("snapshot") or "none (before snapshots)" for r in rows)
+    print("Snapshots: " + ", ".join(f"{k} ({v} rows)" for k, v in snapshots.items()))
+    if len(snapshots) > 1:
+        print("WARNING: this file mixes setups. See what changed: python -m job_fit.snapshot diff <id> <id>")
     print("\nRule picks:", chosen or "nothing passes")
 
     page = build_report(summary, postings, rows, labels, list(CONFIGS), RULE, chosen,
