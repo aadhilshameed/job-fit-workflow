@@ -13,6 +13,9 @@ from job_fit.llm import _client
 
 SUMMARY_MODEL = "claude-haiku-5-5"
 SUMMARY_EFFORT = "high"    # low was cheaper, but failed on a long posting (20 Nov); high costs about 0.1 cent more
+SUMMARY_PROMPT_VERSION = "s2"
+# s1 (20 Nov): role line, about lines, ranked labels of 1 to 4 words with groups
+# s2 (21 Nov): labels more specific, with the posting's examples in brackets, up to 10 words
 
 SUMMARY_PROMPT = """You shorten a job posting for a student who decides whether to open it.
 The posting may be in German or English. Always answer in plain English. No full stops.
@@ -29,8 +32,10 @@ requirements: you get a numbered list of requirements from the posting, each wit
 (met, partial, missing, not stated) and, for partial and missing ones, the reason. Return every number
 exactly once, ordered from the most to the least important for this role (what the posting stresses
 most comes first).
-- label: 1 to 4 words, always in English, even when the posting is German. Name the thing itself,
-  without the heading words ("Idealerweise praktische Erfahrung mit LangGraph" becomes "LangGraph").
+- label: always in English, even when the posting is German. Name the thing itself, without the heading
+  words ("Idealerweise praktische Erfahrung mit LangGraph" becomes "LangGraph"). Be specific rather than
+  short: when the posting names examples, keep them in brackets ("AI frameworks" becomes "AI frameworks
+  (LangChain, LlamaIndex)"). Usually 2 to 6 words; use up to 10 when fewer would lose the meaning.
   Keep combined items together ("Power BI and Power Automate" stays one item).
 - group: when several requirements share a heading, give them the same short English heading of 1 to 3
   words, for example "Practical experience" or "Languages". Empty for a requirement that stands alone.

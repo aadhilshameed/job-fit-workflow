@@ -16,7 +16,8 @@ What gets sent:
 - each posting message is short: verdict, distance, title, company, the job type (🎓 WS Werkstudent,
   🧪 Intern, 📝 Thesis, 🏢 Job) with one line on the role, and the gaps
   as short labels; collapsed boxes you tap to open: "About the job" (2 or 3 lines on the work) under the
-  company, and at the end Required (critical) and Preferred (standard) requirements, most important first,
+  company, and at the end one box with the requirements: REQUIRED (critical) first, then ALSO ASKED FOR
+  (standard), each part most important first,
   with a dot (🟢 met, 🟡 partial, 🔴 missing, ⚪ not stated), a short reason for each gap, and
   related items under one heading (for example "Practical experience:")
 - a German posting is marked 🇩🇪 German in the first line, since it usually means German every day
@@ -51,7 +52,7 @@ GENDER_TAG = re.compile(r"\s*\((?:all genders|[mwfdxgn*]+|div\.?)(?:\s*[/|,]\s*(
 JOB_TYPES = ((re.compile(r"werkstudent|working student|studentische", re.IGNORECASE), "🎓 WS"),
              (re.compile(r"praktik|internship|\bintern\b|trainee", re.IGNORECASE), "🧪 Intern"),
              (re.compile(r"abschlussarbeit|masterarbeit|bachelorarbeit|thesis", re.IGNORECASE), "📝 Thesis"))
-MAX_LISTED = 8             # preferred requirements shown in their box (gaps are always shown)
+MAX_LISTED = 8             # "also asked for" requirements shown (gaps are always shown)
 GERMAN_WORDS = {"und", "der", "die", "das", "mit", "für", "wir", "sie", "ist", "von", "zu", "bei", "auf", "oder",
                 "eine", "ein", "du", "dich", "dein", "deine", "ihre", "unser", "unsere", "kenntnisse"}
 ENGLISH_WORDS = {"and", "the", "with", "for", "we", "you", "is", "of", "to", "at", "on", "or", "an", "your", "our",
@@ -234,26 +235,31 @@ def posting_message(posting: dict, result: dict, published=None, summary=None) -
         short.append("🚆 check the location")
     lines.append("   ".join(short) if short else "🟢 No gaps")
 
-    # two collapsed boxes: Required (critical) and Preferred (standard), most important first
+    # one collapsed box: the required (critical) requirements first, then the ones the posting also asks for
+    # (standard), each part most important first
     required = [r for r in ranked if r["importance"] == "critical" or r["text"] in kinds]
-    preferred = [r for r in ranked if r not in required][:MAX_LISTED]
-    for heading, items, marks, extra in (("Required", required, DOTS, location_lines(result)),
-                                         ("Preferred", preferred, DOTS, [])):
-        box = [f"<b>{heading}</b>"] if items or extra else []
+    also = [r for r in ranked if r not in required][:MAX_LISTED]
+    box = []
+    for heading, items, extra in (("REQUIRED", required, location_lines(result)), ("ALSO ASKED FOR", also, [])):
+        if not items and not extra:
+            continue
+        if box:
+            box.append("")
+        box.append(f"<b>{heading}</b>")
         for group, members in grouped(items):
             if group and len(members) > 1:
                 box.append(f"<b>{esc(group)}:</b>")
             indent = "    " if group and len(members) > 1 else ""
             for r in members:
-                line = f"{indent}{marks.get(r['match_result'], '•')} {esc(r['label'])}"
+                line = f"{indent}{DOTS.get(r['match_result'], '•')} {esc(r['label'])}"
                 if kinds.get(r["text"]) == "language":
                     line += " (not counted)"
                 if r["match_result"] in ("partial", "hard_gap") and r.get("reason"):
                     line += f" · <i>{esc(r['reason'])}</i>"
                 box.append(line)
         box += [f"🚆 {esc(text)}" for text in extra]
-        if box:
-            lines.append("<blockquote expandable>" + "\n".join(box) + "</blockquote>")
+    if box:
+        lines.append("<blockquote expandable>" + "\n".join(box) + "</blockquote>")
     return "\n".join(lines)
 
 
