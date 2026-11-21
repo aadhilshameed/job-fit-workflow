@@ -37,3 +37,40 @@ CREATE TABLE postings (
     );
 
 
+-- One row per Haiku run on one posting. Filled step by step during the daily run:
+-- inserted after the assessment, then updated with the summary and the Telegram time.
+CREATE TABLE assessments (
+    id SERIAL PRIMARY KEY,
+    posting_id INTEGER NOT NULL REFERENCES postings(id),   -- the posting this run assessed
+    assessed_at TIMESTAMPTZ NOT NULL DEFAULT now(),        -- filled in when the row is inserted
+
+    -- the setup: kept so results can be compared when the model or prompt changes
+    model TEXT NOT NULL,                 -- for example claude-haiku-5-5
+    effort TEXT NOT NULL,                -- low, medium or high
+    prompt_version TEXT NOT NULL,        -- PROMPT_VERSION in prompt.py, for example v4
+
+    -- the result: all empty if the call failed (then only the error is filled)
+    model_extraction_error TEXT,         -- the error message when the Haiku call failed
+    model_verdict TEXT,                  -- the verdict Haiku gave (kept only to compare)
+    verdict_reason TEXT,                 -- Haiku's one-sentence reason
+    code_verdict TEXT,                   -- the real verdict from verdict.py: apply, stretch, lack_of_info or skip
+
+    -- what the assessment cost
+    input_tokens INTEGER,
+    output_tokens INTEGER,               -- thinking tokens count here too
+    cost_usd NUMERIC,                    -- in US dollars
+    time_seconds NUMERIC,                -- how long the call took
+
+    -- the summary for Telegram (summary.py): empty for skips, which get no summary
+    summary_model TEXT,
+    summary_effort TEXT,
+    summary_prompt_version TEXT,
+    summary_error TEXT,                  -- the error message when the summary call failed twice
+    summary JSONB,                       -- role line, about lines, ranked requirement labels
+    summary_input_tokens INTEGER,
+    summary_output_tokens INTEGER,
+    summary_cost_usd NUMERIC,
+    summary_time_seconds NUMERIC,
+
+    sent_to_telegram_at TIMESTAMPTZ      -- empty means never sent (a skip, or a crash before sending)
+);
