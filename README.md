@@ -17,9 +17,9 @@ Language rule (kept from n8n on purpose): a language at any lower level is parti
 | `job_fit/verdict.py` | Quote check and the verdict rules, in code |
 | `job_fit/arbeitsagentur.py` | Search and detail calls to the Arbeitsagentur API |
 | `job_fit/title_filter.py` | The free two-stage keyword filter from n8n (title, then description) |
-| `job_fit/relevance.py` | The relevance question (OpenAI Decisions API): is this hands-on AI building work? |
+| `job_fit/llm/decisions_api_filter.py` | The Decisions API filter (OpenAI): is this hands-on AI engineering work? |
 | `job_fit/snapshot.py` | Saves the exact prompt, background and verdict code behind every run in `results/snapshots/` |
-| `scripts/fetch_postings.py` | Fresh postings through search, filter, details and relevance, saved in `data/batches/` |
+| `scripts/fetch_postings.py` | Fresh postings through search, filter, details and the Decisions API filter, saved in `data/batches/` |
 | `scripts/compare_models.py` | Runs every config on a set of postings and scores it (`--set` picks the set) |
 | `scripts/report.py` | Builds the side-by-side comparison page |
 | `data/comparison_set.json` | 25 real postings from the Arbeitsagentur API (Sept to Nov 2026) that pass today's filter |
@@ -61,7 +61,7 @@ python -m scripts.compare_models report                            # results/com
 - Haiku max_tokens 16000 -> 32000 (one posting ran out of room). It is a ceiling, not a spend.
 - Terra high and Sonnet dropped: too expensive to ever be the pick.
 - 5 postings removed from the set because today's filter would not let them through.
-- New: fresh intake and a relevance check before the assessment, so off-target roles never reach Haiku.
+- New: fresh intake and a Decisions API filter before the assessment, so roles that are not AI engineering never reach Haiku.
 
 ## Version log
 

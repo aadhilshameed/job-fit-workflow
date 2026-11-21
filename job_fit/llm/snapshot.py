@@ -3,8 +3,9 @@
 Each distinct setup is saved once, as results/snapshots/<id>.json, with:
 - the full system prompt and its version
 - the full background text (data/background.txt is not in git, so this is the only record of old versions)
-- the code that turns an answer into a verdict (schema.py, verdict.py, location.py, llm.py)
-- the relevance questions version, the git commit, and whether there were uncommitted changes
+- the code that turns an answer into a verdict (llm/schema.py, code_nodes/code_verdict.py,
+  code_nodes/location.py, llm/model_calls.py)
+- the Decisions API questions version, the git commit, and whether there were uncommitted changes
 Every result row stores the id under "snapshot".
 
 The id is a hash of the prompt, the background and that code. Change any of them, even by one character,
@@ -14,8 +15,8 @@ and the id changes, so a forgotten PROMPT_VERSION bump can no longer mix two set
 The snapshots live in results/, which is gitignored, because they contain the background.
 
 See what changed between two snapshots:
-    python -m job_fit.snapshot diff <id> <id>
-    python -m job_fit.snapshot list
+    python -m job_fit.llm.snapshot diff <id> <id>
+    python -m job_fit.llm.snapshot list
 """
 
 import difflib
@@ -26,12 +27,13 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-from job_fit.prompt import PROMPT_VERSION, SYSTEM_PROMPT
-from job_fit.relevance import QUESTIONS_VERSION
+from job_fit.llm.prompt import PROMPT_VERSION, SYSTEM_PROMPT
+from job_fit.llm.decisions_api_filter import QUESTIONS_VERSION
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 FOLDER = ROOT / "results" / "snapshots"
-CODE_FILES = ("schema.py", "verdict.py", "location.py", "llm.py")   # in job_fit/
+CODE_FILES = ("llm/schema.py", "code_nodes/code_verdict.py", "code_nodes/location.py",
+              "llm/model_calls.py")   # in job_fit/
 
 
 def _git(*args) -> str | None:
@@ -87,4 +89,4 @@ if __name__ == "__main__":
             print(f"{s['id']}  {s['prompt_version']}  saved {s['saved']}  commit {s['git_commit']}"
                   f"{'  (uncommitted changes)' if s['uncommitted_changes'] else ''}")
     else:
-        print("python -m job_fit.snapshot list | diff <id> <id>")
+        print("python -m job_fit.llm.snapshot list | diff <id> <id>")

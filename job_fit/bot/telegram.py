@@ -32,7 +32,7 @@ from datetime import date, datetime
 
 import requests
 
-from job_fit.location import HOME, WEEKLY_RADIUS_KM, distance_km
+from job_fit.code_nodes.location import HOME, WEEKLY_RADIUS_KM, distance_km
 
 API_URL = "https://api.telegram.org/bot{token}/{method}"
 POSTING_URL = "https://www.arbeitsagentur.de/jobsuche/jobdetail/{refnr}"

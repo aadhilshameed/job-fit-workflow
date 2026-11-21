@@ -1,14 +1,14 @@
 """The free keyword filter on the title, ported from n8n ("Filter AI roles"), made more lenient on 19 Nov 2026.
 
 It sorts every search result into keep, check or drop, before any detail call. Everything that is not
-dropped goes on to the relevance question (relevance.py), which reads the whole posting. Because that
+dropped goes on to the Decisions API filter (llm/decisions_api_filter.py), which reads the whole posting. Because that
 question now does the careful work, this filter only throws out what is clearly off-target, and
 lets doubtful titles through:
 - a GenAI word in the title (LLM, LLMs, GenAI, agent, chatbot, prompt, generative) is never dropped:
   if a blocked word or occupation is also there, it becomes "check" instead;
 - "Artificial Intelligence" counts as an AI word.
 
-The old stage 2 (a "check" posting needed two GenAI words in its text) is gone: the relevance question
+The old stage 2 (a "check" posting needed two GenAI words in its text) is gone: the Decisions API filter
 replaced it. genai_signals() is kept only so the batch file shows which words a posting contains.
 """
 

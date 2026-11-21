@@ -13,11 +13,11 @@
     "lon": 7.498367336
    }
   ],
-  "target_probability": 0.76,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.76,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "13635-3a4332b9_JB5282037-S",
@@ -33,11 +33,11 @@
     "lon": 13.3650884
    }
   ],
-  "target_probability": 0.95,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.95,
+  "ai_work_type": "ai_automation",
   "office_presence": "occasional",
   "presence_confidence": 0.89,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12117-YF-53146-YF-S",
@@ -53,11 +53,11 @@
     "lon": 10.9973729
    }
   ],
-  "target_probability": 0.86,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.86,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.56,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1004018125-S",
@@ -73,11 +73,11 @@
     "lon": 7.508767846000069
    }
   ],
-  "target_probability": 0.79,
-  "main_focus": "other",
+  "ai_eng_probability": 0.79,
+  "ai_work_type": "other",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.33,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12951-266dd1bb-f9c0-47fb--S",
@@ -93,11 +93,11 @@
     "lon": 10.987713
    }
   ],
-  "target_probability": 0.86,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.86,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.84,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "13635-11ee6672_JB5302127-S",
@@ -113,11 +113,11 @@
     "lon": 11.2372801
    }
   ],
-  "target_probability": 0.82,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.82,
+  "ai_work_type": "ai_automation",
   "office_presence": "occasional",
   "presence_confidence": 0.55,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1004032978-S",
@@ -133,11 +133,11 @@
     "lon": 11.8688041
    }
   ],
-  "target_probability": 0.74,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.74,
+  "ai_work_type": "ai_automation",
   "office_presence": "occasional",
   "presence_confidence": 0.91,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "15986-REF300188Y-0f90b83-S",
@@ -153,11 +153,11 @@
     "lon": 9.9558042
    }
   ],
-  "target_probability": 0.93,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.93,
+  "ai_work_type": "ai_engineering",
   "office_presence": "occasional",
   "presence_confidence": 0.96,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "19376-44552790-114-S",
@@ -173,11 +173,11 @@
     "lon": 6.9170333
    }
   ],
-  "target_probability": 0.53,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.53,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1003946149-S",
@@ -193,11 +193,11 @@
     "lon": 6.4515195
    }
   ],
-  "target_probability": 0.73,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.73,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12465-1646595-2-S",
@@ -213,11 +213,11 @@
     "lon": 10.5232561
    }
   ],
-  "target_probability": 0.69,
-  "main_focus": "other",
+  "ai_eng_probability": 0.69,
+  "ai_work_type": "other",
   "office_presence": "occasional",
   "presence_confidence": 0.98,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12811-2356493-S",
@@ -233,11 +233,11 @@
     "lon": 10.2919815
    }
   ],
-  "target_probability": 0.92,
-  "main_focus": "agentic_ai",
+  "ai_eng_probability": 0.92,
+  "ai_work_type": "agentic_ai",
   "office_presence": "occasional",
   "presence_confidence": 0.43,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12462-1648388-1-S",
@@ -253,11 +253,11 @@
     "lon": 11.5532293
    }
   ],
-  "target_probability": 0.86,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.86,
+  "ai_work_type": "ai_automation",
   "office_presence": "weekly",
   "presence_confidence": 0.39,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12462-1647922-1-S",
@@ -273,11 +273,11 @@
     "lon": 11.5532293
    }
   ],
-  "target_probability": 0.8,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.8,
+  "ai_work_type": "ai_engineering",
   "office_presence": "occasional",
   "presence_confidence": 0.34,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12951-dd7f044e-709a-4c72--S",
@@ -293,11 +293,11 @@
     "lon": 8.6358082
    }
   ],
-  "target_probability": 0.95,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.95,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.76,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12465-1653661-1-S",
@@ -313,11 +313,11 @@
     "lon": 12.0963197
    }
   ],
-  "target_probability": 0.95,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.95,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "14922-146208-S",
@@ -333,11 +333,11 @@
     "lon": 9.966891
    }
   ],
-  "target_probability": 0.96,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.96,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "13635-eaa09236_JB5283763-S",
@@ -353,11 +353,11 @@
     "lon": 8.639339
    }
   ],
-  "target_probability": 0.98,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.98,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1003916890-S",
@@ -379,11 +379,11 @@
     "lon": 8.8627815
    }
   ],
-  "target_probability": 0.86,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.86,
+  "ai_work_type": "ai_engineering",
   "office_presence": "occasional",
   "presence_confidence": 0.93,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "13635-5205ad40_JB5300978-S",
@@ -399,11 +399,11 @@
     "lon": 6.7731433
    }
   ],
-  "target_probability": 0.76,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.76,
+  "ai_work_type": "ai_automation",
   "office_presence": "weekly",
   "presence_confidence": 0.61,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1003971412-S",
@@ -419,11 +419,11 @@
     "lon": 8.3393145
    }
   ],
-  "target_probability": 0.58,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.58,
+  "ai_work_type": "ai_automation",
   "office_presence": "occasional",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12465-1652270-1-S",
@@ -439,11 +439,11 @@
     "lon": 12.3925069
    }
   ],
-  "target_probability": 0.95,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.95,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12811-2372733-S",
@@ -459,11 +459,11 @@
     "lon": 9.929403
    }
   ],
-  "target_probability": 0.93,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.93,
+  "ai_work_type": "ai_automation",
   "office_presence": "weekly",
   "presence_confidence": 0.96,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12465-1647590-1-S",
@@ -491,11 +491,11 @@
     "lon": 10.5232561
    }
   ],
-  "target_probability": 0.75,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.75,
+  "ai_work_type": "ai_automation",
   "office_presence": "occasional",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12951-23ae1766-dfde-4b1a--S",
@@ -511,11 +511,11 @@
     "lon": 11.5147165
    }
   ],
-  "target_probability": 0.98,
-  "main_focus": "agentic_ai",
+  "ai_eng_probability": 0.98,
+  "ai_work_type": "agentic_ai",
   "office_presence": "occasional",
   "presence_confidence": 0.77,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1003935940-S",
@@ -531,11 +531,11 @@
     "lon": 7.0830765
    }
   ],
-  "target_probability": 0.77,
-  "main_focus": "other",
+  "ai_eng_probability": 0.77,
+  "ai_work_type": "other",
   "office_presence": "remote",
   "presence_confidence": 0.89,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12465-1654131-1-S",
@@ -551,11 +551,11 @@
     "lon": 8.4248419
    }
   ],
-  "target_probability": 0.74,
-  "main_focus": "other",
+  "ai_eng_probability": 0.74,
+  "ai_work_type": "other",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "16604-976977-008-S",
@@ -571,11 +571,11 @@
     "lon": 6.9785051
    }
   ],
-  "target_probability": 0.81,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.81,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12336-a26f1156j0456906-S",
@@ -591,11 +591,11 @@
     "lon": 6.5965473
    }
   ],
-  "target_probability": 0.72,
-  "main_focus": "other",
+  "ai_eng_probability": 0.72,
+  "ai_work_type": "other",
   "office_presence": "not_mentioned",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "20208-0b930b41674c496d9b4-S",
@@ -611,11 +611,11 @@
     "lon": 10.886053159
    }
   ],
-  "target_probability": 0.63,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.63,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.98,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "12951-9ae6af22-7ccc-45fb--S",
@@ -631,11 +631,11 @@
     "lon": 13.413114
    }
   ],
-  "target_probability": 0.85,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.85,
+  "ai_work_type": "ai_automation",
   "office_presence": "weekly",
   "presence_confidence": 0.79,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "16947-984545506-S",
@@ -651,11 +651,11 @@
     "lon": 9.8558503
    }
   ],
-  "target_probability": 0.78,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.78,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.31,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1004003687-S",
@@ -671,11 +671,11 @@
     "lon": 10.492317
    }
   ],
-  "target_probability": 0.84,
-  "main_focus": "ai_automation",
+  "ai_eng_probability": 0.84,
+  "ai_work_type": "ai_automation",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.99,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "13151-1647543-1-S",
@@ -691,11 +691,11 @@
     "lon": 8.9960969
    }
   ],
-  "target_probability": 0.95,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.95,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 0.35,
-  "relevance_error": null
+  "decisions_call_error": null
  },
  {
   "refnr": "10001-1003841532-S",
@@ -711,10 +711,10 @@
     "lon": 7.03206
    }
   ],
-  "target_probability": 0.82,
-  "main_focus": "ai_engineering",
+  "ai_eng_probability": 0.82,
+  "ai_work_type": "ai_engineering",
   "office_presence": "not_mentioned",
   "presence_confidence": 1.0,
-  "relevance_error": null
+  "decisions_call_error": null
  }
 ]

@@ -9,7 +9,7 @@ Only postings that get sent are summarised (not skips). The preview prints what 
 
 from pydantic import BaseModel
 
-from job_fit.llm import _client
+from job_fit.llm.model_calls import _client
 
 SUMMARY_MODEL = "claude-haiku-5-5"
 SUMMARY_EFFORT = "high"    # low was cheaper, but failed on a long posting (20 Nov); high costs about 0.1 cent more

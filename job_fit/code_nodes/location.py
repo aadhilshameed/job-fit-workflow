@@ -1,7 +1,7 @@
 """Can I get to this job's office as often as it needs? Decided in code, the same way every time.
 
 Inputs:
-- office_presence: from the relevance call (relevance.py): not_mentioned, remote, occasional, weekly,
+- office_presence: from the Decisions API filter (llm/decisions_api_filter.py): not_mentioned, remote, occasional, weekly,
   regular_unspecified.
 - the posting's locations from the Arbeitsagentur API: coordinates (breite, laenge) and federal state (region).
 

@@ -10,7 +10,7 @@ The steps, in order (each writes to the database as it goes, so a crash loses no
 2. skip what the database already has (db.seen_before)
 3. title filter: postings it drops are not fetched or stored (filtering again tomorrow costs nothing)
 4. details + Decisions API screen + location rule -> one row in screened_postings
-5. Haiku assessment + verdict.py, for target roles (and for postings whose screen call failed: fail-open),
+5. Haiku assessment + code_verdict.py, for AI engineering roles (and for postings whose Decisions API call failed: fail-open),
    ASSESSMENT_WORKERS at a time -> model_verdicts and verdict_requirements. Postings from earlier runs that
    still have no verdict (a failed call, or a run stopped by --max) are tried again (db.still_to_assess)
 6. summary + Telegram for apply, stretch and lack_of_info -> summary columns and sent_to_telegram_at
@@ -38,16 +38,17 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from job_fit import arbeitsagentur, db                                  # noqa: E402
+from job_fit import db
+from job_fit.sources import arbeitsagentur                                  # noqa: E402
 from job_fit.bot import telegram                                         # noqa: E402
-from job_fit.llm import ask_model                                        # noqa: E402
-from job_fit.location import location_gap, location_note, locations_from_api   # noqa: E402
-from job_fit.prompt import PROMPT_VERSION, build_user_message            # noqa: E402
-from job_fit.relevance import check_relevance                            # noqa: E402
-from job_fit.summary import (SUMMARY_EFFORT, SUMMARY_MODEL, SUMMARY_PROMPT_VERSION,   # noqa: E402
+from job_fit.llm.model_calls import ask_model                                        # noqa: E402
+from job_fit.code_nodes.location import location_gap, location_note, locations_from_api   # noqa: E402
+from job_fit.llm.prompt import PROMPT_VERSION, build_user_message            # noqa: E402
+from job_fit.llm.decisions_api_filter import ask_decisions_filter                            # noqa: E402
+from job_fit.llm.summary import (SUMMARY_EFFORT, SUMMARY_MODEL, SUMMARY_PROMPT_VERSION,   # noqa: E402
                              summarize)
-from job_fit.title_filter import title_status                            # noqa: E402
-from job_fit.verdict import compute_verdict                              # noqa: E402
+from job_fit.code_nodes.title_filter import title_status                            # noqa: E402
+from job_fit.code_nodes.code_verdict import compute_verdict                              # noqa: E402
 
 # the fixed setup, chosen on 20 Nov 2026 (Haiku high beat medium on the 35-posting check)
 ASSESSMENT_MODEL = {"provider": "anthropic", "model": "claude-haiku-5-5", "effort": "high"}
@@ -72,7 +73,7 @@ def published_on(job: dict) -> date | None:
 
 
 def assess(posting: dict, background: str) -> dict:
-    """One Haiku call + verdict.py for one posting. Never raises: a failure comes back as an error."""
+    """One Haiku call + code_verdict.py for one posting. Never raises: a failure comes back as an error."""
     cfg = ASSESSMENT_MODEL
     start = time.perf_counter()
     try:
@@ -131,18 +132,18 @@ def run(args) -> None:
                    "location_gap": None, "location_note": None}
         if text:
             try:
-                rel = check_relevance(title, text)
-                rel.pop("input_tokens", None)
-                posting["relevance"] = rel
-                posting["office_presence"] = rel["office_presence"]
-                posting["location_gap"] = location_gap(rel["office_presence"], locations, rel["presence_confidence"])
-                posting["location_note"] = location_note(rel["office_presence"], locations)
+                decisions = ask_decisions_filter(title, text)
+                decisions.pop("input_tokens", None)
+                posting["decisions"] = decisions
+                posting["office_presence"] = decisions["office_presence"]
+                posting["location_gap"] = location_gap(decisions["office_presence"], locations, decisions["presence_confidence"])
+                posting["location_note"] = location_note(decisions["office_presence"], locations)
             except Exception as e:                                          # noqa: BLE001
-                posting["relevance_error"] = f"{type(e).__name__}: {e}"[:300]
+                posting["decisions_call_error"] = f"{type(e).__name__}: {e}"[:300]
         posting["id"] = db.save_posting(conn, posting)
-        relevant = posting.get("relevance", {}).get("is_target_role") or "relevance_error" in posting
-        print(f"[{i}] {title[:60]:60} {'-> Haiku' if relevant and text else 'not a target role' if text else 'no text'}")
-        if relevant and text:
+        goes_to_haiku = posting.get("decisions", {}).get("is_it_ai_eng") or "decisions_call_error" in posting
+        print(f"[{i}] {title[:60]:60} {'-> Haiku' if goes_to_haiku and text else 'not an AI engineering role' if text else 'no text'}")
+        if goes_to_haiku and text:
             to_assess.append(posting)
 
     # 5: Haiku, several at a time; the database writes stay in this thread.
@@ -221,3 +222,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    

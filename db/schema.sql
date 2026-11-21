@@ -14,9 +14,9 @@ CREATE TABLE screened_postings (
     published_on TIMESTAMPTZ,
     found_on TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-    -- from the API decisions filter (relevance.py, OpenAI Decisions API).
+    -- from the API decisions filter (llm/decisions_api_filter.py, OpenAI Decisions API).
     -- All can be empty: if that call fails, the posting still goes on to Haiku (fail-open).
-    relevance_error TEXT,            -- shows error message: if the call fails
+    decisions_call_error TEXT,            -- shows error message: if the call fails
     ai_eng_probability NUMERIC,      -- 0 to 1: how likely this is an AI engineering related job
     is_it_ai_eng BOOLEAN,            -- yes or no: is the probability at least 0.49 (the threshold)
     ai_work_type TEXT,               -- agentic_ai, ai_automation, ai_engineering or other
@@ -53,7 +53,7 @@ CREATE TABLE model_verdicts (
     model_extraction_error TEXT,         -- the error message when the Haiku call failed
     model_verdict TEXT,                  -- the verdict Haiku gave (kept only to compare)
     verdict_reason TEXT,                 -- Haiku's one-sentence reason
-    code_verdict TEXT,                   -- the real verdict from verdict.py: apply, stretch, lack_of_info or skip
+    code_verdict TEXT,                   -- the real verdict from code_verdict.py: apply, stretch, lack_of_info or skip
 
     -- what the assessment cost
     input_tokens INTEGER,
@@ -72,7 +72,12 @@ CREATE TABLE model_verdicts (
     summary_cost_usd NUMERIC,
     summary_time_seconds NUMERIC,
 
-    sent_to_telegram_at TIMESTAMPTZ      -- empty means never sent (a skip, or a crash before sending)
+    sent_to_telegram_at TIMESTAMPTZ,     -- empty means never sent (a skip, or a crash before sending)
+
+    -- filled in by Postgres itself, always the sum of the two calls (the Decisions API's tiny cost is not included).
+    -- Last, because ALTER TABLE ... ADD COLUMN always adds at the end, so this matches the live table.
+    total_cost_usd NUMERIC GENERATED ALWAYS AS (coalesce(cost_usd, 0) + coalesce(summary_cost_usd, 0)) STORED,
+    total_seconds NUMERIC GENERATED ALWAYS AS (coalesce(time_seconds, 0) + coalesce(summary_time_seconds, 0)) STORED
 );
 
 
@@ -84,9 +89,9 @@ CREATE TABLE verdict_requirements (
     requirement_text TEXT NOT NULL,      -- word for word from the posting
     found_in TEXT NOT NULL,              -- requirements_section, tasks_section, implied_by_task or other
     requirement_type TEXT NOT NULL,      -- technical_skill, soft_skill or eligibility
-    critical_or_standard TEXT NOT NULL,  -- critical or standard (implied_by_task is always standard, set by verdict.py)
+    critical_or_standard TEXT NOT NULL,  -- critical or standard (implied_by_task is always standard, set by code_verdict.py)
     background_quote TEXT,               -- the line from my background that proves it; empty when Haiku said "none"
-    quote_status TEXT NOT NULL,          -- verified (found word for word), not_verified or no_quote (set by verdict.py)
+    quote_status TEXT NOT NULL,          -- verified (found word for word), not_verified or no_quote (set by code_verdict.py)
     match_reason TEXT NOT NULL,          -- Haiku's one sentence on why it is a match or a gap
     match_result TEXT NOT NULL           -- match, partial, hard_gap or not_stated
 );

@@ -9,7 +9,7 @@ is lack_of_info, never apply.
 
 import re
 
-from .schema import Assessment
+from job_fit.llm.schema import Assessment
 
 # a requirement about a spoken language (German, English, ...). Its partial never counts towards the
 # two-partial limit, because a lower language level alone should never stop an application (19 Nov 2026)

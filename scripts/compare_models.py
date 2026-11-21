@@ -10,7 +10,7 @@ Run it from the repo folder:
 Same idea as the AI Project screening notebook: every answer is appended to a .jsonl file the moment it
 arrives, so a crash or Ctrl+C loses nothing, and running again only does what is missing.
 Every row also stores a snapshot id: the exact prompt, background and verdict code it was made with
-are saved in results/snapshots/ (see job_fit/snapshot.py).
+are saved in results/snapshots/ (see job_fit/llm/snapshot.py).
 """
 
 try:
@@ -35,12 +35,12 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from job_fit.llm import ask_model                      # noqa: E402
-from job_fit.location import location_gap, location_note   # noqa: E402
-from job_fit.prompt import PROMPT_VERSION, build_user_message   # noqa: E402
-from job_fit.relevance import THRESHOLD                # noqa: E402
-from job_fit.snapshot import save_snapshot             # noqa: E402
-from job_fit.verdict import compute_verdict            # noqa: E402
+from job_fit.llm.model_calls import ask_model                      # noqa: E402
+from job_fit.code_nodes.location import location_gap, location_note   # noqa: E402
+from job_fit.llm.prompt import PROMPT_VERSION, build_user_message   # noqa: E402
+from job_fit.llm.decisions_api_filter import THRESHOLD                # noqa: E402
+from job_fit.llm.snapshot import save_snapshot             # noqa: E402
+from job_fit.code_nodes.code_verdict import compute_verdict            # noqa: E402
 
 # ---------------------------------------------------------------- the frozen setup
 
@@ -86,17 +86,17 @@ MAX_ATTEMPTS = 2              # one retry, as the gate allows
 _write_lock = threading.Lock()
 
 
-def passes_relevance(p) -> bool:
-    """Only postings the relevance check lets through get assessed, as in the real pipeline.
-    A posting without a relevance answer (not checked yet, or the call failed) is assessed anyway."""
-    return p.get("target_probability") is None or p["target_probability"] >= THRESHOLD
+def passes_decisions_filter(p) -> bool:
+    """Only postings the Decisions API filter lets through get assessed, as in the real pipeline.
+    A posting without a Decisions API answer (not checked yet, or the call failed) is assessed anyway."""
+    return p.get("ai_eng_probability") is None or p["ai_eng_probability"] >= THRESHOLD
 
 
 def load_inputs(set_path=DEFAULT_SET):
     everything = json.loads(set_path.read_text(encoding="utf-8"))
-    postings = [p for p in everything if passes_relevance(p)]
+    postings = [p for p in everything if passes_decisions_filter(p)]
     if len(postings) < len(everything):
-        print(f"{len(everything) - len(postings)} postings dropped by the relevance check "
+        print(f"{len(everything) - len(postings)} postings dropped by the Decisions API filter "
               f"(below {THRESHOLD}), {len(postings)} assessed")
     background = (DATA / "background.txt").read_text(encoding="utf-8")
     labels_path = (DATA / "labels.json" if set_path.resolve() == DEFAULT_SET.resolve()
@@ -153,7 +153,7 @@ def cmd_run(args):
     missing = [p["refnr"] for p in postings if not p.get("office_presence")]
     if missing:
         print(f"WARNING: {len(missing)} postings have no office_presence, so no location check for them. "
-              f"Run first: python -m scripts.check_relevance --set {args.set}")
+              f"Run first: python -m scripts.run_decisions_filter_on_set --set {args.set}")
     RESULTS.parent.mkdir(parents=True, exist_ok=True)
     done = {(r["config"], r["refnr"], r["run"]) for r in load_rows() if not r["error"]}
     names = args.only or list(CONFIGS)
@@ -269,7 +269,7 @@ def cmd_report(args):
     snapshots = Counter(r.get("snapshot") or "none (before snapshots)" for r in rows)
     print("Snapshots: " + ", ".join(f"{k} ({v} rows)" for k, v in snapshots.items()))
     if len(snapshots) > 1:
-        print("WARNING: this file mixes setups. See what changed: python -m job_fit.snapshot diff <id> <id>")
+        print("WARNING: this file mixes setups. See what changed: python -m job_fit.llm.snapshot diff <id> <id>")
     print("\nRule picks:", chosen or "nothing passes")
 
     page = build_report(summary, postings, rows, labels, list(CONFIGS), RULE, chosen,

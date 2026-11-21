@@ -1,16 +1,16 @@
 """Fetch fresh postings and run them through every step before the assessment.
 
-    python -m scripts.fetch_postings                  # search, title filter, details, relevance
+    python -m scripts.fetch_postings                  # search, title filter, details, Decisions API filter
     python -m scripts.fetch_postings --max 50         # stop after 50 postings have passed the title filter
     python -m scripts.fetch_postings --days 7         # only postings published in the last 7 days
 
 Steps: search (6 terms) -> title filter (keep / check / drop) -> details for everything not dropped ->
-relevance call (OpenAI Decisions API: target role? main focus? office presence?) -> location rule in code -> save.
+Decisions API filter (OpenAI: AI engineering role? AI work type? office presence?) -> location rule in code -> save.
 
 Writes two files into data/batches/:
 - batch_<date>.json: EVERY search result, with what each step decided: the ones the title filter dropped,
   the duplicates, and the full checks for the rest (so we can audit every step, including the filter)
-- set_<date>.json: only the postings that are a target role, in the shape compare_models expects:
+- set_<date>.json: only the postings that are an AI engineering role, in the shape compare_models expects:
       python -m scripts.compare_models run --set data/batches/set_<date>.json
   Postings with a location gap stay in the set: the gap turns their verdict into skip, and the report shows why.
 Postings already in comparison_set.json or in an earlier batch are skipped, so every batch is new.
@@ -36,14 +36,14 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from job_fit import arbeitsagentur                                  # noqa: E402
-from job_fit.location import location_gap, location_note, locations_from_api   # noqa: E402
-from job_fit.relevance import check_relevance                        # noqa: E402
-from job_fit.title_filter import genai_signals, title_status         # noqa: E402
+from job_fit.sources import arbeitsagentur                                  # noqa: E402
+from job_fit.code_nodes.location import location_gap, location_note, locations_from_api   # noqa: E402
+from job_fit.llm.decisions_api_filter import ask_decisions_filter                        # noqa: E402
+from job_fit.code_nodes.title_filter import genai_signals, title_status         # noqa: E402
 
 BATCHES = ROOT / "data" / "batches"
 SET_FIELDS = ("refnr", "title", "firma", "ort", "description", "locations",
-              "target_probability", "main_focus", "office_presence", "presence_confidence", "relevance_error")
+              "ai_eng_probability", "ai_work_type", "office_presence", "presence_confidence", "decisions_call_error")
 
 
 def duplicate_key(firma, title, city) -> str:
@@ -99,7 +99,7 @@ def main():
     print(f"Title filter: {len(passed)} pass ({sum(s == 'keep' for _, s, _ in passed)} keep, "
           f"{sum(s == 'check' for _, s, _ in passed)} check), taking {min(len(passed), args.max)}")
 
-    batch, final_set, relevance_tokens = [], [], 0
+    batch, final_set, decisions_tokens = [], [], 0
     for i, (job, status, key) in enumerate(passed[: args.max], 1):
         refnr = job["referenznummer"]
         try:
@@ -116,33 +116,33 @@ def main():
                "duplicate_refnrs": extra_refnrs[key]}
         if text:
             try:
-                rel = check_relevance(title, text)
-                relevance_tokens += rel.pop("input_tokens")
-                row.update(rel)
-                row["location_gap"] = location_gap(rel["office_presence"], locations, rel["presence_confidence"])
-                row["location_note"] = location_note(rel["office_presence"], locations)
+                decisions = ask_decisions_filter(title, text)
+                decisions_tokens += decisions.pop("input_tokens")
+                row.update(decisions)
+                row["location_gap"] = location_gap(decisions["office_presence"], locations, decisions["presence_confidence"])
+                row["location_note"] = location_note(decisions["office_presence"], locations)
             except Exception as e:                                      # noqa: BLE001
-                row["relevance_error"] = f"{type(e).__name__}: {e}"[:300]
+                row["decisions_call_error"] = f"{type(e).__name__}: {e}"[:300]
         batch.append(row)
-        if "relevance_error" in row:
-            note = "RELEVANCE ERROR " + row["relevance_error"][:60]
+        if "decisions_call_error" in row:
+            note = "DECISIONS API ERROR " + row["decisions_call_error"][:60]
         elif not text:
             note = "no posting text"
         else:
-            note = (f"target {row['target_probability']:.2f} {str(row['main_focus']):15} "
+            note = (f"ai_eng {row['ai_eng_probability']:.2f} {str(row['ai_work_type']):15} "
                     f"presence {row['office_presence']}{('  LOCATION ' + row['location_gap']['kind'].upper()) if row['location_gap'] else ''}")
         print(f"[{i}/{min(len(passed), args.max)}] {title[:55]:55} {note}")
-        # a posting whose relevance call failed goes through anyway: Haiku costs less than a missed job
-        if row.get("is_target_role") or "relevance_error" in row:
+        # a posting whose Decisions API call failed goes through anyway: Haiku costs less than a missed job
+        if row.get("is_it_ai_eng") or "decisions_call_error" in row:
             final_set.append({k: row.get(k) for k in SET_FIELDS})
 
     today = datetime.now().strftime("%Y-%m-%d_%H%M")   # with the time, so a second run on one day never overwrites
     batch_all = batch + dropped        # dropped postings too, so the title filter can be audited
     (BATCHES / f"batch_{today}.json").write_text(json.dumps(batch_all, ensure_ascii=False, indent=1), encoding="utf-8")
     (BATCHES / f"set_{today}.json").write_text(json.dumps(final_set, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"\n{len(batch)} checked, {len(final_set)} are target roles "
-          f"({sum(1 for r in batch if r.get('is_target_role') and r.get('location_gap'))} of them with a location gap). "
-          f"Relevance cost: ${relevance_tokens * 0.10 / 1_000_000:.4f}")
+    print(f"\n{len(batch)} checked, {len(final_set)} are AI engineering roles "
+          f"({sum(1 for r in batch if r.get('is_it_ai_eng') and r.get('location_gap'))} of them with a location gap). "
+          f"Decisions API cost: ${decisions_tokens * 0.10 / 1_000_000:.4f}")
     # the same set under a fixed name, so an overnight command can find it after midnight
     (BATCHES / "set_latest.json").write_text(json.dumps(final_set, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"Saved data/batches/batch_{today}.json, data/batches/set_{today}.json and data/batches/set_latest.json")

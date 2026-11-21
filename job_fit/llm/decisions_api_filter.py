@@ -1,6 +1,6 @@
 """Is this posting the kind of job I am looking for? Asked with a "Decisions API".
 
-Two providers, same questions, same answer shape, so they can be compared (scripts/compare_relevance.py):
+Two providers, same questions, same answer shape, so they can be compared (scripts/compare_decisions_apis.py):
 - "openai": OpenAI Decisions API, model gpt-6-luna (reads OPENAI_API_KEY)
 - "google": Gemini Decisions API, model gemini-decision-1 (reads GEMINI_API_KEY; needs google-genai 3.2 or newer)
 Both cost $0.10 per million input tokens, and output is free.
@@ -9,9 +9,9 @@ A Decisions API answers closed questions with a probability instead of writing t
 (about 1,500 tokens) costs about 0.015 cents.
 
 Three questions share one request (the posting is billed once):
-- yes_no_target_role: the probability that the role is hands-on AI building work. This one decides:
+- yes_no_ai_eng_role: the probability that the role is hands-on AI building work. This one decides:
   THRESHOLD or higher goes to Haiku.
-- choice_main_focus: what the role is mostly about. Only for reading the results, it decides nothing.
+- choice_ai_work_type: what the role is mostly about. Only for reading the results, it decides nothing.
 - choice_office_presence: how often the candidate must be at the office. location.py turns this,
   plus the posting's coordinates and federal state, into a location gap or none.
 """
@@ -19,9 +19,9 @@ Three questions share one request (the posting is billed once):
 DEFAULT_PROVIDER = "openai"
 QUESTIONS_VERSION = "q2"   # q1: first test; q2: "must live in the region" counts as weekly presence
 MODELS = {"openai": "gpt-6-luna", "google": "gemini-decision-1"}
-THRESHOLD = 0.49  # target_probability >= 0.49 goes to Haiku (set 19 Nov 2026 from the 25-posting test)
+THRESHOLD = 0.49  # ai_eng_probability >= 0.49 goes to Haiku (set 19 Nov 2026 from the 25-posting test)
 
-TARGET_ROLE_QUESTION = (
+AI_ENG_ROLE_QUESTION = (
     "Is the main work of this role hands-on building with AI: AI agents (agentic AI), LLM applications, "
     "RAG or retrieval systems, AI-powered workflows and automations, or AI engineering (building software "
     "around AI models: integrating, deploying and evaluating them)? "
@@ -56,7 +56,7 @@ _clients = {}
 
 
 def _client(provider: str):
-    """Create each client on first use, like in llm.py."""
+    """Create each client on first use, like in model_calls.py."""
     if provider not in _clients:
         if provider == "openai":
             from openai import OpenAI
@@ -72,8 +72,8 @@ def _ask_openai(text: str) -> dict:
         model=MODELS["openai"],
         input=text,
         questions=[
-            {"type": "predicate", "name": "yes_no_target_role", "instructions": TARGET_ROLE_QUESTION}, #predicate means yes/no, name-> a label we pick
-            {"type": "choice", "name": "choice_main_focus",
+            {"type": "predicate", "name": "yes_no_ai_eng_role", "instructions": AI_ENG_ROLE_QUESTION}, #predicate means yes/no, name-> a label we pick
+            {"type": "choice", "name": "choice_ai_work_type",
              "instructions": "What is the main work of this role?", "choices": FOCUS_CHOICES},
             {"type": "choice", "name": "choice_office_presence",
              "instructions": "How often must the person in this role be physically present at the office?",
@@ -81,13 +81,13 @@ def _ask_openai(text: str) -> dict:
         ],
     )
     answers = {a.name: a for a in decision.answers}      # a list of answers -> a dictionary by name
-    target, focus, presence = (answers.get(n) for n in ("yes_no_target_role", "choice_main_focus",
+    ai_eng, focus, presence = (answers.get(n) for n in ("yes_no_ai_eng_role", "choice_ai_work_type",
                                                          "choice_office_presence"))
-    if target is None or target.type == "refusal":
-        raise ValueError("The Decisions API refused or did not answer yes_no_target_role")
+    if ai_eng is None or ai_eng.type == "refusal":
+        raise ValueError("The Decisions API refused or did not answer yes_no_ai_eng_role")
     ok = lambda a: a is not None and a.type == "choice"
-    return {"probability": target.probability,
-            "focus": focus.choice if ok(focus) else None, "focus_confidence": focus.confidence if ok(focus) else None,
+    return {"probability": ai_eng.probability,
+            "focus": focus.choice if ok(focus) else None, "work_type_confidence": focus.confidence if ok(focus) else None,
             "presence": presence.choice if ok(presence) else None,
             "presence_confidence": presence.confidence if ok(presence) else None,
             "input_tokens": decision.usage.input_tokens}
@@ -100,22 +100,22 @@ def _ask_gemini(text: str) -> dict:
         model=MODELS["google"],
         input=text,
         questions={
-            "yes_no_target_role": {"type": "noul", "instructions": TARGET_ROLE_QUESTION},
-            "choice_main_focus": {"type": "choice", "instructions": "What is the main work of this role?",
+            "yes_no_ai_eng_role": {"type": "noul", "instructions": AI_ENG_ROLE_QUESTION},
+            "choice_ai_work_type": {"type": "choice", "instructions": "What is the main work of this role?",
                            "criteria": {c["value"]: c["description"] for c in FOCUS_CHOICES}},
             "choice_office_presence": {"type": "choice",
                                 "instructions": "How often must the person in this role be physically present at the office?",
                                 "criteria": {c["value"]: c["description"] for c in PRESENCE_CHOICES}},
         },
     )
-    target, focus, presence = (result.answers.get(n) for n in ("yes_no_target_role", "choice_main_focus",
+    ai_eng, focus, presence = (result.answers.get(n) for n in ("yes_no_ai_eng_role", "choice_ai_work_type",
                                                                 "choice_office_presence"))
-    if target is None or getattr(target, "noul", None) is None:
-        raise ValueError("The Gemini Decisions API did not answer yes_no_target_role")
+    if ai_eng is None or getattr(ai_eng, "noul", None) is None:
+        raise ValueError("The Gemini Decisions API did not answer yes_no_ai_eng_role")
     usage = result.usage
     tokens = getattr(usage, "total_input_tokens", None) or getattr(usage, "input_tokens", None) or 0
-    return {"probability": target.noul,
-            "focus": getattr(focus, "choice", None), "focus_confidence": getattr(focus, "confidence", None),
+    return {"probability": ai_eng.noul,
+            "focus": getattr(focus, "choice", None), "work_type_confidence": getattr(focus, "confidence", None),
             "presence": getattr(presence, "choice", None),
             "presence_confidence": getattr(presence, "confidence", None),
             "input_tokens": tokens}
@@ -124,7 +124,7 @@ def _ask_gemini(text: str) -> dict:
 ATTEMPTS = 3          # a failed call is tried again twice, 3 seconds apart
 
 
-def check_relevance(title: str, description: str, provider: str = DEFAULT_PROVIDER) -> dict:
+def ask_decisions_filter(title: str, description: str, provider: str = DEFAULT_PROVIDER) -> dict:
     """Returns the probability, the yes/no decision, the main focus, the office presence and the token count.
 
     Raises the last error if all attempts fail; the caller decides what to do then (fetch_postings lets
@@ -142,10 +142,10 @@ def check_relevance(title: str, description: str, provider: str = DEFAULT_PROVID
             time.sleep(3)
     rnd = lambda x: round(x, 3) if x is not None else None
     return {
-        "target_probability": rnd(a["probability"]),
-        "is_target_role": a["probability"] >= THRESHOLD,
-        "main_focus": a["focus"],
-        "focus_confidence": rnd(a["focus_confidence"]),
+        "ai_eng_probability": rnd(a["probability"]),
+        "is_it_ai_eng": a["probability"] >= THRESHOLD,
+        "ai_work_type": a["focus"],
+        "work_type_confidence": rnd(a["work_type_confidence"]),
         "office_presence": a["presence"],
         "presence_confidence": rnd(a["presence_confidence"]),
         "input_tokens": a["input_tokens"],

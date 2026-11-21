@@ -3,7 +3,7 @@
 v1 (frozen 19 Nov 2026): the n8n prompt with the implied-skill rule shortened.
 v2 (19 Nov 2026): v1 plus a work-location rule. Haiku then marked presence requirements "not stated"
     instead of checking them against the travel limits, so:
-v3 (19 Nov 2026): location is taken out of the prompt completely. The relevance call asks how often the
+v3 (19 Nov 2026): location is taken out of the prompt completely. The Decisions API filter asks how often the
     office needs you, and location.py decides in code.
 
 v4 (20 Nov 2026): prompt text unchanged. The version moves because the inputs changed: the background

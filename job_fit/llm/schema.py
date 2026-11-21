@@ -1,7 +1,7 @@
 """What the LLM is asked to fill for one job posting.
 
 The same Pydantic models are sent to every provider as the response schema, so every model
-must answer in exactly this shape. The verdict is NOT taken from here: verdict.py computes it
+must answer in exactly this shape. The verdict is NOT taken from here: code_nodes/code_verdict.py computes it
 from the per-requirement labels. model_verdict is kept only to compare with the code's verdict.
 """
 

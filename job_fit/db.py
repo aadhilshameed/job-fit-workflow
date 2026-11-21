@@ -2,10 +2,10 @@
 
 The tables are in db/schema.sql. The daily run fills them step by step:
 1. seen_before()     before anything else: skip a posting we already have
-   still_to_assess()  target roles saved earlier without a verdict yet (the Haiku call failed, or --max
+   still_to_assess()  AI engineering roles saved earlier without a verdict yet (the Haiku call failed, or --max
                       stopped the run): they are tried again
 2. save_posting()    after the Decisions API screen: one row in screened_postings
-3. save_verdict()    after Haiku and verdict.py: one row in model_verdicts, plus its rows in verdict_requirements
+3. save_verdict()    after Haiku and code_verdict.py: one row in model_verdicts, plus its rows in verdict_requirements
 4. save_summary()    after the summary call: fills in the summary columns of that verdict
 5. mark_sent()       after Telegram accepted the message: fills in sent_to_telegram_at
 
@@ -56,7 +56,7 @@ def seen_before(conn, source: str, source_id: str, company: str | None, title: s
 
 
 def still_to_assess(conn) -> list[dict]:
-    """Saved postings that should get a verdict but have none yet: a target role (or the screen call failed),
+    """Saved postings that should get a verdict but have none yet: an AI engineering role (or the Decisions API call failed),
     with text, found in the last RETRY_DAYS days, with no successful verdict and fewer than MAX_ATTEMPTS tries.
     Returned in the shape the daily run assesses."""
     with conn.cursor(row_factory=dict_row) as cur:
@@ -64,7 +64,7 @@ def still_to_assess(conn) -> list[dict]:
             """
             SELECT p.*
             FROM screened_postings p
-            WHERE (p.is_it_ai_eng OR p.relevance_error IS NOT NULL)
+            WHERE (p.is_it_ai_eng OR p.decisions_call_error IS NOT NULL)
               AND p.description <> ''
               AND p.found_on > now() - make_interval(days => %(days)s)
               AND NOT EXISTS (SELECT 1 FROM model_verdicts v
@@ -88,16 +88,16 @@ def save_posting(conn, posting: dict) -> int:
     """One row in screened_postings; returns its id.
 
     posting: source, source_id, title, company, city, locations, description, and optionally duplicate_ids,
-    published_on, relevance (the dict check_relevance() returns), relevance_error, location_gap
+    published_on, decisions (the dict ask_decisions_filter() returns), decisions_call_error, location_gap
     ({"kind", "reason"} or None) and location_note.
     """
-    rel = posting.get("relevance") or {}
+    decisions = posting.get("decisions") or {}
     gap = posting.get("location_gap") or {}
     row = conn.execute(
         """
         INSERT INTO screened_postings
             (source, source_id, duplicate_ids, title, company, city, locations, description, published_on,
-             relevance_error, ai_eng_probability, is_it_ai_eng, ai_work_type, work_type_confidence,
+             decisions_call_error, ai_eng_probability, is_it_ai_eng, ai_work_type, work_type_confidence,
              office_presence, presence_confidence, location_note, location_gap_type, location_gap_reason)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id
@@ -105,9 +105,9 @@ def save_posting(conn, posting: dict) -> int:
         (posting["source"], posting["source_id"], posting.get("duplicate_ids") or [],
          posting["title"], posting["company"], posting.get("city"), Jsonb(posting.get("locations") or []),
          posting.get("description") or "", posting.get("published_on"),
-         posting.get("relevance_error"), rel.get("target_probability"), rel.get("is_target_role"),
-         rel.get("main_focus"), rel.get("focus_confidence"), rel.get("office_presence"),
-         rel.get("presence_confidence"), posting.get("location_note"), gap.get("kind"), gap.get("reason")),
+         posting.get("decisions_call_error"), decisions.get("ai_eng_probability"), decisions.get("is_it_ai_eng"),
+         decisions.get("ai_work_type"), decisions.get("work_type_confidence"), decisions.get("office_presence"),
+         decisions.get("presence_confidence"), posting.get("location_note"), gap.get("kind"), gap.get("reason")),
     ).fetchone()
     return row[0]
 
@@ -180,8 +180,8 @@ def _self_test():
         posting = {"source": "selftest", "source_id": "TEST-1", "title": "Werkstudent KI (m/w/d)",
                    "company": "Test GmbH", "city": "Hof", "locations": [{"city": "Hof", "lat": 50.3, "lon": 11.9}],
                    "description": "Wir suchen dich.", "duplicate_ids": ["TEST-1b"],
-                   "relevance": {"target_probability": 0.83, "is_target_role": True, "main_focus": "agentic_ai",
-                                 "focus_confidence": 0.7, "office_presence": "occasional",
+                   "decisions": {"ai_eng_probability": 0.83, "is_it_ai_eng": True, "ai_work_type": "agentic_ai",
+                                 "work_type_confidence": 0.7, "office_presence": "occasional",
                                  "presence_confidence": 0.9}}
         pid = save_posting(conn, posting)
         result = {"code_verdict": "apply", "model_verdict": "apply", "model_verdict_reason": "All critical skills match.",

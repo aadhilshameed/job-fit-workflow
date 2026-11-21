@@ -26,8 +26,8 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit.bot.telegram import send_alerts  # noqa: E402
-from job_fit.prompt import PROMPT_VERSION     # noqa: E402
-from job_fit.summary import summarize         # noqa: E402
+from job_fit.llm.prompt import PROMPT_VERSION     # noqa: E402
+from job_fit.llm.summary import summarize         # noqa: E402
 
 
 def main():

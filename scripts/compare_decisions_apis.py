@@ -1,9 +1,9 @@
 """Ask both Decisions APIs (OpenAI and Gemini) the same three questions about the same postings.
 
-    python -m scripts.compare_relevance                                    # the 25 comparison postings
-    python -m scripts.compare_relevance --set data/batches/set_<date>.json
+    python -m scripts.compare_decisions_apis                                    # the 25 comparison postings
+    python -m scripts.compare_decisions_apis --set data/batches/set_<date>.json
 
-Nothing is written into the set. Every answer goes to results/relevance_<set name>.jsonl, so a rerun only
+Nothing is written into the set. Every answer goes to results/decisions_<set name>.jsonl, so a rerun only
 asks what is missing. Each answer is checked against the posting text before a provider is picked.
 Cost: about 0.015 cents per posting per provider, so under 1 cent for 25 postings.
 """
@@ -26,8 +26,8 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from job_fit.location import location_gap           # noqa: E402
-from job_fit.relevance import QUESTIONS_VERSION, check_relevance        # noqa: E402
+from job_fit.code_nodes.location import location_gap           # noqa: E402
+from job_fit.llm.decisions_api_filter import QUESTIONS_VERSION, ask_decisions_filter        # noqa: E402
 
 PROVIDERS = ["openai", "google"]
 
@@ -40,7 +40,7 @@ def main():
 
     postings = json.loads(args.set.read_text(encoding="utf-8"))
     name = "comparison" if args.set.stem == "comparison_set" else args.set.stem
-    out = ROOT / "results" / f"relevance_{name}_{QUESTIONS_VERSION}.jsonl"
+    out = ROOT / "results" / f"decisions_{name}_{QUESTIONS_VERSION}.jsonl"
     out.parent.mkdir(parents=True, exist_ok=True)
     done = set()
     if out.exists():
@@ -56,12 +56,12 @@ def main():
                 continue
             start = time.perf_counter()
             try:
-                rel = check_relevance(p["title"], p["description"], provider)
-                tokens[provider] += rel["input_tokens"] or 0
-                rel["location_gap"] = location_gap(rel["office_presence"], p.get("locations") or [],
-                                                   rel["presence_confidence"])
-                row, status = rel, (f"target {rel['target_probability']:.2f} {str(rel['main_focus']):15} "
-                                    f"presence {rel['office_presence']}{('  LOCATION ' + rel['location_gap']['kind'].upper()) if rel['location_gap'] else ''}")
+                decisions = ask_decisions_filter(p["title"], p["description"], provider)
+                tokens[provider] += decisions["input_tokens"] or 0
+                decisions["location_gap"] = location_gap(decisions["office_presence"], p.get("locations") or [],
+                                                   decisions["presence_confidence"])
+                row, status = decisions, (f"ai_eng {decisions['ai_eng_probability']:.2f} {str(decisions['ai_work_type']):15} "
+                                    f"presence {decisions['office_presence']}{('  LOCATION ' + decisions['location_gap']['kind'].upper()) if decisions['location_gap'] else ''}")
             except Exception as e:                                       # noqa: BLE001
                 row, status = {"error": f"{type(e).__name__}: {e}"[:400]}, "ERROR " + f"{type(e).__name__}: {e}"[:100]
             row |= {"provider": provider, "refnr": p["refnr"], "seconds": round(time.perf_counter() - start, 2)}
