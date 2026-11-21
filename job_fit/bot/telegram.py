@@ -11,11 +11,13 @@ What gets sent:
 - order: nearby first (within the weekly radius), then hybrid (office days somewhere reachable),
   then the rest (remote, or office days not mentioned); inside each group apply, then check, then stretch,
   and the closest first
-- the place shown is the closest of the posting's locations, with the number of other places
+- the place shown is the closest of the posting's locations, with 📍+N for the other places;
+  gender tags such as (m/w/d) are dropped from the title
 - each posting message is short: verdict, distance, title, company, the job type (🎓 WS Werkstudent,
   🧪 Intern, 📝 Thesis, 🏢 Job) with one line on the role, and the gaps
-  as short labels; the collapsed box you tap to open lists every requirement, most important first,
-  with a dot (green met, yellow partial, red missing, white not stated), a short reason for each gap, and
+  as short labels; collapsed boxes you tap to open: "About the job" (2 or 3 lines on the work) under the
+  company, and at the end Required (critical) and Preferred (standard) requirements, most important first,
+  with a dot (🟢 met, 🟡 partial, 🔴 missing, ⚪ not stated), a short reason for each gap, and
   related items under one heading (for example "Practical experience:")
 - a German posting is marked 🇩🇪 German in the first line, since it usually means German every day
 - every posting message has an "Open posting" button that opens it on the Arbeitsagentur website
@@ -44,10 +46,12 @@ PRESENCE_SHORT = {"not_mentioned": "office days?", "remote": "remote", "occasion
 HYBRID = {"occasional", "weekly", "regular_unspecified"}
 GAP_PREFIXES = (("hard_gap: ", "hard_gap"), ("partial (language, not counted): ", "language"), ("partial: ", "partial"))
 DOTS = {"match": "🟢", "partial": "🟡", "hard_gap": "🔴", "not_stated": "⚪"}
+GENDER_TAG = re.compile(r"\s*\((?:all genders|[mwfdxgn*]+|div\.?)(?:\s*[/|,]\s*(?:[mwfdxgn*]+|div\.?))*\)",
+                        re.IGNORECASE)    # (m/w/d), (w/m/div.), (all genders), (g*), (m/f/x)
 JOB_TYPES = ((re.compile(r"werkstudent|working student|studentische", re.IGNORECASE), "🎓 WS"),
              (re.compile(r"praktik|internship|\bintern\b|trainee", re.IGNORECASE), "🧪 Intern"),
              (re.compile(r"abschlussarbeit|masterarbeit|bachelorarbeit|thesis", re.IGNORECASE), "📝 Thesis"))
-MAX_LISTED = 8             # requirements shown in the collapsed box (gaps are always shown)
+MAX_LISTED = 8             # preferred requirements shown in their box (gaps are always shown)
 GERMAN_WORDS = {"und", "der", "die", "das", "mit", "für", "wir", "sie", "ist", "von", "zu", "bei", "auf", "oder",
                 "eine", "ein", "du", "dich", "dein", "deine", "ihre", "unser", "unsere", "kenntnisse"}
 ENGLISH_WORDS = {"and", "the", "with", "for", "we", "you", "is", "of", "to", "at", "on", "or", "an", "your", "our",
@@ -204,8 +208,13 @@ def posting_message(posting: dict, result: dict, published=None, summary=None) -
     head.append(PRESENCE_SHORT.get(presence, "office days?"))
     if posting_language(posting.get("description") or "") == "de":
         head.append("🇩🇪 German")
-    place = " · ".join(x for x in (posting.get("firma"), city) if x) + (f" (+{n_other} more)" if n_other else "")
-    lines = [" · ".join(head), f"<b>{esc(posting.get('title') or '')}</b>", esc(place), ""]
+    place = " · ".join(x for x in (posting.get("firma"), city) if x) + (f" 📍+{n_other}" if n_other else "")
+    title = GENDER_TAG.sub("", posting.get("title") or "").strip()
+    lines = [" · ".join(head), f"<b>{esc(title)}</b>", esc(place)]
+    if summary and summary.about:
+        lines.append("<blockquote expandable><b>About the job</b>\n"
+                     + "\n".join(f"• {esc(line)}" for line in summary.about) + "</blockquote>")
+    lines.append("")
 
     ago = published_ago(published)
     if ago:
@@ -222,26 +231,29 @@ def posting_message(posting: dict, result: dict, published=None, summary=None) -
                              ("eligibility", "⚪", " (not in your background)")):
         short += [f"{dot} {esc(label_of.get(text, text))}{extra}" for text, k in kinds.items() if k == kind]
     if location_lines(result):
-        short.append("📍 check the location")
+        short.append("🚆 check the location")
     lines.append("   ".join(short) if short else "🟢 No gaps")
 
-    # the collapsed box: every requirement, most important first, with a coloured dot and the reason for gaps
-    listed = [r for i, r in enumerate(ranked) if i < MAX_LISTED or r["text"] in kinds]
-    more = []
-    for group, members in grouped(listed):
-        if group and len(members) > 1:
-            more.append(f"<b>{esc(group)}:</b>")
-        indent = "    " if group and len(members) > 1 else ""
-        for r in members:
-            line = f"{indent}{DOTS.get(r['match_result'], '•')} {esc(r['label'])}"
-            if kinds.get(r["text"]) == "language":
-                line += " (not counted)"
-            if r["match_result"] in ("partial", "hard_gap") and r.get("reason"):
-                line += f" · <i>{esc(r['reason'])}</i>"
-            more.append(line)
-    more += [f"📍 {esc(text)}" for text in location_lines(result)]
-    if more:
-        lines.append("<blockquote expandable>" + "\n".join(more) + "</blockquote>")
+    # two collapsed boxes: Required (critical) and Preferred (standard), most important first
+    required = [r for r in ranked if r["importance"] == "critical" or r["text"] in kinds]
+    preferred = [r for r in ranked if r not in required][:MAX_LISTED]
+    for heading, items, marks, extra in (("Required", required, DOTS, location_lines(result)),
+                                         ("Preferred", preferred, DOTS, [])):
+        box = [f"<b>{heading}</b>"] if items or extra else []
+        for group, members in grouped(items):
+            if group and len(members) > 1:
+                box.append(f"<b>{esc(group)}:</b>")
+            indent = "    " if group and len(members) > 1 else ""
+            for r in members:
+                line = f"{indent}{marks.get(r['match_result'], '•')} {esc(r['label'])}"
+                if kinds.get(r["text"]) == "language":
+                    line += " (not counted)"
+                if r["match_result"] in ("partial", "hard_gap") and r.get("reason"):
+                    line += f" · <i>{esc(r['reason'])}</i>"
+                box.append(line)
+        box += [f"🚆 {esc(text)}" for text in extra]
+        if box:
+            lines.append("<blockquote expandable>" + "\n".join(box) + "</blockquote>")
     return "\n".join(lines)
 
 

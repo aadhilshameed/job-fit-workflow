@@ -1,4 +1,5 @@
-"""A short summary of a posting for the alert: what the role is about in one short line, and every requirement
+"""A short summary of a posting for the alert: what the role is about in one short line, 2 or 3 lines on what
+you would do, and every requirement
 with a short label, ranked by how much the role depends on it, so the message stays small.
 
 A separate small call, so the frozen assessment prompt (prompt.py) stays untouched. It does not judge the fit:
@@ -20,6 +21,9 @@ role: what the role is about, in the form "<kind of work> → <field>", 3 to 8 w
 Leave out "working student" and verbs such as supporting, building or developing. Name the field in
 1 to 3 words, not a list. Examples: "AI agent systems → aero-engine testing",
 "AI automation → safety and compliance", "LLM chatbots → customer service".
+
+about: 2 or 3 short lines, each at most 12 words, on what you would actually do in this job day to day.
+Concrete tasks, not company marketing.
 
 requirements: you get a numbered list of requirements from the posting, each with its status
 (met, partial, missing, not stated) and, for partial and missing ones, the reason. Return every number
@@ -50,6 +54,7 @@ class RankedRequirement(BaseModel):
 
 class PostingSummary(BaseModel):
     role: str
+    about: list[str]
     requirements: list[RankedRequirement]
 
 
