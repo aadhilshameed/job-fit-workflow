@@ -1,6 +1,6 @@
 -- One row per job posting. Filled by the daily run.
 -- Comments in SQL start with two dashes (--). Postgres ignores everything after them on that line.
-CREATE TABLE postings ( 
+CREATE TABLE screened_postings ( 
     -- from the job site (Arbeitsagentur search and details)
     id  SERIAL PRIMARY KEY,
     source TEXT NOT NULL,
@@ -39,9 +39,9 @@ CREATE TABLE postings (
 
 -- One row per Haiku run on one posting. Filled step by step during the daily run:
 -- inserted after the assessment, then updated with the summary and the Telegram time.
-CREATE TABLE assessments (
+CREATE TABLE model_verdicts (
     id SERIAL PRIMARY KEY,
-    posting_id INTEGER NOT NULL REFERENCES postings(id),   -- the posting this run assessed
+    screened_posting_id INTEGER NOT NULL REFERENCES screened_postings(id),   -- the posting this verdict is about
     assessed_at TIMESTAMPTZ NOT NULL DEFAULT now(),        -- filled in when the row is inserted
 
     -- the setup: kept so results can be compared when the model or prompt changes
@@ -73,4 +73,30 @@ CREATE TABLE assessments (
     summary_time_seconds NUMERIC,
 
     sent_to_telegram_at TIMESTAMPTZ      -- empty means never sent (a skip, or a crash before sending)
+);
+
+
+-- One row per requirement Haiku extracted for one verdict. A failed Haiku call has no rows here.
+CREATE TABLE verdict_requirements (
+    id SERIAL PRIMARY KEY,
+    model_verdict_id INTEGER NOT NULL REFERENCES model_verdicts(id),   -- the verdict this requirement belongs to
+    position_in_req_list INTEGER NOT NULL,           -- 1, 2, 3... the order Haiku listed them in, within this verdict
+    requirement_text TEXT NOT NULL,      -- word for word from the posting
+    found_in TEXT NOT NULL,              -- requirements_section, tasks_section, implied_by_task or other
+    requirement_type TEXT NOT NULL,      -- technical_skill, soft_skill or eligibility
+    critical_or_standard TEXT NOT NULL,  -- critical or standard (implied_by_task is always standard, set by verdict.py)
+    background_quote TEXT,               -- the line from my background that proves it; empty when Haiku said "none"
+    quote_status TEXT NOT NULL,          -- verified (found word for word), not_verified or no_quote (set by verdict.py)
+    match_reason TEXT NOT NULL,          -- Haiku's one sentence on why it is a match or a gap
+    match_result TEXT NOT NULL           -- match, partial, hard_gap or not_stated
+);
+
+
+-- One row per button press under a Telegram message. Several per verdict are fine
+-- (for example "right" first, "applied" a week later).
+CREATE TABLE verdict_feedback (
+    id SERIAL PRIMARY KEY,
+    model_verdict_id INTEGER NOT NULL REFERENCES model_verdicts(id),   -- the verdict whose Telegram message the button was under
+    action TEXT NOT NULL,                -- right, wrong or applied
+    pressed_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
