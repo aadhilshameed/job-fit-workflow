@@ -277,11 +277,13 @@ def summary_message(results: list[dict], day: date | None = None, note: str = ""
 
 
 def send_alerts(items: list[tuple[dict, dict, object]], note: str = "", limit: int | None = None,
-                summarize=None) -> int:
+                summarize=None, on_sent=None) -> int:
     """items: [(posting, result, published), ...]. Sends the summary, then the postings in order.
     summarize: a function (title, description, requirement rows) -> PostingSummary, called only for postings
     that get sent, with one retry; if both tries fail, the message goes out without the role line and
     lists only the gaps, in the posting's own words.
+    on_sent: a function (posting, result, summary) called after Telegram accepted each posting's message
+    (run_daily.py uses it to note the time in the database).
     Returns how many postings were sent."""
     send_message(summary_message([r for _, r, _ in items], note=note))
     to_send = sorted((i for i in items if i[1]["code_verdict"] in SENT_VERDICTS),
@@ -298,5 +300,7 @@ def send_alerts(items: list[tuple[dict, dict, object]], note: str = "", limit: i
                 print(f"Summary failed for {posting['refnr']} (try {attempt} of 2): {type(e).__name__}: {e}"[:300])
         send_message(posting_message(posting, result, published, summary),
                      [("Open posting ↗", POSTING_URL.format(refnr=posting["refnr"]))])
+        if on_sent:
+            on_sent(posting, result, summary)
         time.sleep(1)                                          # Telegram allows about one message a second per chat
     return len(to_send[:limit])

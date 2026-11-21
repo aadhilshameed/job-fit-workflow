@@ -2,6 +2,8 @@
 
 The tables are in db/schema.sql. The daily run fills them step by step:
 1. seen_before()     before anything else: skip a posting we already have
+   still_to_assess()  target roles saved earlier without a verdict yet (the Haiku call failed, or --max
+                      stopped the run): they are tried again
 2. save_posting()    after the Decisions API screen: one row in screened_postings
 3. save_verdict()    after Haiku and verdict.py: one row in model_verdicts, plus its rows in verdict_requirements
 4. save_summary()    after the summary call: fills in the summary columns of that verdict
@@ -19,9 +21,12 @@ Try it without leaving anything behind:  python -m job_fit.db
 import os
 
 import psycopg
+from psycopg.rows import dict_row
 from psycopg.types.json import Jsonb
 
 REPOST_WINDOW_DAYS = 60   # same company + title + city within this many days counts as the same job
+MAX_ATTEMPTS = 3          # a posting whose Haiku call failed is tried again on later runs, this many times in all
+RETRY_DAYS = 7            # ...but only while it is at most this many days old
 
 
 def connect() -> psycopg.Connection:
@@ -48,6 +53,35 @@ def seen_before(conn, source: str, source_id: str, company: str | None, title: s
          "city": city, "days": REPOST_WINDOW_DAYS},
     ).fetchone()
     return row is not None
+
+
+def still_to_assess(conn) -> list[dict]:
+    """Saved postings that should get a verdict but have none yet: a target role (or the screen call failed),
+    with text, found in the last RETRY_DAYS days, with no successful verdict and fewer than MAX_ATTEMPTS tries.
+    Returned in the shape the daily run assesses."""
+    with conn.cursor(row_factory=dict_row) as cur:
+        rows = cur.execute(
+            """
+            SELECT p.*
+            FROM screened_postings p
+            WHERE (p.is_it_ai_eng OR p.relevance_error IS NOT NULL)
+              AND p.description <> ''
+              AND p.found_on > now() - make_interval(days => %(days)s)
+              AND NOT EXISTS (SELECT 1 FROM model_verdicts v
+                              WHERE v.screened_posting_id = p.id AND v.model_extraction_error IS NULL)
+              AND (SELECT count(*) FROM model_verdicts v WHERE v.screened_posting_id = p.id) < %(max)s
+            ORDER BY p.id
+            """,
+            {"days": RETRY_DAYS, "max": MAX_ATTEMPTS},
+        ).fetchall()
+    return [{"id": r["id"], "source_id": r["source_id"], "refnr": r["source_id"], "title": r["title"],
+             "company": r["company"], "firma": r["company"], "city": r["city"], "ort": r["city"],
+             "locations": r["locations"] or [], "description": r["description"],
+             "published_on": r["published_on"].date() if r["published_on"] else None,
+             "office_presence": r["office_presence"],
+             "location_gap": ({"kind": r["location_gap_type"], "reason": r["location_gap_reason"]}
+                              if r["location_gap_type"] else None),
+             "location_note": r["location_note"]} for r in rows]
 
 
 def save_posting(conn, posting: dict) -> int:

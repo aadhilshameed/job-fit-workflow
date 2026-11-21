@@ -21,6 +21,7 @@ SEARCH_TERMS = [
 
 PAUSE_SECONDS = 2      # between calls, like the n8n batching (1 item every 2000 ms)
 RETRIES = 3            # like n8n "Retry On Fail": 3 tries, 5 s apart
+MAX_PAGES = 5          # per search term: at most 500 results, far more than one day brings
 
 
 def _get(url, params=None):
@@ -39,15 +40,18 @@ def search(days_back: int | None = None, size: int = 100) -> list[dict]:
     """All search results for every term, without duplicates (the same posting often matches several terms)."""
     seen, postings = set(), []
     for term in SEARCH_TERMS:
-        params = {"was": term, "size": size, "page": 1}
-        if days_back:
-            params["veroeffentlichtseit"] = days_back
-        result = _get(SEARCH_URL, params)
-        for job in result.get("ergebnisliste", []) or []:
-            if job["referenznummer"] not in seen:
-                seen.add(job["referenznummer"])
-                postings.append(job)
-        time.sleep(PAUSE_SECONDS)
+        for page in range(1, MAX_PAGES + 1):      # a full page means there may be more: fetch the next one
+            params = {"was": term, "size": size, "page": page}
+            if days_back:
+                params["veroeffentlichtseit"] = days_back   # ignored by the v6 search (21 Nov 2026), kept in case it returns
+            page_jobs = _get(SEARCH_URL, params).get("ergebnisliste", []) or []
+            for job in page_jobs:
+                if job["referenznummer"] not in seen:
+                    seen.add(job["referenznummer"])
+                    postings.append(job)
+            time.sleep(PAUSE_SECONDS)
+            if len(page_jobs) < size:
+                break
     return postings
 
 
