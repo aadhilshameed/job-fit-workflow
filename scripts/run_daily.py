@@ -27,7 +27,6 @@ import argparse
 import html
 import sys
 import time
-import traceback
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
@@ -210,14 +209,13 @@ def main():
     try:
         run(args)
     except Exception as e:                                                  # noqa: BLE001
-        traceback.print_exc()
         if not args.no_telegram:
             try:
                 telegram.send_message(f"⚠️ <b>Job Scout run failed</b>\n{html.escape(type(e).__name__)}: "
                                       f"{html.escape(str(e)[:300])}")
             except Exception:                                               # noqa: BLE001
                 pass
-        sys.exit(1)
+        raise       # the full error goes on: a traceback in the terminal, a clear failed run in Lambda
 
 
 if __name__ == "__main__":

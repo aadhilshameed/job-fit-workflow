@@ -189,3 +189,6 @@ token.json
 data/background.txt
 # model comparison outputs (they quote my background)
 results/
+
+# Lambda upload file (scripts/build_lambda.py)
+lambda.zip
