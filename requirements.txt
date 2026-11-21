@@ -1,8 +1,9 @@
-# Versions pinned to the ones the AI Project already runs with, so both projects behave the same.
+# Versions pinned to the ones this project runs with on the laptop (checked 21 Nov 2026). openai and google-genai are newer than the AI Project's, because the Decisions APIs need them.
 pydantic==2.14.1
 python-dotenv==1.2.4
 anthropic==2.6.0
-openai==3.46.0
-google-genai==2.34.0
+openai==3.55.1
+google-genai==3.6.1
 requests==2.32.5
+psycopg[binary]==3.3.9
 truststore==0.10.5; sys_platform == "win32"
