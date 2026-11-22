@@ -32,6 +32,8 @@ CREATE TABLE screened_postings (
 
     -- added 22 Nov 2026, when a second source arrived
     url TEXT,                        -- the posting's own page (the Telegram button); empty for older Arbeitsagentur rows
+    assessment_skipped TEXT,         -- why this posting will never go to Haiku (for example a full-time role skipped
+                                     -- by a --students-only run); empty for every normal posting
 
     -- rules for the whole table
     UNIQUE (source, source_id)   

@@ -30,7 +30,7 @@ import argparse
 import html
 import sys
 import time
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date
 from pathlib import Path
 
@@ -50,7 +50,8 @@ from job_fit.llm.prompt import PROMPT_VERSION, build_user_message            # n
 from job_fit.llm.decisions_api_filter import ask_decisions_filter                            # noqa: E402
 from job_fit.llm.summary import (SUMMARY_EFFORT, SUMMARY_MODEL, SUMMARY_PROMPT_VERSION,   # noqa: E402
                              summarize)
-from job_fit.code_nodes.title_filter import title_status                            # noqa: E402
+from job_fit.code_nodes.duplicates import KnownJobs                         # noqa: E402
+from job_fit.code_nodes.title_filter import is_student_role, title_status                            # noqa: E402
 from job_fit.code_nodes.code_verdict import compute_verdict                              # noqa: E402
 
 # the fixed setup, chosen on 20 Nov 2026 (Haiku high beat medium on the 35-posting check)
@@ -90,19 +91,20 @@ def assess(posting: dict, background: str) -> dict:
                 "seconds": time.perf_counter() - start}
 
 
-def arbeitsagentur_postings(conn, args) -> list[dict]:
+def arbeitsagentur_postings(conn, args, known: KnownJobs) -> list[dict]:
     """Steps 1-3 for the Arbeitsagentur: search, drop duplicates and old postings, skip what the database has,
     title filter, then the detail call for the full text. Returns postings ready for the Decisions API."""
     found = arbeitsagentur.search(days_back=args.days)
-    keys, new, too_old = set(), [], 0
+    new, too_old, duplicates = [], 0, 0
     for job in found:
         city = arbeitsagentur.location(job)[0]
         key = (job.get("firma") or "", job.get("stellenangebotsTitel") or "", city)
-        if key in keys:
-            continue                                                        # the same job twice in one search
-        keys.add(key)
         if db.seen_before(conn, ARBEITSAGENTUR, job["referenznummer"], *key):
             continue
+        if known.has(*key):
+            duplicates += 1                 # the same job under another id, from this search or another source
+            continue
+        known.add(*key)
         if title_status(job.get("stellenangebotsTitel"), job.get("hauptberuf")) == "drop":
             continue
         published = published_on(job)
@@ -111,7 +113,8 @@ def arbeitsagentur_postings(conn, args) -> list[dict]:
             continue
         new.append(job)
     print(f"Arbeitsagentur: {len(found)} postings, {len(new)} new that pass the title filter"
-          + (f" ({too_old} older than {args.days} days skipped)" if too_old else ""))
+          + (f" ({too_old} older than {args.days} days skipped)" if too_old else "")
+          + (f" ({duplicates} duplicates of known jobs skipped)" if duplicates else ""))
 
     postings = []
     for job in new[: args.max_new]:
@@ -133,41 +136,63 @@ def arbeitsagentur_postings(conn, args) -> list[dict]:
     return postings
 
 
-def arbeitnow_postings(conn, args) -> list[dict]:
+def arbeitnow_postings(conn, args, known: KnownJobs) -> list[dict]:
     """Steps 1-3 for Arbeitnow: its newest jobs in Germany (it has no search), duplicates and what the database
     has skipped, title filter, then coordinates for the city names (geocode.py). The full text comes with the
     list, so there is no detail call."""
     found = arbeitnow.fetch(args.days)
-    keys, postings = set(), []
+    postings, duplicates = [], 0
     for job in found:
         posting = arbeitnow.to_posting(job)
         key = (posting["company"], posting["title"], posting["city"] or "")
-        if key in keys:
-            continue
-        keys.add(key)
         if db.seen_before(conn, arbeitnow.SOURCE, posting["source_id"], *key):
             continue
+        if known.has(*key):
+            duplicates += 1
+            continue
+        known.add(*key)
         if title_status(posting["title"]) == "drop":
             continue
         postings.append(posting)
     postings = postings[: args.max_new]
     for posting in postings:
         add_coordinates(conn, posting["locations"])
-    print(f"Arbeitnow: {len(found)} postings in Germany, {len(postings)} new that pass the title filter")
+    print(f"Arbeitnow: {len(found)} postings in Germany, {len(postings)} new that pass the title filter"
+          + (f" ({duplicates} duplicates of known jobs skipped)" if duplicates else ""))
     return postings
 
 
-def company_feed_postings(conn, args) -> list[dict]:
+def company_feed_postings(conn, args, known: KnownJobs) -> list[dict]:
     """Steps 1-3 for the company feeds (sources/company_feeds.py): every open job, skip what the database has,
     title filter, then the description for SmartRecruiters (its list has none, so only survivors cost a call)
     and coordinates where the feed gives only a place name. No --days filter: a feed lists only open jobs."""
     found = company_feeds.fetch_all()
-    postings = []
+    # one group per job: Bosch posts most jobs twice (German and English) under one reference number, and both
+    # versions are one job. A group is skipped if ANY version is already known (by id or by duplicates.py).
+    groups, by_reference = [], {}
     for source, company, raw in found:
         posting = source.to_posting(raw, company)
-        if db.seen_before(conn, posting["source"], posting["source_id"],
-                          posting["company"], posting["title"], posting["city"] or ""):
+        reference = raw.get("refNumber") if source is smartrecruiters else None
+        if reference and (company, reference) in by_reference:
+            by_reference[(company, reference)][3].append(posting)
             continue
+        group = (source, company, raw, [posting])
+        groups.append(group)
+        if reference:
+            by_reference[(company, reference)] = group
+    postings, duplicates = [], 0
+    for source, company, raw, versions in groups:
+        keys = [(p["company"], p["title"], p["city"] or "") for p in versions]
+        if any(db.seen_before(conn, p["source"], p["source_id"], *k) for p, k in zip(versions, keys)):
+            continue
+        is_duplicate = any(known.has(*k) for k in keys)
+        for k in keys:
+            known.add(*k)
+        if is_duplicate:
+            duplicates += 1
+            continue
+        posting = versions[0]
+        posting["duplicate_ids"] = [p["source_id"] for p in versions[1:]]
         if title_status(posting["title"]) == "drop":
             continue
         if source is smartrecruiters:
@@ -181,7 +206,8 @@ def company_feed_postings(conn, args) -> list[dict]:
     postings = postings[: args.max_new]
     for posting in postings:
         add_coordinates(conn, posting["locations"])
-    print(f"Company feeds: {len(found)} open jobs, {len(postings)} new that pass the title filter")
+    print(f"Company feeds: {len(found)} open jobs, {len(postings)} new that pass the title filter"
+          + (f" ({duplicates} duplicates of known jobs skipped)" if duplicates else ""))
     return postings
 
 
@@ -190,8 +216,9 @@ def run(args) -> None:
     conn = db.connect()
 
     # 1-3: every source's new postings that pass the title filter, in one shape
-    candidates = (arbeitsagentur_postings(conn, args) + arbeitnow_postings(conn, args)
-                  + company_feed_postings(conn, args))
+    known = KnownJobs(db.recent_jobs(conn))     # duplicates across sources and spellings (code_nodes/duplicates.py)
+    candidates = (arbeitsagentur_postings(conn, args, known) + arbeitnow_postings(conn, args, known)
+                  + company_feed_postings(conn, args, known))
 
     # 4: Decisions API screen, location rule, save
     to_assess = []
@@ -214,27 +241,38 @@ def run(args) -> None:
         if goes_to_haiku and text:
             to_assess.append(posting)
 
-    # 5: Haiku, several at a time; the database writes stay in this thread.
+    # 5: Haiku, ASSESSMENT_WORKERS at a time; each verdict is saved the moment its call ends (the writes stay
+    # in this thread), so a crash keeps every verdict already paid for, and the database never sits idle long.
     # Saved postings still without a verdict (a failed call, or a run stopped by --max) come along again.
     waiting = [p for p in db.still_to_assess(conn) if p["id"] not in {q["id"] for q in to_assess}]
     if waiting:
         print(f"{len(waiting)} postings from earlier runs still need a verdict, trying them again")
-    to_assess = (to_assess + waiting)[: args.max]
+    to_assess = to_assess + waiting
+    if args.students_only:
+        others = [p for p in to_assess if not is_student_role(p["title"])]
+        for p in others:
+            db.skip_assessment(conn, p["id"], f"not a student role, skipped by a --students-only run on {date.today()}")
+        to_assess = [p for p in to_assess if is_student_role(p["title"])]
+        print(f"--students-only: {len(others)} other roles marked as never to assess, {len(to_assess)} student roles left")
+    to_assess = to_assess[: args.max]
     print(f"Assessing {len(to_assess)} postings with {ASSESSMENT_MODEL['model']} ({ASSESSMENT_MODEL['effort']})")
+    items, spent, outcomes = [], 0.0, []
     with ThreadPoolExecutor(max_workers=ASSESSMENT_WORKERS) as pool:
-        outcomes = list(pool.map(lambda p: assess(p, background), to_assess))
-    items, spent = [], 0.0
-    for posting, out in zip(to_assess, outcomes):
-        usage = out["usage"] or {}
-        cost = cost_usd(ASSESSMENT_MODEL["model"], usage) if usage else None
-        spent += cost or 0
-        posting["verdict_id"] = db.save_verdict(
-            conn, posting["id"], ASSESSMENT_MODEL["model"], ASSESSMENT_MODEL["effort"], PROMPT_VERSION,
-            out["result"], out["error"], usage.get("input"), usage.get("output"), cost, round(out["seconds"], 2))
-        verdict = out["result"]["code_verdict"] if out["result"] else "ERROR " + out["error"][:60]
-        print(f"  {posting['title'][:60]:60} {verdict}")
-        if out["result"]:
-            items.append((posting, out["result"], posting["published_on"]))
+        futures = {pool.submit(assess, p, background): p for p in to_assess}
+        for future in as_completed(futures):
+            posting, out = futures[future], future.result()
+            outcomes.append(out)
+            conn = db.still_open(conn)
+            usage = out["usage"] or {}
+            cost = cost_usd(ASSESSMENT_MODEL["model"], usage) if usage else None
+            spent += cost or 0
+            posting["verdict_id"] = db.save_verdict(
+                conn, posting["id"], ASSESSMENT_MODEL["model"], ASSESSMENT_MODEL["effort"], PROMPT_VERSION,
+                out["result"], out["error"], usage.get("input"), usage.get("output"), cost, round(out["seconds"], 2))
+            verdict = out["result"]["code_verdict"] if out["result"] else "ERROR " + out["error"][:60]
+            print(f"  {posting['title'][:60]:60} {verdict}")
+            if out["result"]:
+                items.append((posting, out["result"], posting["published_on"]))
 
     # 6: summaries and Telegram
     if args.no_telegram:
@@ -249,7 +287,8 @@ def run(args) -> None:
         return summary
 
     def on_sent(posting, result, summary):
-        nonlocal spent
+        nonlocal spent, conn
+        conn = db.still_open(conn)              # summaries can take a while: the database may have gone to sleep
         usage, seconds = summary_usage.get(posting["description"], (None, None))
         if summary is not None and usage:
             db.save_summary(conn, posting["verdict_id"], SUMMARY_MODEL, SUMMARY_EFFORT, SUMMARY_PROMPT_VERSION,
@@ -274,6 +313,9 @@ def main():
     parser.add_argument("--max", type=int, default=None, help="at most this many Haiku assessments")
     parser.add_argument("--max-new", type=int, default=None, help="at most this many new postings per source")
     parser.add_argument("--no-telegram", action="store_true", help="skip the summaries and Telegram messages")
+    parser.add_argument("--students-only", action="store_true",
+                        help="assess only student roles (Werkstudent, Praktikum, internship); every other role found "
+                             "or waiting is marked as never to assess. For catch-up runs over old postings")
     args = parser.parse_args()
     try:
         run(args)

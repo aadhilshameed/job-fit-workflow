@@ -32,7 +32,8 @@ import requests
 from job_fit.sources.arbeitnow import clean_text
 
 SOURCE = "personio"
-FEED_URL = "https://{company}.jobs.personio.de/xml?language=en"
+FEED_URLS = ("https://{company}.jobs.personio.de/xml?language=en",     # older accounts
+             "https://{company}.jobs.personio.com/xml?language=en")    # newer accounts: tried when .de answers 404
 JOB_URL = "https://{company}.jobs.personio.de/job/{id}"
 BERLIN = ZoneInfo("Europe/Berlin")
 RETRIES = 3             # like the Arbeitnow source: 3 tries, 5 s apart
@@ -47,7 +48,16 @@ POSTAL_CODE = re.compile(r"\s*\(\s*\d{4,5}\s*\)|^\s*\d{5}\s+")      # "München 
 
 
 def _get_feed(company: str) -> str:
-    url = FEED_URL.format(company=company)
+    """The feed text from the first address that has it (.de, then .com)."""
+    for url in FEED_URLS:
+        try:
+            return _get_one(url.format(company=company), company)
+        except LookupError:
+            continue
+    raise LookupError(f"Personio has no job feed for company '{company}' (404 on .de and .com)")
+
+
+def _get_one(url: str, company: str) -> str:
     for attempt in range(1, RETRIES + 1):
         try:
             response = requests.get(url, timeout=30)

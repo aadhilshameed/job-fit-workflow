@@ -89,6 +89,19 @@ SIGNALS = {
 }
 
 
+STUDENT_WORD_STARTS = ["werkstudent", "working student", "studentische", "praktikum", "praktikant", "pflichtpraktikum",
+                       "internship"]
+STUDENT_WHOLE_WORDS = ["intern", "interns"]       # whole word: not "international" or "internal"
+
+
+def is_student_role(title: str) -> bool:
+    """A role a student can take next to the MSc: Werkstudent, working student, Praktikum or internship.
+    Used by run_daily --students-only; thesis and PhD positions are not counted (yet)."""
+    text = (title or "").lower()
+    return (any(has_start(text, w) for w in STUDENT_WORD_STARTS)
+            or any(has_whole(text, w) for w in STUDENT_WHOLE_WORDS))
+
+
 def genai_signals(description: str) -> list[str]:
     text = (description or "").lower()
     return [name for name, test in SIGNALS.items() if test(text)]

@@ -35,6 +35,18 @@ def connect() -> psycopg.Connection:
     return psycopg.connect(os.environ["DATABASE_URL"], autocommit=True)
 
 
+def still_open(conn) -> psycopg.Connection:
+    """The same connection if it still answers, otherwise a new one. Neon's free plan puts the database to
+    sleep after 5 minutes without queries and closes open connections (22 Nov 2026: a run crashed after
+    10 minutes of Haiku calls), so call this before writing after a long wait."""
+    try:
+        conn.execute("SELECT 1")
+        return conn
+    except psycopg.OperationalError:
+        print("Database connection was closed (Neon sleeps after 5 idle minutes): reconnected")
+        return connect()
+
+
 def seen_before(conn, source: str, source_id: str, company: str | None, title: str | None,
                 city: str | None) -> bool:
     """True if we already have this posting: the same id (or one of its duplicate ids) on the same site,
@@ -55,6 +67,14 @@ def seen_before(conn, source: str, source_id: str, company: str | None, title: s
     return row is not None
 
 
+def recent_jobs(conn) -> list[tuple]:
+    """(company, title, city) of every posting found in the last REPOST_WINDOW_DAYS days, for the duplicate
+    check across sources and spellings (code_nodes/duplicates.py)."""
+    return conn.execute(
+        "SELECT company, title, coalesce(city, '') FROM screened_postings "
+        "WHERE found_on > now() - make_interval(days => %s)", (REPOST_WINDOW_DAYS,)).fetchall()
+
+
 def still_to_assess(conn) -> list[dict]:
     """Saved postings that should get a verdict but have none yet: an AI engineering role (or the Decisions API call failed),
     with text, found in the last RETRY_DAYS days, with no successful verdict and fewer than MAX_ATTEMPTS tries.
@@ -66,6 +86,7 @@ def still_to_assess(conn) -> list[dict]:
             FROM screened_postings p
             WHERE (p.is_it_ai_eng OR p.decisions_call_error IS NOT NULL)
               AND p.description <> ''
+              AND p.assessment_skipped IS NULL
               AND p.found_on > now() - make_interval(days => %(days)s)
               AND NOT EXISTS (SELECT 1 FROM model_verdicts v
                               WHERE v.screened_posting_id = p.id AND v.model_extraction_error IS NULL)
@@ -82,6 +103,11 @@ def still_to_assess(conn) -> list[dict]:
              "location_gap": ({"kind": r["location_gap_type"], "reason": r["location_gap_reason"]}
                               if r["location_gap_type"] else None),
              "location_note": r["location_note"], "url": r.get("url")} for r in rows]
+
+
+def skip_assessment(conn, screened_posting_id: int, reason: str) -> None:
+    """Never send this posting to Haiku: still_to_assess() leaves it out from now on. The row itself stays."""
+    conn.execute("UPDATE screened_postings SET assessment_skipped = %s WHERE id = %s", (reason, screened_posting_id))
 
 
 def save_posting(conn, posting: dict) -> int:
