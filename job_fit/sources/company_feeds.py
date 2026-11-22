@@ -14,8 +14,9 @@ from datetime import date, timedelta
 
 from job_fit.sources import ashby, greenhouse, lever, personio, smartrecruiters
 
-MAX_AGE_DAYS = 180      # older postings are left out: a job still listed after half a year is likely filled or
-                        # a standing "always hiring" ad. 180 keeps appliedAI's working student role (June 2026).
+MAX_AGE_DAYS = 7        # only jobs first posted in the last week (180 until 22 Nov 2026). A week, not a day,
+                        # because some systems date a job when its ad was drafted, not when it went online, so a
+                        # 1-day window could miss it. Each job is screened only once, so the wider window costs nothing.
 
 WATCH_LIST = {
     personio: ["appliedai", "statworx", "fact-finder", "acto", "deeploi", "nfon", "cinemo", "feld-m",
