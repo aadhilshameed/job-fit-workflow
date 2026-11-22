@@ -12,17 +12,21 @@ yet" (db.seen_before). Each job is screened once, so the first run is the only b
 
 from datetime import date, timedelta
 
-from job_fit.sources import lever, personio, smartrecruiters
+from job_fit.sources import ashby, greenhouse, lever, personio, smartrecruiters
 
 MAX_AGE_DAYS = 180      # older postings are left out: a job still listed after half a year is likely filled or
                         # a standing "always hiring" ad. 180 keeps appliedAI's working student role (June 2026).
 
 WATCH_LIST = {
-    personio: ["appliedai", "statworx", "fact-finder", "acto", "deeploi", "nfon", "cinemo", "feld-m"],
+    personio: ["appliedai", "statworx", "fact-finder", "acto", "deeploi", "nfon", "cinemo", "feld-m",
+               "certivity", "hypatos-gmbh", "merantix-momentum", "celus"],          # last four added 22 Nov 2026
     # removed 22 Nov 2026, no Personio feed on .de or .com (moved to another system?): deepset, justaddai,
-    # agile-robots-se (Agile Robots is on Greenhouse EU)
+    # agile-robots-se (Agile Robots is on Greenhouse EU); xayn (Noxtua)
     lever: ["xentral"],
     smartrecruiters: ["BoschGroup", "Continental", "RolandBerger"],
+    # added 22 Nov 2026; every board name answered on the live API that day
+    ashby: ["DeepL", "AlephAlpha", "atira", "peec", "lio", "langdock", "parloa", "n8n", "black-forest-labs"],
+    greenhouse: ["celonis"],        # US-hosted Greenhouse boards only (boards on job-boards.eu.greenhouse.io have no API)
 }
 
 
