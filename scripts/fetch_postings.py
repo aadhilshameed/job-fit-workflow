@@ -90,7 +90,7 @@ def main():
     n_dupes = sum(len(v) for v in extra_refnrs.values())
     print(f"Search: {len(found)} postings, {skipped_seen} seen before, {n_dupes} duplicates, {len(new)} new")
 
-    statuses = [(j, title_status(j), key) for j, key in new]
+    statuses = [(j, title_status(j.get("stellenangebotsTitel") or j.get("titel"), j.get("hauptberuf") or j.get("beruf")), key) for j, key in new]
     dropped = [{"refnr": j["referenznummer"], "title": j.get("stellenangebotsTitel"), "firma": j.get("firma"),
                 "ort": arbeitsagentur.location(j)[0], "region": arbeitsagentur.location(j)[1],
                 "hauptberuf": j.get("hauptberuf"), "title_status": "drop",

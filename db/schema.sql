@@ -30,6 +30,9 @@ CREATE TABLE screened_postings (
     location_gap_type TEXT,          -- skip (too far for the office days) or check (look up the train time)
     location_gap_reason TEXT,        -- one sentence on why: skip or check
 
+    -- added 22 Nov 2026, when a second source arrived
+    url TEXT,                        -- the posting's own page (the Telegram button); empty for older Arbeitsagentur rows
+
     -- rules for the whole table
     UNIQUE (source, source_id)   
     -- source + source id needs to be unique for every row
@@ -104,4 +107,19 @@ CREATE TABLE verdict_feedback (
     model_verdict_id INTEGER NOT NULL REFERENCES model_verdicts(id),   -- the verdict whose Telegram message the button was under
     action TEXT NOT NULL,                -- right, wrong or applied
     pressed_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- One row per place text ever looked up with Geoapify, so each place costs one call in total (job_fit/geocode.py).
+-- A place Geoapify could not find is kept too (lat and lon NULL), so it is not asked about again every run.
+CREATE TABLE place_coordinates (
+    id SERIAL PRIMARY KEY,
+    place_text TEXT NOT NULL UNIQUE,     -- the place as the source wrote it, lowercased and trimmed ("düsseldorf")
+    lat DOUBLE PRECISION,                -- NULL when Geoapify found nothing
+    lon DOUBLE PRECISION,
+    country_code TEXT,                   -- "de", "fr", ... as Geoapify says
+    result_type TEXT,                    -- city, street, building, county, state or country: how exact the point is
+    confidence REAL,                     -- Geoapify's 0 to 1 certainty
+    found_name TEXT,                     -- Geoapify's full name for the place, to check by eye
+    looked_up_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    state_code TEXT                      -- the federal state as Geoapify writes it ("BY" for Bavaria); added 22 Nov 2026
 );

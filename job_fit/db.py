@@ -81,7 +81,7 @@ def still_to_assess(conn) -> list[dict]:
              "office_presence": r["office_presence"],
              "location_gap": ({"kind": r["location_gap_type"], "reason": r["location_gap_reason"]}
                               if r["location_gap_type"] else None),
-             "location_note": r["location_note"]} for r in rows]
+             "location_note": r["location_note"], "url": r.get("url")} for r in rows]
 
 
 def save_posting(conn, posting: dict) -> int:
@@ -89,7 +89,7 @@ def save_posting(conn, posting: dict) -> int:
 
     posting: source, source_id, title, company, city, locations, description, and optionally duplicate_ids,
     published_on, decisions (the dict ask_decisions_filter() returns), decisions_call_error, location_gap
-    ({"kind", "reason"} or None) and location_note.
+    ({"kind", "reason"} or None), location_note and url (the posting's page, for the Telegram button).
     """
     decisions = posting.get("decisions") or {}
     gap = posting.get("location_gap") or {}
@@ -98,8 +98,8 @@ def save_posting(conn, posting: dict) -> int:
         INSERT INTO screened_postings
             (source, source_id, duplicate_ids, title, company, city, locations, description, published_on,
              decisions_call_error, ai_eng_probability, is_it_ai_eng, ai_work_type, work_type_confidence,
-             office_presence, presence_confidence, location_note, location_gap_type, location_gap_reason)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+             office_presence, presence_confidence, location_note, location_gap_type, location_gap_reason, url)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id
         """,
         (posting["source"], posting["source_id"], posting.get("duplicate_ids") or [],
@@ -107,7 +107,8 @@ def save_posting(conn, posting: dict) -> int:
          posting.get("description") or "", posting.get("published_on"),
          posting.get("decisions_call_error"), decisions.get("ai_eng_probability"), decisions.get("is_it_ai_eng"),
          decisions.get("ai_work_type"), decisions.get("work_type_confidence"), decisions.get("office_presence"),
-         decisions.get("presence_confidence"), posting.get("location_note"), gap.get("kind"), gap.get("reason")),
+         decisions.get("presence_confidence"), posting.get("location_note"), gap.get("kind"), gap.get("reason"),
+         posting.get("url")),
     ).fetchone()
     return row[0]
 

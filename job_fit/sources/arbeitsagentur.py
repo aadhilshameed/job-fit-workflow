@@ -14,9 +14,11 @@ SEARCH_URL = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v6/jo
 DETAILS_URL = "https://rest.arbeitsagentur.de/jobboerse/jobsuche-service/pc/v4/jobdetails/{}"
 HEADERS = {"X-API-Key": "jobboerse-jobsuche"}
 
-SEARCH_TERMS = [
+SEARCH_TERMS = [         # every role a student can take next to the MSc: Werkstudent, internship (widened 22 Nov 2026)
     "Werkstudent KI", "Werkstudent AI", "Werkstudent Künstliche Intelligenz",
-    "Werkstudent Generative KI", "Werkstudent LLM", "Werkstudent Agent",
+    "Werkstudent Generative KI", "Werkstudent LLM", "Werkstudent Agent", "Working Student AI",
+    "Praktikum KI", "Praktikum AI", "Praktikum Generative KI", "Praktikum LLM", "Praktikum Agent",
+    "Internship AI",
 ]
 
 PAUSE_SECONDS = 2      # between calls, like the n8n batching (1 item every 2000 ms)

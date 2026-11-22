@@ -299,7 +299,7 @@ def send_alerts(items: list[tuple[dict, dict, object]], note: str = "", limit: i
             except Exception as e:                                  # noqa: BLE001
                 print(f"Summary failed for {posting['refnr']} (try {attempt} of 2): {type(e).__name__}: {e}"[:300])
         send_message(posting_message(posting, result, published, summary),
-                     [("Open posting ↗", POSTING_URL.format(refnr=posting["refnr"]))])
+                     [("Open posting ↗", posting.get("url") or POSTING_URL.format(refnr=posting["refnr"]))])
         if on_sent:
             on_sent(posting, result, summary)
         time.sleep(1)                                          # Telegram allows about one message a second per chat

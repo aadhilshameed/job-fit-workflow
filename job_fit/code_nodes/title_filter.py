@@ -17,7 +17,9 @@ import re
 BLOCKED_OCCUPATIONS = ["betriebswirt", "personal", "operations", "marketing", "kaufmann", "kauffrau",
                        "verkäufer", "controller", "designer", "vertrieb", "sales"]
 HARD_BLOCKED_TITLE_WORDS = ["content", "marketing", "social media", "grafik", "webdesign", "seo", "sales",
-                            "e-commerce", "hubspot", "machine learning"]
+                            "e-commerce", "hubspot"]
+# "machine learning" was blocked until 22 Nov 2026; removed after "Werkstudent Python & KI (LLMs / Machine Learning)"
+# (HUK-COBURG) turned out to be an LLM role. The Decisions API filter now judges such titles.
 HARD_BLOCKED_TITLE_WHOLE_WORDS = ["cad"]
 CHECK_TITLE_WORDS = ["qualitätsmanagement", "produktmanagement", "projektmanagement", "innovationsmanagement",
                      "organisationsentwicklung", "unternehmensentwicklung", "wissenstransfer",
@@ -28,7 +30,7 @@ CHECK_TITLE_WHOLE_WORDS = ["data", "hr"]
 GENAI_WHOLE_WORDS = ["llms?", "genai"]
 GENAI_WORD_STARTS = ["generativ", "agent", "chatbot", "prompt"]
 AI_WHOLE_WORDS = ["ki", "ai"]
-AI_WORD_STARTS = ["künstliche intelligenz", "artificial intelligence"]
+AI_WORD_STARTS = ["künstliche intelligenz", "artificial intelligence", "machine learning", "maschinelles lernen"]
 
 LETTERS = "a-z0-9äöüß"
 
@@ -43,10 +45,12 @@ def has_start(text: str, word: str) -> bool:
     return re.search(rf"(^|[^{LETTERS}]){word}", text) is not None
 
 
-def title_status(job: dict) -> str:
-    """Stage 1: "keep", "check" or "drop", from the title and the occupation (hauptberuf)."""
-    title = (job.get("stellenangebotsTitel") or job.get("titel") or "").lower()
-    occupation = (job.get("hauptberuf") or job.get("beruf") or "").lower()
+def title_status(title: str, occupation: str = "") -> str:
+    """Stage 1: "keep", "check" or "drop", from the title text and, where the source has one, the occupation
+    (the Arbeitsagentur's hauptberuf). Every source passes its own field, for example
+    title_status(job.get("stellenangebotsTitel"), job.get("hauptberuf")) or title_status(posting["title"])."""
+    title = (title or "").lower()
+    occupation = (occupation or "").lower()
 
     genai_title = (any(has_whole(title, w) for w in GENAI_WHOLE_WORDS)
                    or any(has_start(title, w) for w in GENAI_WORD_STARTS))
