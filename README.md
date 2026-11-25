@@ -1,9 +1,6 @@
 # job-fit-workflow
 
-Three times a day, this pipeline reads new job postings in Germany from free job APIs and company job boards,
-checks each one against my background and sends the ones worth applying to my phone on Telegram. Each
-message says **apply**, **stretch** or **lack of info**, lists the gaps and links to the posting. A **skip** is
-not sent, but it is saved in the database with its reasons.
+Three times a day, AWS Lambda runs this pipeline which reads new job postings in Germany from free job APIs and company job boards, checks each one against my background and sends the ones worth applying to my phone on Telegram. Each message says **apply**, **stretch** or **lack of info**, lists the gaps and links to the posting. A **skip** is not sent, but it is saved in the database with its reasons.
 
 **Why a workflow and not an agent.** I looked at both. The job is the same every time (collect, filter, check,
 decide), so there is nothing for an agent to plan. A fixed workflow always runs the same steps in the same
@@ -20,8 +17,8 @@ What arrives on my phone (left: as it comes in, right: opened):
 
 New postings come from the Arbeitsagentur API, Arbeitnow and the job boards of a list of companies. Then:
 
-1. **Skip what is known.** A posting already in the database, or the same job from another source, is dropped.
-2. **Title filter.** A free keyword check drops titles that are clearly not AI work (sales, marketing and so on).
+1. **Skip already seen postings:** A posting already in the database, or the same job from another source, is dropped.
+2. **Title filter.** A keyword check code drops titles that are clearly not AI work (sales, marketing and so on).
 3. **Decisions API check.** One call to OpenAI's Decisions API answers three questions:
    - Is this hands-on AI engineering? (yes or no).
    - What is the role mostly about? (agentic AI, AI automation, AI engineering or other; I mostly look for agentic AI).
