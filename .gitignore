@@ -192,3 +192,6 @@ results/
 
 # Lambda upload file (scripts/build_lambda.py)
 lambda.zip
+
+# local render of docs/pipeline.svg
+docs/_preview.png
