@@ -1,7 +1,7 @@
 # job-fit-workflow
 
 Three times a day, this pipeline reads new job postings in Germany from free job APIs and company job boards,
-checks each one against my background and sends the ones worth applying to to my phone on Telegram. Each
+checks each one against my background and sends the ones worth applying to my phone on Telegram. Each
 message says **apply**, **stretch** or **lack of info**, lists the gaps and links to the posting. A **skip** is
 not sent, but it is saved in the database with its reasons.
 
@@ -12,27 +12,38 @@ the model, so the same labels always give the same verdict.
 
 ![How a posting flows through the pipeline](docs/pipeline.svg)
 
+What arrives on my phone (left: as it comes in, right: opened):
+
+![A Telegram message for one posting](docs/telegram-message.png)
+
 ## How it works
 
-1. **Collect.** New postings come from the Arbeitsagentur API, Arbeitnow and the job boards of a list of companies.
-2. **Skip what is known.** A posting already in the database, or the same job from another source, is dropped.
-3. **Title filter.** A free keyword check drops titles that are clearly not AI work (sales, marketing and so on).
-4. **Decisions API check.** One call to OpenAI's Decisions API (a small model that answers fixed questions with a choice, not with free text) answers three questions:
-   - Is this hands-on AI engineering?
-   - What is the role mostly about (for example agents, classic ML, data)?
-   - How many days a week is the office required?
-5. **Location rule.** Code decides whether the office is close enough for that many days. Too far means skip, and unsure means "check it yourself".
-6. **Requirement check.** Claude Haiku goes through the posting requirement by requirement and compares each one with my background. Every "I have this" must come with a quote from the background, and code checks that the quote is really there.
-7. **Verdict.** Code counts the gaps and decides (see the rules below).
-8. **Telegram.** Only apply, stretch and lack of info are sent. Each run's messages start with a short divider, and a morning and an evening message report on the runs themselves.
+New postings come from the Arbeitsagentur API, Arbeitnow and the job boards of a list of companies. Then:
 
-Everything is saved in a Postgres database on [Neon](https://neon.tech) (postings, verdicts, every requirement,
-costs and a log of each run). So if a message fails, it is sent again on the next run.
+1. **Skip what is known.** A posting already in the database, or the same job from another source, is dropped.
+2. **Title filter.** A free keyword check drops titles that are clearly not AI work (sales, marketing and so on).
+3. **Decisions API check.** One call to OpenAI's Decisions API answers three questions:
+   - Is this hands-on AI engineering? (yes or no).
+   - What is the role mostly about? (agentic AI, AI automation, AI engineering or other; I mostly look for agentic AI).
+   - How many days a week is the office required? (not mentioned, remote, a few days a month, one day a week, two or more days a week, or regular without a number).
+4. **Location rule.** Code decides whether the office is close enough for the number of office days. Too far means skip, and unsure means "check it by yourself".
+5. **Requirement check.** Claude Haiku goes through the posting requirement by requirement and compares each one with my background. Every requirement Haiku marks as met must come with a quote from the background, and code checks that the quote is really there.
+6. **Verdict.** Code counts the gaps and decides (see the rules below).
+7. **Summary and Telegram.** Only apply, stretch and lack of info are sent. For each of them, Haiku is called once more to write a short summary (what the job is about, its focus and the gaps), and that summary is what the message shows. The 08:00 and 13:00 runs open with a short status message, and the 20:00 run ends with a summary of the day.
 
-**Why the Decisions API step.** At first Haiku did everything in one go, and it was not consistent. So the work
-was split. The Decisions API drops postings that are not AI engineering before they reach Haiku (fewer paid
-Haiku calls), and it answers the office question with a fixed choice. Then plain code checks the distance. So
-Haiku is left with one job only: matching the requirements against my background.
+Everything is saved in a Postgres database on [Neon](https://neon.tech): the postings, the verdicts, every
+requirement, the costs and a log of each run. So I can always see what happened. A Haiku check that fails is tried again on the next runs (at most 3 times), and a message that could not be sent goes out on the next run. If a whole run crashes, I get an alert on Telegram.
+
+**Why the Decisions API step.** At first, the filtering was done by keyword rules only, and it was not efficient: it was either too broad or too strict. Too broad meant too many Haiku calls (expensive), and too strict meant losing good listings without ever seeing them. So the Decisions API was added to make the filtering more efficient. But even then Haiku did everything in one go (matching the requirements against my background, checking if my location and the company's location is far for me to travel based on the office presence requirement), and Haiku was not consistent: the same listing got different answers on different runs.
+
+So the Decisions API got a second job: it now answers the office question with a fixed choice (a few days a month, one day a week, two or more days a week, regular without a number, remote, or not mentioned). Then plain code checks the distance and decides if there is a commute problem or not. And now Haiku is left with one job only: matching the requirements against my background. In my comparison runs, this raised Haiku's correct verdicts from 72% (18 of 25) to 89% (17 of 19). It also got cheaper, because the Decisions API keeps about half of all postings (131 of 259 so far) away from Haiku. Note: whether Haiku gives the same answer every time is not measured yet. I will test it once more real listings have come in.
+
+## How it got here
+
+- **Gemini in Google Colab, then n8n, then Python.** The first version was a Colab notebook, then an n8n workflow. It moved to plain Python to run on AWS Lambda.
+- **The assessment model.** I planned a full comparison (Gemini, GPT and Claude) with pass rules fixed before any run. I ran Claude Haiku 5.5 first, and it already gave good results at about 1 cent a check, so I went with it and stopped the comparison there. I also compared Haiku at high and medium effort: high gave clearly better requirement labels, so it stays on high.
+- **The summary.** Same test for the Telegram summary: high effort wrote better summaries than medium, for only a fraction of a cent more.
+- **The Decisions API.** I tested OpenAI's and Gemini's Decisions APIs on the same postings. OpenAI's answers were clearly more often correct, so the pipeline uses OpenAI.
 
 ## The verdict rules
 
@@ -94,8 +105,7 @@ python -m scripts.build_lambda       # builds lambda.zip for Lambda's Linux
 
 ## Cost
 
-In my use it costs a few cents to about 35 cents a day, almost all of it Claude Haiku. The exact cost of every
-call is saved in the `model_verdicts` table.
+A normal day costs about 3 to 17 cents and a busy day about 40 cents, almost all of it Claude Haiku (about 1 cent a check). The exact cost of every call is saved in the `model_verdicts` table.
 
 ## Project layout
 

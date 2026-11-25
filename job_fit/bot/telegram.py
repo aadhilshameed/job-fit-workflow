@@ -470,6 +470,24 @@ def morning_message(now: datetime, stats: dict, resending: int, waiting: int) ->
     return "\n".join(lines)
 
 
+def midday_message(now: datetime, stats: dict, resending: int, waiting: int) -> str:
+    """The 13:00 run's message: a divider between the morning's jobs and this run's (25 Nov 2026). Same counts
+    as the morning message, but it leads with the time, so it does not look like a new day."""
+    lines = ["━━━━━━━━━━━━━━━━",
+             f"🕐 <b>{now:%H:%M} · {now:%a %d %b}</b>",
+             f"New: {sum((stats.get('new') or {}).values())} · AI roles {stats.get('ai_roles', 0)} · "
+             f"assessed {stats.get('assessed', 0)}",
+             _verdict_line(stats.get("verdicts") or {})]
+    if resending:
+        lines.append(f"From earlier: {resending} postings that never reached you, sent below")
+    if waiting:
+        lines.append(f"Waiting: {waiting} postings for another Haiku try")
+    problems = problem_lines(stats)
+    if problems:
+        lines += ["", "<b>Problems</b>"] + [f"• {html.escape(p)}" for p in problems]
+    return "\n".join(lines)
+
+
 def evening_message(now: datetime, runs: list[dict], total: dict, expected_hours=(8, 13, 20)) -> str:
     """The 20:00 run's message: every run of the day and the day's counts.
     runs: [{"hour": 8, "status": "done" | "failed" | "running"}, ...] for today, this run included.

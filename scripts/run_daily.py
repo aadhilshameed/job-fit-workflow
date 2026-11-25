@@ -67,6 +67,7 @@ ARBEITSAGENTUR = "arbeitsagentur"
 BERLIN = ZoneInfo("Europe/Berlin")      # Lambda runs on UTC; the morning and evening messages go by Berlin time
 MORNING_BEFORE_HOUR = 11    # a run starting before 11:00 am sends the morning message (the 08:00 run)
 EVENING_FROM_HOUR = 18      # a run starting at 6:00 pm or later sends the day's summary (the 20:00 run)
+                            # a run between the two (the 13:00 run) opens with the midday message
 
 
 def new_stats() -> dict:
@@ -404,11 +405,13 @@ def run_steps(args, conn, background: str, run_id: int | None, stats: dict):
         print(f"{len(resend)} postings from earlier runs never reached Telegram, sending them again")
 
     now = datetime.now(BERLIN)
-    if now.hour < MORNING_BEFORE_HOUR:
+    if now.hour < EVENING_FROM_HOUR:            # morning (before 11:00) or midday run: its message opens the run
         waiting_now = len(db.still_to_assess(conn))
-        send_quietly(telegram.morning_message(now, stats, len(resend), waiting_now))
+        opening = telegram.morning_message if now.hour < MORNING_BEFORE_HOUR else telegram.midday_message
+        send_quietly(opening(now, stats, len(resend), waiting_now))
+    # the evening run has no opening message (its day summary comes after the jobs), so its jobs get a divider
     sent = telegram.send_alerts(items + resend, summarize=summarize_and_record, on_sent=on_sent, on_failed=on_failed,
-                                run_time=now)
+                                run_time=now if now.hour >= EVENING_FROM_HOUR else None)
     stats["cost_usd"] = round(spent, 4)
     if now.hour >= EVENING_FROM_HOUR:
         conn = db.still_open(conn)
