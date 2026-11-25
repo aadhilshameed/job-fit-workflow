@@ -62,7 +62,7 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
         if r.found_in == "implied_by_task":       # a duty never makes a skill critical
             r.importance = "standard"
 
-    quote_verification = {id(r): quote_verification(r.background_quote, background) for r in requirements} 
+    quote_statuses = {id(r): quote_verification(r.background_quote, background) for r in requirements}
     #quote_verification returns either "verified", "not_verified" or "no_quote"
     #every object has an id and id(x) gives x's id
     #the content of 2 objects can be same, but the ids will be different.
@@ -103,8 +103,8 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
         "location_gap": location_gap,
         "missing_eligibility": [r.requirement_text for r in missing_eligibility],
         "unverified_quotes": [r.requirement_text for r in requirements
-                              if quote_verification[id(r)] == "not_verified"],
-        "quotes_checked": sum(1 for s in quote_verification.values() if s != "no_quote"),
+                              if quote_statuses[id(r)] == "not_verified"],
+        "quotes_checked": sum(1 for s in quote_statuses.values() if s != "no_quote"),
         "tasks": tasks,
-        "requirements": [r.model_dump() | {"quote_status": quote_verification[id(r)]} for r in requirements],
+        "requirements": [r.model_dump() | {"quote_status": quote_statuses[id(r)]} for r in requirements],
     }

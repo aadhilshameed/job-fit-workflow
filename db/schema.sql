@@ -117,7 +117,7 @@ CREATE TABLE pipeline_run_logs (
     id SERIAL PRIMARY KEY,
     started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     finished_at TIMESTAMPTZ,             -- empty while running, and for a run that died
-    status TEXT NOT NULL DEFAULT 'running',   -- running, done or failed
+    status TEXT NOT NULL DEFAULT 'running',   -- running, done, failed, or died (still running after 20 minutes: killed)
     days INTEGER,                        -- the --days window of this run
     error TEXT,                          -- the error when status is failed (bot token removed)
     stats JSONB                          -- counts per step: found, new, AI roles, assessed, verdicts, sent, problems

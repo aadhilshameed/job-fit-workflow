@@ -245,8 +245,16 @@ def unsent_verdicts(conn, leave_out: set[int] = frozenset()) -> list[dict]:
 # These never stop a run: if the table is missing or a write fails, the run goes on without its row.
 
 def start_run(conn, days: int) -> int | None:
-    """A new row with status "running"; returns its id, or None if it could not be written."""
+    """A new row with status "running"; returns its id, or None if it could not be written.
+    First closes earlier rows that are still "running" after 20 minutes: those runs were killed before they could
+    write their end (Lambda stops a run at 15 minutes), so they become "died"."""
     try:
+        conn.execute(
+            """
+            UPDATE pipeline_run_logs
+            SET status = 'died', error = coalesce(error, 'never finished: killed before its end (for example the 15-minute Lambda limit)')
+            WHERE status = 'running' AND started_at < now() - interval '20 minutes'
+            """)
         return conn.execute("INSERT INTO pipeline_run_logs (days) VALUES (%s) RETURNING id", (days,)).fetchone()[0]
     except psycopg.Error as e:
         print(f"pipeline_run_logs: could not start the row ({type(e).__name__}), the run goes on without it")

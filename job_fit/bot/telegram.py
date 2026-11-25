@@ -466,7 +466,7 @@ def evening_message(now: datetime, runs: list[dict], total: dict, expected_hours
     for hour in expected_hours:
         statuses = [r["status"] for r in runs if r["hour"] == hour]
         mark = ("✓" if "done" in statuses or hour == now.hour else "⚠️ failed" if "failed" in statuses
-                else "✗ died" if "running" in statuses else "✗ missing")
+                else "✗ died" if "running" in statuses or "died" in statuses else "✗ missing")
         marks.append(f"{hour:02d}:00 {mark}")
     found = sum((total.get("found") or {}).values())
     lines = [f"🌙 <b>{now:%a %d %b} · day summary</b>",
