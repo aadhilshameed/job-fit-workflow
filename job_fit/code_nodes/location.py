@@ -1,8 +1,8 @@
 """Can I get to this job's office as often as it needs? Decided in code, the same way every time.
 
 Inputs:
-- office_presence: from the Decisions API filter (llm/decisions_api_filter.py): not_mentioned, remote, occasional, weekly,
-  regular_unspecified.
+- office_presence: from the Decisions API filter (llm/decisions_api_filter.py): not_mentioned, remote, occasional,
+  one_day_weekly, weekly (two or more days), regular_unspecified.
 - the posting's locations from the Arbeitsagentur API: coordinates (breite, laenge) and federal state (region).
 
 The rule (agreed 19 Nov 2026), with three zones for weekly presence so nothing reachable is lost silently:
@@ -10,6 +10,9 @@ The rule (agreed 19 Nov 2026), with three zones for weekly presence so nothing r
     within WEEKLY_RADIUS_KM (115 km)        -> fine
     up to CHECK_RADIUS_KM (170 km)           -> "check": you look up the train time (verdict lack_of_info)
     further                                  -> "skip"
+- one_day_weekly (agreed 25 Nov 2026): at least one location in ONE_DAY_WEEKLY_STATES (Bavaria, Saxony, Thuringia:
+  Munich, Augsburg, Leipzig and Dresden are fine once a week), or within the weekly radius, else "skip".
+  States, not a radius: Frankfurt (221 km) is closer than Munich (229 km) in a straight line, but far longer by train.
 - occasional: at least one location in TWICE_A_MONTH_STATES (or within the weekly radius), else "skip".
 - remote or not_mentioned: fine. "Not mentioned" counts as fine, so a posting is never dropped over
   something it does not say.
@@ -32,7 +35,9 @@ CHECK_RADIUS_KM = 170       # 115 to 170 km: Leipzig, Regensburg, Würzburg, Ans
 TWICE_A_MONTH_STATES = {"BAYERN", "THUERINGEN", "SACHSEN", "SACHSEN_ANHALT", "HESSEN",
                         "BADEN_WUERTTEMBERG", "BERLIN"}   # the API's own spelling of the federal states
 
-NEEDS_WEEKLY = {"weekly", "regular_unspecified"}
+NEEDS_WEEKLY = {"weekly", "regular_unspecified"}       # two or more office days a week
+ONE_DAY_WEEKLY = "one_day_weekly"
+ONE_DAY_WEEKLY_STATES = {"BAYERN", "SACHSEN", "THUERINGEN"}   # one office day a week is fine anywhere in these
 MIN_SKIP_CONFIDENCE = 0.6   # the one harmful presence mistake in the 19 Nov test had confidence 0.58
 
 
@@ -60,7 +65,7 @@ def _rule(office_presence: str | None, locations: list[dict]) -> dict | None:
     locations: [{"city": ..., "region": ..., "lat": ..., "lon": ...}, ...]; a job is fine if ANY of its
     locations works (for example "Chemnitz or Dresden").
     """
-    if office_presence not in NEEDS_WEEKLY and office_presence != "occasional":
+    if office_presence not in NEEDS_WEEKLY and office_presence not in ("occasional", ONE_DAY_WEEKLY):
         return None                          # remote, not_mentioned, or the question was not answered
     with_coords = [loc for loc in locations if loc.get("lat") is not None and loc.get("lon") is not None]
     if not locations:
@@ -70,6 +75,14 @@ def _rule(office_presence: str | None, locations: list[dict]) -> dict | None:
         if with_coords else None
     if nearest and nearest[0] <= WEEKLY_RADIUS_KM:
         return None
+    if office_presence == ONE_DAY_WEEKLY:
+        if any(loc.get("region") in ONE_DAY_WEEKLY_STATES for loc in locations):
+            return None
+        if not any(loc.get("region") for loc in locations):
+            return {"kind": "check", "reason": "One office day a week, but the federal state of the office is unknown: "
+                                               "check where it is"}
+        where = ", ".join(sorted({loc.get("city") or "?" for loc in locations}))
+        return {"kind": "skip", "reason": f"One office day a week in {where}, outside Bavaria, Saxony and Thuringia"}
     if office_presence == "occasional":
         if any(loc.get("region") in TWICE_A_MONTH_STATES for loc in locations):
             return None

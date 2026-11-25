@@ -31,9 +31,10 @@ WATCH_LIST = {
 }
 
 
-def fetch_all() -> list[tuple]:
-    """(source module, company, raw job) for every job on every watched feed. A feed that fails (a wrong name,
-    a site that is down) is reported and skipped, so one company never stops the run."""
+def fetch_all() -> tuple[list[tuple], list[str]]:
+    """((source module, company, raw job) for every job on every watched feed, the feeds that failed).
+    A feed that fails (a wrong name, a site that is down) is reported and skipped, so one company never stops
+    the run. The failed ones ("ashby/DeepL (LookupError)") go into the evening message."""
     found, failed, too_old = [], [], 0
     cutoff = date.today() - timedelta(days=MAX_AGE_DAYS)
     for source, companies in WATCH_LIST.items():
@@ -51,4 +52,4 @@ def fetch_all() -> list[tuple]:
         print(f"Company feeds: {too_old} jobs older than {MAX_AGE_DAYS} days left out")
     if failed:
         print(f"Company feeds that failed this run: {', '.join(failed)}")
-    return found
+    return found, failed

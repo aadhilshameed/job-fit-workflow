@@ -19,6 +19,10 @@ SEARCH_TERMS = [         # every role a student can take next to the MSc: Werkst
     "Werkstudent Generative KI", "Werkstudent LLM", "Werkstudent Agent", "Working Student AI",
     "Praktikum KI", "Praktikum AI", "Praktikum Generative KI", "Praktikum LLM", "Praktikum Agent",
     "Internship AI",
+    # added 22 Nov 2026: agentic AI is the target, and English titles starting with "Intern" were missed
+    # (BMW's "Intern Artificial Intelligence and Agentic AI in Quality Management"). These also bring full-time roles.
+    "Agentic AI", "KI Agent", "AI Agent", "Generative AI", "GenAI", "LLM", "Intern AI", "Intern KI",
+    "Werkstudent Agentic AI", "Praktikum Agentic AI",
 ]
 
 PAUSE_SECONDS = 2      # between calls, like the n8n batching (1 item every 2000 ms)
@@ -39,7 +43,8 @@ def _get(url, params=None):
 
 
 def search(days_back: int | None = None, size: int = 100) -> list[dict]:
-    """All search results for every term, without duplicates (the same posting often matches several terms)."""
+    """All search results for every term, without duplicates among them (the same posting often matches several terms).
+    wihin the said number of pages"""
     seen, postings = set(), []
     for term in SEARCH_TERMS:
         for page in range(1, MAX_PAGES + 1):      # a full page means there may be more: fetch the next one
@@ -55,6 +60,8 @@ def search(days_back: int | None = None, size: int = 100) -> list[dict]:
             if len(page_jobs) < size:
                 break
     return postings
+    #if there are 500 postings in AI which are unique, it would return all of them.
+    #of these 500 postings, 95% will be the postings that we have seen before
 
 
 def details(refnr: str) -> dict:

@@ -1,4 +1,13 @@
-"""The Telegram alerts: one summary message, then one short message per posting.
+"""The Telegram alerts: one short message per posting, a morning and an evening message, and crash alerts.
+
+Since 24 Nov 2026 there is no summary at the top of every run any more (three a day, often "0 new postings"):
+- 08:00 run: a morning message (morning_message): this run's results, postings sent again from earlier runs,
+  and how many wait for another Haiku try
+- 13:00 run: only the posting messages, and nothing at all when there is nothing to send
+- 20:00 run: an evening message (evening_message): every run of the day with a tick, the day's counts and the
+  problems in plain words. A missing tick means a run that never happened or died
+- a crash: crash_alert(), the error and what it means in plain words, without the bot token
+summary_message() is still used by scripts/preview_telegram.py.
 
 Needs two lines in .env:
     TELEGRAM_BOT_TOKEN   the bot's password (from BotFather)
@@ -32,6 +41,8 @@ from datetime import date, datetime
 
 import requests
 
+TOKEN_IN_TEXT = re.compile(r"bot\d+:[A-Za-z0-9_-]+")       # the bot token as it appears inside a Telegram URL
+
 from job_fit.code_nodes.location import HOME, WEEKLY_RADIUS_KM, distance_km
 
 API_URL = "https://api.telegram.org/bot{token}/{method}"
@@ -43,8 +54,9 @@ VERDICT_HEADINGS = {"apply": "✅ <b>APPLY</b>", "lack_of_info": "❓ <b>CHECK</
 VERDICT_ORDER = {"apply": 0, "lack_of_info": 1, "stretch": 2, "skip": 3}
 SENT_VERDICTS = {"apply", "lack_of_info", "stretch"}
 PRESENCE_SHORT = {"not_mentioned": "office days?", "remote": "remote", "occasional": "hybrid",
-                  "weekly": "office weekly", "regular_unspecified": "regular office"}
-HYBRID = {"occasional", "weekly", "regular_unspecified"}
+                  "one_day_weekly": "office 1 day/week", "weekly": "office 2+ days/week",
+                  "regular_unspecified": "regular office"}
+HYBRID = {"occasional", "one_day_weekly", "weekly", "regular_unspecified"}
 GAP_PREFIXES = (("hard_gap: ", "hard_gap"), ("partial (language, not counted): ", "language"), ("partial: ", "partial"))
 DOTS = {"match": "🟢", "partial": "🟡", "hard_gap": "🔴", "not_stated": "⚪"}
 GENDER_TAG = re.compile(r"\s*\((?:all genders|[mwfdxgn*]+|div\.?)(?:\s*[/|,]\s*(?:[mwfdxgn*]+|div\.?))*\)",
@@ -61,15 +73,41 @@ ENGLISH_WORDS = {"and", "the", "with", "for", "we", "you", "is", "of", "to", "at
 
 # ---------------------------------------------------------------- sending
 
+def scrub(text) -> str:
+    """The text with the bot token replaced by ***. The token is part of every Telegram URL, so a connection error
+    prints it (23 Nov 2026: it ended up in the crash alert). Use this on every error text that is printed or sent."""
+    text = TOKEN_IN_TEXT.sub("bot***", str(text))
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    return text.replace(token, "***") if token else text
+
+
 def send_message(text: str, url_buttons: list[tuple[str, str]] | None = None) -> None:
-    """Send one message to my chat. url_buttons: [(label, link), ...], shown in one row under the message."""
+    """Send one message to my chat. url_buttons: [(label, link), ...], shown in one row under the message.
+
+    Up to 3 tries:
+    - the connection never opened (ConnectTimeout, ConnectionError): the message never reached Telegram, so it is
+      safe to send again, 5 s later (23 Nov 2026: one such blip crashed a run and lost a posting)
+    - ReadTimeout: the message was sent but no answer came back, so it may have arrived. Not sent again (it
+      could arrive twice); the error goes up
+    - 429 (too many messages): wait as long as Telegram says
+    - any other refusal: 3 s, then again
+    Every error that goes up has the token removed (scrub)."""
     payload = {"chat_id": os.environ["TELEGRAM_CHAT_ID"], "text": text[:MAX_LENGTH],
                "parse_mode": "HTML", "link_preview_options": {"is_disabled": True}}
     if url_buttons:
         payload["reply_markup"] = {"inline_keyboard": [[{"text": label, "url": link} for label, link in url_buttons]]}
     url = API_URL.format(token=os.environ["TELEGRAM_BOT_TOKEN"], method="sendMessage")
     for attempt in range(1, 4):
-        response = requests.post(url, json=payload, timeout=30)
+        try:
+            response = requests.post(url, json=payload, timeout=30)
+        except requests.exceptions.ConnectionError as e:     # ConnectTimeout is one of these: nothing was sent
+            if attempt == 3:
+                raise type(e)(scrub(e)) from None
+            print(f"Telegram not reachable (try {attempt} of 3, {type(e).__name__}): trying again in 5 s")
+            time.sleep(5)
+            continue
+        except requests.exceptions.RequestException as e:   # ReadTimeout and the rest: may have arrived
+            raise type(e)(scrub(e)) from None
         if response.status_code == 429:                       # too many messages too fast: wait as told
             time.sleep(response.json().get("parameters", {}).get("retry_after", 5))
             continue
@@ -276,31 +314,166 @@ def summary_message(results: list[dict], day: date | None = None, note: str = ""
     return text + (f"\n{html.escape(note)}" if note else "")
 
 
-def send_alerts(items: list[tuple[dict, dict, object]], note: str = "", limit: int | None = None,
-                summarize=None, on_sent=None) -> int:
-    """items: [(posting, result, published), ...]. Sends the summary, then the postings in order.
+def send_alerts(items: list[tuple[dict, dict, object]], note: str | None = None, limit: int | None = None,
+                summarize=None, on_sent=None, on_failed=None) -> int:
+    """items: [(posting, result, published), ...]. Sends the postings in order (apply, stretch, lack_of_info).
+    note: only for previews (scripts/preview_telegram.py): then the old summary message goes first.
     summarize: a function (title, description, requirement rows) -> PostingSummary, called only for postings
-    that get sent, with one retry; if both tries fail, the message goes out without the role line and
-    lists only the gaps, in the posting's own words.
+    that get sent and have no summary yet (posting["summary"]), with one retry; if both tries fail, the message
+    goes out without the role line and lists only the gaps, in the posting's own words.
     on_sent: a function (posting, result, summary) called after Telegram accepted each posting's message
     (run_daily.py uses it to note the time in the database).
+    on_failed: a function (posting, error) called when a message could not be sent even after send_message's
+    retries. The other postings are still sent; the run does not stop.
     Returns how many postings were sent."""
-    send_message(summary_message([r for _, r, _ in items], note=note))
+    if note is not None:
+        send_message(summary_message([r for _, r, _ in items], note=note))
     to_send = sorted((i for i in items if i[1]["code_verdict"] in SENT_VERDICTS),
                      key=lambda i: (place_group(i[0]), VERDICT_ORDER[i[1]["code_verdict"]],
                                     nearest_km(i[0].get("locations") or []) or 9999))
+    sent = 0
     for posting, result, published in to_send[:limit]:
-        summary = None
-        for attempt in (1, 2) if summarize else ():             # one retry: most failures are passing ones
+        summary = posting.get("summary")                        # a posting sent again may have one from before
+        for attempt in (1, 2) if summarize and summary is None else ():   # one retry: most failures pass
             try:
                 summary = summarize(posting.get("title") or "", posting.get("description") or "",
                                     requirement_rows(result))
                 break
             except Exception as e:                                  # noqa: BLE001
                 print(f"Summary failed for {posting['refnr']} (try {attempt} of 2): {type(e).__name__}: {e}"[:300])
-        send_message(posting_message(posting, result, published, summary),
-                     [("Open posting ↗", posting.get("url") or POSTING_URL.format(refnr=posting["refnr"]))])
+        try:
+            send_message(posting_message(posting, result, published, summary),
+                         [("Open posting ↗", posting.get("url") or POSTING_URL.format(refnr=posting["refnr"]))])
+        except Exception as e:                                  # noqa: BLE001
+            print(f"Could not send {posting['refnr']}: {type(e).__name__}: {scrub(e)}"[:300])
+            if on_failed:
+                on_failed(posting, e)
+            continue
+        sent += 1
         if on_sent:
             on_sent(posting, result, summary)
         time.sleep(1)                                          # Telegram allows about one message a second per chat
-    return len(to_send[:limit])
+    return sent
+
+
+# ---------------------------------------------------------------- errors in plain words
+
+# which service an error is about, found in its text (the first match wins)
+SERVICES = (("api.telegram.org", "Telegram"), ("neon.tech", "the database (Neon)"), ("anthropic", "Anthropic (Haiku)"),
+            ("openai", "OpenAI (Decisions API)"), ("arbeitsagentur", "the Arbeitsagentur API"),
+            ("arbeitnow", "Arbeitnow"), ("geoapify", "Geoapify"), ("smartrecruiters", "SmartRecruiters"),
+            ("personio", "Personio"), ("lever.co", "Lever"), ("ashbyhq", "Ashby"), ("greenhouse", "Greenhouse"))
+
+# error name -> what it means, in plain words. {service} is filled in from SERVICES
+EXPLANATIONS = {
+    "ConnectTimeout": "AWS Lambda tried to connect to {service}, but the connection was never established, so "
+                      "nothing was sent or received. Usually a short network blip between AWS and {service}, "
+                      "not an outage.",
+    "ConnectionError": "AWS Lambda could not open a connection to {service} (the connection was never established, "
+                       "or was dropped at once). Usually a short network blip.",
+    "APIConnectionError": "AWS Lambda could not open a connection to {service}, so the request never got there. "
+                          "Usually a short network blip.",
+    "ReadTimeout": "The connection to {service} was established and the request was sent, but no answer came back "
+                   "in time. The request may or may not have gone through.",
+    "APITimeoutError": "{service} took too long to answer, so the request was given up. It may have been "
+                       "processed anyway.",
+    "OperationalError": "The database (Neon) refused or dropped the connection. Neon may have been asleep, "
+                        "restarting, or briefly unreachable.",
+    "RateLimitError": "{service} said too many requests in a short time, or the monthly spend limit was reached.",
+    "InternalServerError": "{service} had a problem on its own side (a server error or overloaded). Not caused by "
+                           "this code.",
+    "OverloadedError": "{service} was overloaded and turned the request away. Not caused by this code.",
+    "AuthenticationError": "{service} rejected the API key: the key in the Lambda's environment variables is "
+                           "wrong, expired or revoked.",
+    "PermissionDeniedError": "{service} says this key is not allowed to do that.",
+    "KeyError": "A setting is missing: probably an environment variable that is not set in Lambda or .env.",
+}
+UNKNOWN = "An error this code does not know yet. The CloudWatch log has the full details."
+
+
+def explain(error: Exception) -> str:
+    """One or two plain sentences on what the error means."""
+    text = str(error).lower()
+    package = type(error).__module__.split(".")[0]              # "anthropic", "openai", "psycopg", "requests"
+    service = {"anthropic": "Anthropic (Haiku)", "openai": "OpenAI (Decisions API)",
+               "psycopg": "the database (Neon)"}.get(package) or next(
+        (name for key, name in SERVICES if key in text), "a service")
+    if isinstance(error, RuntimeError) and "telegram refused" in text:
+        return "Telegram received the message but refused it (for example broken formatting in the text)."
+    return EXPLANATIONS.get(type(error).__name__, UNKNOWN).format(service=service)
+
+
+def crash_alert(error: Exception, when: datetime) -> str:
+    """The message sent when a run crashes: the error (without the token), what it means, what happens next."""
+    detail = scrub(error)[:200]
+    return (f"⚠️ <b>Job Scout run failed</b> ({when:%H:%M})\n"
+            f"<code>{html.escape(type(error).__name__)}</code>: {html.escape(detail)}\n\n"
+            f"<b>What it means:</b> {html.escape(explain(error))}\n"
+            f"<b>What happens now:</b> everything done before the crash is saved. Postings that were assessed but "
+            f"not sent are sent on the next run, and failed Haiku calls are tried again.")
+
+
+# ---------------------------------------------------------------- morning and evening messages
+
+def problem_lines(stats: dict) -> list[str]:
+    """The problems in a run's (or a day's) counts, in plain words. Empty when there were none."""
+    lines = []
+    errors = stats.get("haiku_errors") or {}
+    if errors.get("cut_off"):
+        lines.append(f"{errors['cut_off']} Haiku answers cut off (the posting needed more than the token limit), "
+                     f"tried again on the next run")
+    if errors.get("other"):
+        lines.append(f"{errors['other']} Haiku calls failed for another reason (see the log), tried again on the "
+                     f"next run")
+    if stats.get("send_failed"):
+        lines.append(f"{stats['send_failed']} postings could not be sent to Telegram, sent again on the next run")
+    if stats.get("decisions_errors"):
+        lines.append(f"{stats['decisions_errors']} Decisions API calls failed; those postings went to Haiku anyway")
+    if stats.get("failed_feeds"):
+        lines.append("Company feeds that did not answer: " + ", ".join(sorted(set(stats["failed_feeds"]))))
+    return lines
+
+
+def _verdict_line(verdicts: dict) -> str:
+    sent = [f"{verdicts.get(v, 0)} {name}" for v, name in (("apply", "apply"), ("stretch", "stretch"),
+                                                           ("lack_of_info", "check")) if verdicts.get(v)]
+    line = "Sent: " + (" · ".join(sent) if sent else "nothing")
+    return line + (f" · not sent: {verdicts['skip']} skip" if verdicts.get("skip") else "")
+
+
+def morning_message(now: datetime, stats: dict, resending: int, waiting: int) -> str:
+    """The 08:00 run's message: the start of the day. resending: postings from earlier runs that never reached
+    Telegram and follow below this message; waiting: postings waiting for another Haiku try."""
+    lines = [f"☀️ <b>{now:%a %d %b} · {now:%H:%M}</b>",
+             f"New: {sum((stats.get('new') or {}).values())} · AI roles {stats.get('ai_roles', 0)} · "
+             f"assessed {stats.get('assessed', 0)}",
+             _verdict_line(stats.get("verdicts") or {})]
+    if resending:
+        lines.append(f"From earlier: {resending} postings that never reached you, sent below")
+    if waiting:
+        lines.append(f"Waiting: {waiting} postings for another Haiku try")
+    problems = problem_lines(stats)
+    if problems:
+        lines += ["", "<b>Problems</b>"] + [f"• {html.escape(p)}" for p in problems]
+    return "\n".join(lines)
+
+
+def evening_message(now: datetime, runs: list[dict], total: dict, expected_hours=(8, 13, 20)) -> str:
+    """The 20:00 run's message: every run of the day and the day's counts.
+    runs: [{"hour": 8, "status": "done" | "failed" | "running"}, ...] for today, this run included.
+    A run still "running" that is not this one died without finishing (for example the 15-minute limit)."""
+    marks = []
+    for hour in expected_hours:
+        statuses = [r["status"] for r in runs if r["hour"] == hour]
+        mark = ("✓" if "done" in statuses or hour == now.hour else "⚠️ failed" if "failed" in statuses
+                else "✗ died" if "running" in statuses else "✗ missing")
+        marks.append(f"{hour:02d}:00 {mark}")
+    found = sum((total.get("found") or {}).values())
+    lines = [f"🌙 <b>{now:%a %d %b} · day summary</b>",
+             "Runs: " + "   ".join(marks),
+             f"Found {found} · new {sum((total.get('new') or {}).values())} · AI roles {total.get('ai_roles', 0)} · "
+             f"assessed {total.get('assessed', 0)}",
+             _verdict_line(total.get("verdicts") or {})]
+    problems = problem_lines(total)
+    lines += (["", "<b>Problems</b>"] + [f"• {html.escape(p)}" for p in problems]) if problems else ["No problems today"]
+    return "\n".join(lines)

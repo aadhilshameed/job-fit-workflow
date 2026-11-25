@@ -17,7 +17,8 @@ Three questions share one request (the posting is billed once):
 """
 
 DEFAULT_PROVIDER = "openai"
-QUESTIONS_VERSION = "q2"   # q1: first test; q2: "must live in the region" counts as weekly presence
+QUESTIONS_VERSION = "q3"   # q1: first test; q2: "must live in the region" counts as weekly presence;
+                           # q3 (25 Nov 2026): one fixed office day a week is its own answer (one_day_weekly)
 MODELS = {"openai": "gpt-6-luna", "google": "gemini-decision-1"}
 THRESHOLD = 0.49  # ai_eng_probability >= 0.49 goes to Haiku (set 19 Nov 2026 from the 25-posting test)
 
@@ -44,9 +45,10 @@ FOCUS_CHOICES = [
 PRESENCE_CHOICES = [
     {"value": "not_mentioned", "description": "The posting says nothing about remote work or office days."},
     {"value": "remote", "description": "Fully remote, or office visits are only optional."},
-    {"value": "occasional", "description": "Hybrid or mobile work with some office days, a few per month at most, "
-                                           "or mostly remote."},
-    {"value": "weekly", "description": "Fixed office days every week, mostly on site, no remote work, "
+    {"value": "occasional", "description": "Hybrid with office days less than once a week: a few days per month at most."},
+    {"value": "one_day_weekly", "description": "Exactly one fixed office day every week, otherwise remote "
+                                               "(for example 'one office day a week', '1 day on site per week')."},
+    {"value": "weekly", "description": "Two or more office days every week, mostly or fully on site, "
                                        "or the person must live in the city or region."},
     {"value": "regular_unspecified", "description": "Regular presence at the office is required, "
                                                     "without saying how often."},
@@ -58,6 +60,8 @@ _clients = {}
 def _client(provider: str):
     """Create each client on first use, like in model_calls.py."""
     if provider not in _clients:
+        #client is an object that holds the api key, setting and a pool of connection it keeps open and reuses
+        #it is created once and reused
         if provider == "openai":
             from openai import OpenAI
             _clients[provider] = OpenAI()                     # reads OPENAI_API_KEY
@@ -66,6 +70,8 @@ def _client(provider: str):
             _clients[provider] = genai.Client(http_options={"api_version": "v1beta"})   # reads GEMINI_API_KEY
     return _clients[provider]
 
+#.get for dicts 
+#getattr for objects
 
 def _ask_openai(text: str) -> dict:
     decision = _client("openai").decisions.create(
@@ -80,7 +86,7 @@ def _ask_openai(text: str) -> dict:
              "choices": PRESENCE_CHOICES},
         ],
     )
-    answers = {a.name: a for a in decision.answers}      # a list of answers -> a dictionary by name
+    answers = {a.name: a for a in decision.answers}
     ai_eng, focus, presence = (answers.get(n) for n in ("yes_no_ai_eng_role", "choice_ai_work_type",
                                                          "choice_office_presence"))
     if ai_eng is None or ai_eng.type == "refusal":
@@ -91,7 +97,7 @@ def _ask_openai(text: str) -> dict:
             "presence": presence.choice if ok(presence) else None,
             "presence_confidence": presence.confidence if ok(presence) else None,
             "input_tokens": decision.usage.input_tokens}
-
+    
 
 def _ask_gemini(text: str) -> dict:
     # Gemini takes the questions as a dictionary (the key is the name), the yes/no type is called "noul",
@@ -108,9 +114,11 @@ def _ask_gemini(text: str) -> dict:
                                 "criteria": {c["value"]: c["description"] for c in PRESENCE_CHOICES}},
         },
     )
+    #here choices are a dict of dicts .. our choices are a list of dicts.. hence this
     ai_eng, focus, presence = (result.answers.get(n) for n in ("yes_no_ai_eng_role", "choice_ai_work_type",
                                                                 "choice_office_presence"))
     if ai_eng is None or getattr(ai_eng, "noul", None) is None:
+        #getattr(ai_eng, "noul", None) -> means focus.choice, or None if focus has no choice field
         raise ValueError("The Gemini Decisions API did not answer yes_no_ai_eng_role")
     usage = result.usage
     tokens = getattr(usage, "total_input_tokens", None) or getattr(usage, "input_tokens", None) or 0
@@ -119,6 +127,8 @@ def _ask_gemini(text: str) -> dict:
             "presence": getattr(presence, "choice", None),
             "presence_confidence": getattr(presence, "confidence", None),
             "input_tokens": tokens}
+
+            # we are doing this getattr method since Gemini has no refusal thing like OpenAI
 
 
 ATTEMPTS = 3          # a failed call is tried again twice, 3 seconds apart

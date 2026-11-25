@@ -15,6 +15,7 @@ from job_fit.llm.schema import Assessment
 # two-partial limit, because a lower language level alone should never stop an application (19 Nov 2026)
 LANGUAGE = re.compile(r"deutsch|german|englisch|english|französisch|french|spanisch|spanish|"
                       r"sprachkenntnis|language skill|\b(a1|a2|b1|b2|c1|c2)\b", re.IGNORECASE)
+#| means OR
 
 
 def is_language(requirement_text: str) -> bool:
@@ -22,20 +23,23 @@ def is_language(requirement_text: str) -> bool:
 
 
 def _clean(text: str) -> str:
-    """Lower case, and every run of spaces or line breaks becomes one space."""
+    """Lower case, and every run of spaces, tabs or line breaks is replaced by one space."""
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
-def quote_status(quote: str, background: str) -> str:
+def quote_verification(quote: str, background: str) -> str:
     """no_quote, verified or not_verified.
 
     The quote may have up to three pieces joined with " | ". Every piece must appear
     word for word in the background (ignoring case, extra spaces and punctuation at its edges).
     """
-    if quote.strip().lower() == "none":
-        return "no_quote"
-    clean_background = _clean(background)
-    pieces = [_clean(p).strip(".,;: ") for p in re.split(r"\s*\|\s*", quote)]
+    if quote.strip().lower() in ("", "none"):
+        return "no_quote"   # the prompt tells Haiku to write the word "none" when nothing in the background supports a
+                            # requirement (it did so all 217 times by 24 Nov 2026); an empty quote counts the same
+    clean_background = _clean(background)   # the whole background, cleaned the same way as the quotes
+
+    different_quote_broken_into_list = re.split(r"\s*\|\s*", quote)
+    pieces = [_clean(p).strip(".,;: ") for p in different_quote_broken_into_list]
     pieces = [p for p in pieces if p]
     if pieces and all(p in clean_background for p in pieces):
         return "verified"
@@ -48,14 +52,22 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
     location_gap: None, or {"kind": "skip" or "check", "reason": ...} from location.location_gap().
     """
     requirements = [r.model_copy() for r in assessment.requirements if r.found_in != "tasks_section"]
+    #.model_copy() makes a copy of the each requirements from the response of the model.
+    #because we are changing "importance" of the requiremt based on the "found_in" and if were to do it without the model_copy(), it would change the original response of the model.
+    #we want to the keep the original response of the model: to evaluate its responses later.
     tasks = [r.requirement_text for r in assessment.requirements if r.found_in == "tasks_section"]
+    #we just need the requirement_text and not anything else
 
     for r in requirements:
         if r.found_in == "implied_by_task":       # a duty never makes a skill critical
             r.importance = "standard"
 
-    statuses = {id(r): quote_status(r.background_quote, background) for r in requirements}
-
+    quote_verification = {id(r): quote_verification(r.background_quote, background) for r in requirements} 
+    #quote_verification returns either "verified", "not_verified" or "no_quote"
+    #every object has an id and id(x) gives x's id
+    #the content of 2 objects can be same, but the ids will be different.
+    #id(r) is used since r is a pydatic object and not actually a dict, so cant just say r 
+    
     critical_skills = [r for r in requirements
                        if r.requirement_type == "technical_skill" and r.importance == "critical"]
     # a critical technical skill marked not_stated is treated as a gap (the prompt forbids that label for skills)
@@ -91,8 +103,8 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
         "location_gap": location_gap,
         "missing_eligibility": [r.requirement_text for r in missing_eligibility],
         "unverified_quotes": [r.requirement_text for r in requirements
-                              if statuses[id(r)] == "not_verified"],
-        "quotes_checked": sum(1 for s in statuses.values() if s != "no_quote"),
+                              if quote_verification[id(r)] == "not_verified"],
+        "quotes_checked": sum(1 for s in quote_verification.values() if s != "no_quote"),
         "tasks": tasks,
-        "requirements": [r.model_dump() | {"quote_status": statuses[id(r)]} for r in requirements],
+        "requirements": [r.model_dump() | {"quote_status": quote_verification[id(r)]} for r in requirements],
     }

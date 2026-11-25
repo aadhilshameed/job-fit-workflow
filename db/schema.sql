@@ -21,7 +21,7 @@ CREATE TABLE screened_postings (
     is_it_ai_eng BOOLEAN,            -- yes or no: is the probability at least 0.49 (the threshold)
     ai_work_type TEXT,               -- agentic_ai, ai_automation, ai_engineering or other
     work_type_confidence NUMERIC,    -- 0 to 1: how confident the model is in ai_work_type
-    office_presence TEXT,            -- not_mentioned, remote, occasional, weekly or regular_unspecified
+    office_presence TEXT,            -- not_mentioned, remote, occasional, one_day_weekly, weekly (2+ days) or regular_unspecified
     presence_confidence NUMERIC,     -- 0 to 1: confidence on office_presence response
     
 
@@ -109,6 +109,18 @@ CREATE TABLE verdict_feedback (
     model_verdict_id INTEGER NOT NULL REFERENCES model_verdicts(id),   -- the verdict whose Telegram message the button was under
     action TEXT NOT NULL,                -- right, wrong or applied
     pressed_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+-- One row per run of scripts/run_daily.py (added 24 Nov 2026), for the evening message and to spot runs that died.
+-- A row still 'running' long after its start means the run was killed before it finished (the 15-minute limit).
+CREATE TABLE pipeline_run_logs (
+    id SERIAL PRIMARY KEY,
+    started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    finished_at TIMESTAMPTZ,             -- empty while running, and for a run that died
+    status TEXT NOT NULL DEFAULT 'running',   -- running, done or failed
+    days INTEGER,                        -- the --days window of this run
+    error TEXT,                          -- the error when status is failed (bot token removed)
+    stats JSONB                          -- counts per step: found, new, AI roles, assessed, verdicts, sent, problems
 );
 
 -- One row per place text ever looked up with Geoapify, so each place costs one call in total (job_fit/geocode.py).

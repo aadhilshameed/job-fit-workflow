@@ -47,8 +47,13 @@ REMOTE_PHRASES = ["fully remote", "full remote", "full-remote", "100% remote", "
 POSTAL_CODE = re.compile(r"\s*\(\s*\d{4,5}\s*\)|^\s*\d{5}\s+")      # "München (81671)" and "81671 München"
 
 
-def _get_feed(company: str) -> str:
-    """The feed text from the first address that has it (.de, then .com)."""
+def _get_feed(company: str) -> bytes:
+    """The feed from the first address that has it (.de, then .com), as raw bytes.
+
+    Bytes, not text: the feed is UTF-8, but Personio's answer does not say so in its Content-Type header, and for
+    text without a stated charset requests guesses ISO-8859-1. Then "München" became "MÃ¼nchen" (found 25 Nov 2026:
+    5 appliedAI postings, one Munich job wrongly skipped because Geoapify could not place "MÃ¼nchen").
+    The XML parser reads the encoding from the feed's own first line (<?xml ... encoding="UTF-8"?>) when it gets bytes."""
     for url in FEED_URLS:
         try:
             return _get_one(url.format(company=company), company)
@@ -57,14 +62,14 @@ def _get_feed(company: str) -> str:
     raise LookupError(f"Personio has no job feed for company '{company}' (404 on .de and .com)")
 
 
-def _get_one(url: str, company: str) -> str:
+def _get_one(url: str, company: str) -> bytes:
     for attempt in range(1, RETRIES + 1):
         try:
             response = requests.get(url, timeout=30)
             if response.status_code == 404:
                 raise LookupError(f"Personio has no job feed for company '{company}' (404 at {url})")
             response.raise_for_status()
-            return response.text
+            return response.content                  # bytes: see _get_feed
         except LookupError:
             raise                                    # a missing company will not appear on the next try
         except requests.RequestException:

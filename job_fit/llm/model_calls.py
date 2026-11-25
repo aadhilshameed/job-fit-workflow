@@ -9,8 +9,18 @@ effort=None means "send no thinking setting", so the model runs on its default (
 because that is how it ran in n8n).
 """
 
+from anthropic import transform_schema
+
 from .prompt import SYSTEM_PROMPT
 from .schema import Assessment
+
+# Haiku's ceiling for thinking + answer together; a ceiling, not a spend (you pay only for what is used).
+# 20000 cut off about 1 answer in 15 (24 Nov 2026): Haiku high uses 7,000 to 19,800 tokens, about 800 per
+# requirement, and the same posting varies from run to run. A cut-off answer is half a JSON and cannot be read.
+MAX_TOKENS = 32000
+# the Assessment schema in the shape the API expects. Sent ourselves (instead of output_format=Assessment) so the
+# SDK does not parse the answer before we have checked why it stopped
+ASSESSMENT_FORMAT = {"type": "json_schema", "schema": transform_schema(Assessment)}
 
 _clients = {}
 
@@ -45,8 +55,13 @@ def ask_gemini(user_message: str, model: str, effort: str | None):
         contents=user_message,
         config=types.GenerateContentConfig(**config),
     )
-    # response.parsed is filled by the Google SDK; if it is None we parse the text ourselves,
-    # which raises an error by itself if the text is broken or cut off
+
+# response:        Google's response object (the envelope)
+# response.text:   the model's answer, a JSON string
+#                  (it follows the Assessment schema, because we passed response_schema=Assessment)
+# response.parsed: that JSON string already turned into an Assessment object by the SDK,
+#                  or None if it could not be (a broken or cut-off answer)
+   
     assessment = response.parsed or Assessment.model_validate_json(response.text)
     u = response.usage_metadata
     usage = {"input": u.prompt_token_count or 0,
@@ -55,23 +70,31 @@ def ask_gemini(user_message: str, model: str, effort: str | None):
 
 
 def ask_claude(user_message: str, model: str, effort: str | None):
-    extra = {"output_config": {"effort": effort}} if effort else {}
-    response = _client("anthropic").messages.parse(
+    """Streamed: the answer arrives in pieces while Haiku writes it, so the connection never sits silent for the
+    90 seconds a long answer takes (the SDK's advice for long answers). The result is the same as one call.
+    Then three checks, in this order, so the error says what really happened:
+    1. stop_reason "max_tokens": the answer was cut off at MAX_TOKENS (it cannot be complete JSON)
+    2. no text at all
+    3. the text must fit Assessment (pydantic raises a ValidationError if it does not)"""
+    output_config = {"format": ASSESSMENT_FORMAT}
+    if effort:
+        output_config["effort"] = effort
+    with _client("anthropic").messages.stream(
         model=model,
-        # a ceiling, not a spend: thinking counts toward it (16000 was hit once, the longest answer used 15,850).
-        # Above about 21,000 the Anthropic SDK refuses a non-streaming call ("may take longer than 10 minutes"),
-        # so 20000 it is, with an explicit 10-minute timeout.
-        max_tokens=20000,
+        max_tokens=MAX_TOKENS,
         timeout=600,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_message}],
-        output_format=Assessment,
-        **extra,
-    )
-    if response.parsed_output is None: #response.parsed_output checks if the parsing failed
-        raise ValueError(f"No structured answer (stop_reason={response.stop_reason})")
+        output_config=output_config,
+    ) as stream:
+        response = stream.get_final_message()       # waits until the end message has arrived, then only it is complete. 
+    if response.stop_reason == "max_tokens":
+        raise ValueError(f"Answer cut off: Haiku used all {MAX_TOKENS} tokens (thinking + answer) before finishing")
+    text = "".join(block.text for block in response.content if block.type == "text")
+    if not text:
+        raise ValueError(f"No answer text (stop_reason={response.stop_reason})")
     usage = {"input": response.usage.input_tokens, "output": response.usage.output_tokens}
-    return response.parsed_output, usage
+    return Assessment.model_validate_json(text), usage
 
 
 def ask_gpt(user_message: str, model: str, effort: str | None):

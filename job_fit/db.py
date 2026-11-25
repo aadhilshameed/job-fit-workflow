@@ -8,6 +8,8 @@ The tables are in db/schema.sql. The daily run fills them step by step:
 3. save_verdict()    after Haiku and code_verdict.py: one row in model_verdicts, plus its rows in verdict_requirements
 4. save_summary()    after the summary call: fills in the summary columns of that verdict
 5. mark_sent()       after Telegram accepted the message: fills in sent_to_telegram_at
+6. unsent_verdicts() verdicts worth sending that never reached Telegram (a crash, a network blip): sent again
+7. start_run(), save_run(), runs_on()  one row per run in pipeline_run_logs, for the evening message
 
 Needs DATABASE_URL in .env (Neon's connection string, with connection pooling on).
 
@@ -27,6 +29,7 @@ from psycopg.types.json import Jsonb
 REPOST_WINDOW_DAYS = 60   # same company + title + city within this many days counts as the same job
 MAX_ATTEMPTS = 3          # a posting whose Haiku call failed is tried again on later runs, this many times in all
 RETRY_DAYS = 7            # ...but only while it is at most this many days old
+RESEND_DAYS = 3           # an unsent apply, stretch or lack_of_info is sent again on later runs for this many days
 
 
 def connect() -> psycopg.Connection:
@@ -197,6 +200,90 @@ def save_summary(conn, verdict_id: int, model: str, effort: str, prompt_version:
 def mark_sent(conn, verdict_id: int) -> None:
     """Telegram accepted this verdict's message: note the moment."""
     conn.execute("UPDATE model_verdicts SET sent_to_telegram_at = now() WHERE id = %s", (verdict_id,))
+
+
+def unsent_verdicts(conn, leave_out: set[int] = frozenset()) -> list[dict]:
+    """Verdicts worth sending (apply, stretch, lack_of_info) that never reached Telegram, from the last
+    RESEND_DAYS days: the run crashed or Telegram could not be reached before their message went out.
+    leave_out: verdict ids this run is sending anyway. Each comes with its posting (the shape still_to_assess
+    returns), its stored summary (or None) and its requirement rows, so the message can be built again."""
+    with conn.cursor(row_factory=dict_row) as cur:
+        rows = cur.execute(
+            """
+            SELECT p.*, v.id AS verdict_id, v.code_verdict, v.model_verdict, v.verdict_reason, v.summary
+            FROM model_verdicts v
+            JOIN screened_postings p ON p.id = v.screened_posting_id
+            WHERE v.code_verdict IN ('apply', 'stretch', 'lack_of_info')
+              AND v.sent_to_telegram_at IS NULL
+              AND v.assessed_at > now() - make_interval(days => %s)
+            ORDER BY v.id
+            """, (RESEND_DAYS,)).fetchall()
+        rows = [r for r in rows if r["verdict_id"] not in leave_out]
+        out = []
+        for r in rows:
+            requirements = cur.execute(
+                """
+                SELECT requirement_text, found_in, requirement_type, critical_or_standard AS importance,
+                       coalesce(background_quote, '') AS background_quote, match_reason, match_result
+                FROM verdict_requirements WHERE model_verdict_id = %s ORDER BY position_in_req_list
+                """, (r["verdict_id"],)).fetchall()
+            out.append({"id": r["id"], "source": r["source"], "source_id": r["source_id"], "refnr": r["source_id"],
+                        "title": r["title"], "company": r["company"], "firma": r["company"], "city": r["city"],
+                        "ort": r["city"], "locations": r["locations"] or [], "description": r["description"],
+                        "published_on": r["published_on"].date() if r["published_on"] else None,
+                        "office_presence": r["office_presence"],
+                        "location_gap": ({"kind": r["location_gap_type"], "reason": r["location_gap_reason"]}
+                                         if r["location_gap_type"] else None),
+                        "location_note": r["location_note"], "url": r.get("url"),
+                        "verdict_id": r["verdict_id"], "code_verdict": r["code_verdict"],
+                        "model_verdict": r["model_verdict"], "verdict_reason": r["verdict_reason"] or "",
+                        "stored_summary": r["summary"], "requirements": requirements})
+    return out
+
+
+# ---------------------------------------------------------------- pipeline_run_logs: one row per run (24 Nov 2026)
+# These never stop a run: if the table is missing or a write fails, the run goes on without its row.
+
+def start_run(conn, days: int) -> int | None:
+    """A new row with status "running"; returns its id, or None if it could not be written."""
+    try:
+        return conn.execute("INSERT INTO pipeline_run_logs (days) VALUES (%s) RETURNING id", (days,)).fetchone()[0]
+    except psycopg.Error as e:
+        print(f"pipeline_run_logs: could not start the row ({type(e).__name__}), the run goes on without it")
+        return None
+
+
+def save_run(conn, run_id: int | None, stats: dict, status: str | None = None, error: str | None = None) -> None:
+    """Stores the run's counts so far; with status "done" or "failed" also the end time (and the error)."""
+    if run_id is None:
+        return
+    try:
+        conn.execute(
+            """
+            UPDATE pipeline_run_logs
+            SET stats = %s, status = coalesce(%s, status), error = coalesce(%s, error),
+                finished_at = CASE WHEN %s IS NULL THEN finished_at ELSE now() END
+            WHERE id = %s
+            """, (Jsonb(stats), status, error, status, run_id))
+    except psycopg.Error as e:
+        print(f"pipeline_run_logs: could not save the row ({type(e).__name__})")
+
+
+def runs_on(conn, day) -> list[dict]:
+    """Every run that started on this Berlin calendar day: [{"hour", "status", "stats"}, ...], oldest first."""
+    try:
+        with conn.cursor(row_factory=dict_row) as cur:
+            return cur.execute(
+                """
+                SELECT extract(hour FROM started_at AT TIME ZONE 'Europe/Berlin')::int AS hour, status,
+                       coalesce(stats, '{}'::jsonb) AS stats
+                FROM pipeline_run_logs
+                WHERE (started_at AT TIME ZONE 'Europe/Berlin')::date = %s
+                ORDER BY started_at
+                """, (day,)).fetchall()
+    except psycopg.Error as e:
+        print(f"pipeline_run_logs: could not read today's runs ({type(e).__name__})")
+        return []
 
 
 def _self_test():
