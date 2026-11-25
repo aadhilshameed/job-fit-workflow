@@ -314,8 +314,13 @@ def summary_message(results: list[dict], day: date | None = None, note: str = ""
     return text + (f"\n{html.escape(note)}" if note else "")
 
 
+def run_header(run_time, count: int) -> str:
+    """The divider that opens each run's messages, so one run's jobs are not mixed up with the last run's (25 Nov 2026)."""
+    return f"━━━━━━━━━━━━━━━━\n<b>{run_time:%H:%M} run</b> · {count} job{'' if count == 1 else 's'}"
+
+
 def send_alerts(items: list[tuple[dict, dict, object]], note: str | None = None, limit: int | None = None,
-                summarize=None, on_sent=None, on_failed=None) -> int:
+                summarize=None, on_sent=None, on_failed=None, run_time=None) -> int:
     """items: [(posting, result, published), ...]. Sends the postings in order (apply, stretch, lack_of_info).
     note: only for previews (scripts/preview_telegram.py): then the old summary message goes first.
     summarize: a function (title, description, requirement rows) -> PostingSummary, called only for postings
@@ -325,12 +330,19 @@ def send_alerts(items: list[tuple[dict, dict, object]], note: str | None = None,
     (run_daily.py uses it to note the time in the database).
     on_failed: a function (posting, error) called when a message could not be sent even after send_message's
     retries. The other postings are still sent; the run does not stop.
+    run_time: when given, a short divider with the time and the number of jobs goes first (only if there is
+    something to send).
     Returns how many postings were sent."""
     if note is not None:
         send_message(summary_message([r for _, r, _ in items], note=note))
     to_send = sorted((i for i in items if i[1]["code_verdict"] in SENT_VERDICTS),
                      key=lambda i: (place_group(i[0]), VERDICT_ORDER[i[1]["code_verdict"]],
                                     nearest_km(i[0].get("locations") or []) or 9999))
+    if run_time is not None and to_send[:limit]:
+        try:
+            send_message(run_header(run_time, len(to_send[:limit])))
+        except Exception as e:                                  # noqa: BLE001
+            print(f"Could not send the run divider: {type(e).__name__}: {scrub(e)}"[:300])   # the jobs still go out
     sent = 0
     for posting, result, published in to_send[:limit]:
         summary = posting.get("summary")                        # a posting sent again may have one from before

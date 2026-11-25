@@ -407,7 +407,8 @@ def run_steps(args, conn, background: str, run_id: int | None, stats: dict):
     if now.hour < MORNING_BEFORE_HOUR:
         waiting_now = len(db.still_to_assess(conn))
         send_quietly(telegram.morning_message(now, stats, len(resend), waiting_now))
-    sent = telegram.send_alerts(items + resend, summarize=summarize_and_record, on_sent=on_sent, on_failed=on_failed)
+    sent = telegram.send_alerts(items + resend, summarize=summarize_and_record, on_sent=on_sent, on_failed=on_failed,
+                                run_time=now)
     stats["cost_usd"] = round(spent, 4)
     if now.hour >= EVENING_FROM_HOUR:
         conn = db.still_open(conn)
