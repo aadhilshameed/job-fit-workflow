@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from job_fit.code_nodes.location import location_gap           # noqa: E402
+from job_fit.code_nodes.location import commute_problem           # noqa: E402
 from job_fit.llm.decisions_api_filter import ask_decisions_filter        # noqa: E402
 
 
@@ -44,7 +44,7 @@ def main():
         tokens += decisions.pop("input_tokens")
         for key in ("ai_eng_probability", "ai_work_type", "office_presence", "presence_confidence"):
             p[key] = decisions[key]
-        gap = location_gap(p["office_presence"], p.get("locations") or [], p.get("presence_confidence"))
+        gap = commute_problem(p["office_presence"], p.get("locations") or [], p.get("presence_confidence"))
         print(f"[{i}/{len(postings)}] {p['title'][:55]:55} ai_eng {p['ai_eng_probability']:.2f} "
               f"{str(p['ai_work_type']):15} presence {p['office_presence']}{('  LOCATION ' + gap['kind'].upper()) if gap else ''}")
         args.set.write_text(json.dumps(postings, ensure_ascii=False, indent=1), encoding="utf-8")   # save as we go

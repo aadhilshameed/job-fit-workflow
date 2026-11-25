@@ -103,9 +103,9 @@ def still_to_assess(conn) -> list[dict]:
              "locations": r["locations"] or [], "description": r["description"],
              "published_on": r["published_on"].date() if r["published_on"] else None,
              "office_presence": r["office_presence"],
-             "location_gap": ({"kind": r["location_gap_type"], "reason": r["location_gap_reason"]}
-                              if r["location_gap_type"] else None),
-             "location_note": r["location_note"], "url": r.get("url")} for r in rows]
+             "commute_problem": ({"kind": r["commute_problem_type"], "reason": r["commute_problem_reason"]}
+                              if r["commute_problem_type"] else None),
+             "far_office_reminder": r["far_office_reminder"], "url": r.get("url")} for r in rows]
 
 
 def skip_assessment(conn, screened_posting_id: int, reason: str) -> None:
@@ -117,17 +117,17 @@ def save_posting(conn, posting: dict) -> int:
     """One row in screened_postings; returns its id.
 
     posting: source, source_id, title, company, city, locations, description, and optionally duplicate_ids,
-    published_on, decisions (the dict ask_decisions_filter() returns), decisions_call_error, location_gap
-    ({"kind", "reason"} or None), location_note and url (the posting's page, for the Telegram button).
+    published_on, decisions (the dict ask_decisions_filter() returns), decisions_call_error, commute_problem
+    ({"kind", "reason"} or None), far_office_reminder and url (the posting's page, for the Telegram button).
     """
     decisions = posting.get("decisions") or {}
-    gap = posting.get("location_gap") or {}
+    gap = posting.get("commute_problem") or {}
     row = conn.execute(
         """
         INSERT INTO screened_postings
             (source, source_id, duplicate_ids, title, company, city, locations, description, published_on,
              decisions_call_error, ai_eng_probability, is_it_ai_eng, ai_work_type, work_type_confidence,
-             office_presence, presence_confidence, location_note, location_gap_type, location_gap_reason, url)
+             office_presence, presence_confidence, far_office_reminder, commute_problem_type, commute_problem_reason, url)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id
         """,
@@ -136,7 +136,7 @@ def save_posting(conn, posting: dict) -> int:
          posting.get("description") or "", posting.get("published_on"),
          posting.get("decisions_call_error"), decisions.get("ai_eng_probability"), decisions.get("is_it_ai_eng"),
          decisions.get("ai_work_type"), decisions.get("work_type_confidence"), decisions.get("office_presence"),
-         decisions.get("presence_confidence"), posting.get("location_note"), gap.get("kind"), gap.get("reason"),
+         decisions.get("presence_confidence"), posting.get("far_office_reminder"), gap.get("kind"), gap.get("reason"),
          posting.get("url")),
     ).fetchone()
     return row[0]
@@ -232,9 +232,9 @@ def unsent_verdicts(conn, leave_out: set[int] = frozenset()) -> list[dict]:
                         "ort": r["city"], "locations": r["locations"] or [], "description": r["description"],
                         "published_on": r["published_on"].date() if r["published_on"] else None,
                         "office_presence": r["office_presence"],
-                        "location_gap": ({"kind": r["location_gap_type"], "reason": r["location_gap_reason"]}
-                                         if r["location_gap_type"] else None),
-                        "location_note": r["location_note"], "url": r.get("url"),
+                        "commute_problem": ({"kind": r["commute_problem_type"], "reason": r["commute_problem_reason"]}
+                                         if r["commute_problem_type"] else None),
+                        "far_office_reminder": r["far_office_reminder"], "url": r.get("url"),
                         "verdict_id": r["verdict_id"], "code_verdict": r["code_verdict"],
                         "model_verdict": r["model_verdict"], "verdict_reason": r["verdict_reason"] or "",
                         "stored_summary": r["summary"], "requirements": requirements})
@@ -269,10 +269,12 @@ def save_run(conn, run_id: int | None, stats: dict, status: str | None = None, e
         conn.execute(
             """
             UPDATE pipeline_run_logs
-            SET stats = %s, status = coalesce(%s, status), error = coalesce(%s, error),
-                finished_at = CASE WHEN %s IS NULL THEN finished_at ELSE now() END
+            SET stats = %s, status = coalesce(%s::text, status), error = coalesce(%s::text, error),
+                finished_at = CASE WHEN %s::text IS NULL THEN finished_at ELSE now() END
             WHERE id = %s
             """, (Jsonb(stats), status, error, status, run_id))
+        # ::text tells Postgres the type of each value. Without it, "%s IS NULL" gives no hint, and Postgres
+        # refuses the whole statement (IndeterminateDatatype: on 25 Nov 2026 every run's row stayed "running")
     except psycopg.Error as e:
         print(f"pipeline_run_logs: could not save the row ({type(e).__name__})")
 
@@ -303,7 +305,7 @@ def _self_test():
                    "company": "Test GmbH", "city": "Hof", "locations": [{"city": "Hof", "lat": 50.3, "lon": 11.9}],
                    "description": "Wir suchen dich.", "duplicate_ids": ["TEST-1b"],
                    "decisions": {"ai_eng_probability": 0.83, "is_it_ai_eng": True, "ai_work_type": "agentic_ai",
-                                 "work_type_confidence": 0.7, "office_presence": "occasional",
+                                 "work_type_confidence": 0.7, "office_presence": "few_days_a_month",
                                  "presence_confidence": 0.9}}
         pid = save_posting(conn, posting)
         result = {"code_verdict": "apply", "model_verdict": "apply", "model_verdict_reason": "All critical skills match.",

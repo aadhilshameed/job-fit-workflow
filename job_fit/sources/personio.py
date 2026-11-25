@@ -154,5 +154,5 @@ def to_posting(raw: dict, company: str) -> dict:
             "locations": locations, "location_text": "; ".join(place["raw"] for place in locations),
             "remote": is_remote(raw, description),
             "description": description, "published_on": published_on(raw),
-            "url": JOB_URL.format(company=company, id=raw["id"]), "location_gap": None, "location_note": None,
+            "url": JOB_URL.format(company=company, id=raw["id"]), "commute_problem": None, "far_office_reminder": None,
             "employment_type": raw.get("employment_type") or "", "seniority": raw.get("seniority") or ""}

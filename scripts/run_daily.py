@@ -49,7 +49,7 @@ from job_fit.sources import arbeitnow, arbeitsagentur, company_feeds, smartrecru
 from job_fit.geocode import add_coordinates                                 # noqa: E402
 from job_fit.bot import telegram                                         # noqa: E402
 from job_fit.llm.model_calls import ask_model                                        # noqa: E402
-from job_fit.code_nodes.location import location_gap, location_note, locations_from_api   # noqa: E402
+from job_fit.code_nodes.location import commute_problem, far_office_reminder, locations_from_api   # noqa: E402
 from job_fit.llm.prompt import PROMPT_VERSION, build_user_message            # noqa: E402
 from job_fit.llm.decisions_api_filter import ask_decisions_filter                            # noqa: E402
 from job_fit.llm.summary import (SUMMARY_EFFORT, SUMMARY_MODEL, SUMMARY_PROMPT_VERSION,   # noqa: E402
@@ -108,16 +108,17 @@ def assess(posting: dict, background: str) -> dict:
     """One Haiku call + code_verdict.py for one posting. Never raises: a failure comes back as an error."""
     cfg = ASSESSMENT_MODEL
     start = time.perf_counter()
+    usage = None        # set as soon as Haiku answers, so a failure AFTER the call still reports what it cost
     try:
         assessment, usage = ask_model(build_user_message(posting["description"], background),
                                       cfg["provider"], cfg["model"], cfg["effort"])
                                       #provider is for setting the client connection
-        result = compute_verdict(assessment, background, posting["location_gap"])
-        #location gap - location is too far given: being present daily, weekly, monthly or remote
-        result["location_note"] = posting["location_note"]
+        result = compute_verdict(assessment, background, posting["commute_problem"])
+        #commute_problem: None if the office is reachable often enough, else {"kind": "skip" or "check", "reason": ...}
+        result["far_office_reminder"] = posting["far_office_reminder"]
         return {"result": result, "error": None, "usage": usage, "seconds": time.perf_counter() - start}
     except Exception as e:                                                  # noqa: BLE001
-        return {"result": None, "error": f"{type(e).__name__}: {e}"[:500], "usage": None,
+        return {"result": None, "error": f"{type(e).__name__}: {e}"[:500], "usage": usage,
                 "seconds": time.perf_counter() - start}
 
 
@@ -175,7 +176,7 @@ def arbeitsagentur_postings(conn, args, known: KnownJobs, stats: dict) -> list[d
                          "company": company, "firma": company, "city": city, "ort": city, "locations": locations,
                          "description": full.get("stellenangebotsBeschreibung", "") or "",
                          "published_on": published_on(each_listing), "url": telegram.POSTING_URL.format(refnr=refnr),
-                         "location_gap": None, "location_note": None})
+                         "commute_problem": None, "far_office_reminder": None})
     stats["new"][ARBEITSAGENTUR] = len(postings)
     return postings
 
@@ -265,9 +266,9 @@ def rebuild_result(row: dict, background: str) -> dict:
     assessment = Assessment(role_focus=[], requirements=[Requirement(**r) for r in row["requirements"]],
                             model_verdict_reason=row["verdict_reason"],
                             model_verdict=row["model_verdict"] or row["code_verdict"])
-    result = compute_verdict(assessment, background, row["location_gap"])
+    result = compute_verdict(assessment, background, row["commute_problem"])
     result["code_verdict"] = row["code_verdict"]
-    result["location_note"] = row["location_note"]
+    result["far_office_reminder"] = row["far_office_reminder"]
     return result
 
 
@@ -302,8 +303,8 @@ def run_steps(args, conn, background: str, run_id: int | None, stats: dict):
                 decisions.pop("input_tokens", None)
                 posting["decisions"] = decisions
                 posting["office_presence"] = decisions["office_presence"]
-                posting["location_gap"] = location_gap(decisions["office_presence"], locations, decisions["presence_confidence"])
-                posting["location_note"] = location_note(decisions["office_presence"], locations)
+                posting["commute_problem"] = commute_problem(decisions["office_presence"], locations, decisions["presence_confidence"])
+                posting["far_office_reminder"] = far_office_reminder(decisions["office_presence"], locations)
             except Exception as e:                                          # noqa: BLE001
                 posting["decisions_call_error"] = f"{type(e).__name__}: {e}"[:300]
                 stats["decisions_errors"] += 1

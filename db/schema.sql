@@ -21,14 +21,14 @@ CREATE TABLE screened_postings (
     is_it_ai_eng BOOLEAN,            -- yes or no: is the probability at least 0.49 (the threshold)
     ai_work_type TEXT,               -- agentic_ai, ai_automation, ai_engineering or other
     work_type_confidence NUMERIC,    -- 0 to 1: how confident the model is in ai_work_type
-    office_presence TEXT,            -- not_mentioned, remote, occasional, one_day_weekly, weekly (2+ days) or regular_unspecified
+    office_presence TEXT,            -- not_mentioned, remote, few_days_a_month, one_day_a_week, two_plus_days_a_week or regular_unknown_frequency
     presence_confidence NUMERIC,     -- 0 to 1: confidence on office_presence response
     
 
     -- from the location code (location.py). All empty when the location is fine.
-    location_note TEXT,
-    location_gap_type TEXT,          -- skip (too far for the office days) or check (look up the train time)
-    location_gap_reason TEXT,        -- one sentence on why: skip or check
+    far_office_reminder TEXT,
+    commute_problem_type TEXT,          -- skip (too far for the office days) or check (look up the train time)
+    commute_problem_reason TEXT,        -- one sentence on why: skip or check
 
     -- added 22 Nov 2026, when a second source arrived
     url TEXT,                        -- the posting's own page (the Telegram button); empty for older Arbeitsagentur rows

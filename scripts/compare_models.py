@@ -36,7 +36,7 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit.llm.model_calls import ask_model                      # noqa: E402
-from job_fit.code_nodes.location import location_gap, location_note   # noqa: E402
+from job_fit.code_nodes.location import commute_problem, far_office_reminder   # noqa: E402
 from job_fit.llm.prompt import PROMPT_VERSION, build_user_message   # noqa: E402
 from job_fit.llm.decisions_api_filter import THRESHOLD                # noqa: E402
 from job_fit.llm.snapshot import save_snapshot             # noqa: E402
@@ -123,9 +123,9 @@ def assess_once(posting, background, name, run, snapshot):
         try:
             assessment, usage = ask_model(user_message, cfg["provider"], cfg["model"], cfg["effort"])
             presence, places = posting.get("office_presence"), posting.get("locations") or []
-            gap = location_gap(presence, places, posting.get("presence_confidence"))
+            gap = commute_problem(presence, places, posting.get("presence_confidence"))
             result, error = compute_verdict(assessment, background, gap), None
-            result["location_note"] = location_note(presence, places)
+            result["far_office_reminder"] = far_office_reminder(presence, places)
             break
         except Exception as e:                    # noqa: BLE001  (any failure is recorded, not hidden)
             error = f"{type(e).__name__}: {e}"[:500]

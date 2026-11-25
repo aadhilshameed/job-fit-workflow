@@ -123,5 +123,5 @@ def to_posting(raw: dict, company: str) -> dict:
             "locations": locations, "location_text": location_text,
             "remote": workplace_type == "remote" or any(_has_remote_word(p) for p in places),
             "description": build_description(raw), "published_on": published_on(raw),
-            "url": raw.get("hostedUrl"), "location_gap": None, "location_note": None,
+            "url": raw.get("hostedUrl"), "commute_problem": None, "far_office_reminder": None,
             "commitment": categories.get("commitment"), "workplace_type": workplace_type}

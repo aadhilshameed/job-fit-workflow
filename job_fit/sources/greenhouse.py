@@ -167,5 +167,5 @@ def to_posting(raw: dict, board: str) -> dict:
             "location_text": (raw.get("location") or {}).get("name") or "; ".join(places),
             "remote": any(_has_remote_word(place) and place_in_germany(place) for place in places),
             "description": clean_text(raw.get("content")), "published_on": published_on(raw),
-            "url": raw.get("absolute_url"), "location_gap": None, "location_note": None,
+            "url": raw.get("absolute_url"), "commute_problem": None, "far_office_reminder": None,
             "language": raw.get("language"), "requisition_id": raw.get("requisition_id")}

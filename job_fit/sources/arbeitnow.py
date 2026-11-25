@@ -135,4 +135,4 @@ def to_posting(job: dict) -> dict:
             "company": company, "firma": company, "city": city, "ort": city,
             "locations": locations, "location_text": job.get("location") or "", "remote": is_remote(job),
             "description": text if len(text) >= MIN_TEXT_CHARS else "", "published_on": published_on(job),
-            "url": job.get("url"), "location_gap": None, "location_note": None}
+            "url": job.get("url"), "commute_problem": None, "far_office_reminder": None}

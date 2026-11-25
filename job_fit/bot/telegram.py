@@ -53,10 +53,10 @@ VERDICT_HEADINGS = {"apply": "✅ <b>APPLY</b>", "lack_of_info": "❓ <b>CHECK</
                     "stretch": "🟠 <b>STRETCH</b>", "skip": "⛔ <b>SKIP</b>"}
 VERDICT_ORDER = {"apply": 0, "lack_of_info": 1, "stretch": 2, "skip": 3}
 SENT_VERDICTS = {"apply", "lack_of_info", "stretch"}
-PRESENCE_SHORT = {"not_mentioned": "office days?", "remote": "remote", "occasional": "hybrid",
-                  "one_day_weekly": "office 1 day/week", "weekly": "office 2+ days/week",
-                  "regular_unspecified": "regular office"}
-HYBRID = {"occasional", "one_day_weekly", "weekly", "regular_unspecified"}
+PRESENCE_SHORT = {"not_mentioned": "office days?", "remote": "remote", "few_days_a_month": "hybrid",
+                  "one_day_a_week": "office 1 day/week", "two_plus_days_a_week": "office 2+ days/week",
+                  "regular_unknown_frequency": "regular office"}
+HYBRID = {"few_days_a_month", "one_day_a_week", "two_plus_days_a_week", "regular_unknown_frequency"}
 GAP_PREFIXES = (("hard_gap: ", "hard_gap"), ("partial (language, not counted): ", "language"), ("partial: ", "partial"))
 DOTS = {"match": "🟢", "partial": "🟡", "hard_gap": "🔴", "not_stated": "⚪"}
 GENDER_TAG = re.compile(r"\s*\((?:all genders|[mwfdxgn*]+|div\.?)(?:\s*[/|,]\s*(?:[mwfdxgn*]+|div\.?))*\)",
@@ -196,7 +196,7 @@ def gap_kinds(result: dict) -> dict[str, str]:
 def location_lines(result: dict) -> list[str]:
     """The location check and the far-away note, as full sentences."""
     lines = [g.split(": ", 1)[-1] for g in result.get("critical_gaps") or [] if g.startswith("location")]
-    return lines + ([result["location_note"]] if result.get("location_note") else [])
+    return lines + ([result["far_office_reminder"]] if result.get("far_office_reminder") else [])
 
 
 def ranked_requirements(result: dict, summary=None) -> list[dict]:

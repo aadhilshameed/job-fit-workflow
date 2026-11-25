@@ -88,8 +88,8 @@ details summary {{ cursor:pointer; color:var(--muted); }}
             if first and not first["error"]:
                 gap_list = first["result"]["critical_gaps"] + [f"not_stated: {g}" for g in first["result"]["missing_eligibility"]]
                 gaps = "<br>".join(_esc(g) for g in gap_list) or '<span class="muted">none</span>'
-                if first["result"].get("location_note"):
-                    gaps += f'<br><span class="muted">{_esc(first["result"]["location_note"])}</span>'
+                if first["result"].get("far_office_reminder"):
+                    gaps += f'<br><span class="muted">{_esc(first["result"]["far_office_reminder"])}</span>'
                 if first["result"]["unverified_quotes"]:
                     gaps += f'<br><span class="muted">unverified quotes: {len(first["result"]["unverified_quotes"])}</span>'
             elif first:

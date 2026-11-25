@@ -164,5 +164,5 @@ def to_posting(raw: dict, board: str) -> dict:
             "company": name, "firma": name, "city": city, "ort": city,
             "locations": locations, "location_text": (raw.get("location") or "").strip() or "; ".join(places),
             "remote": remote, "description": description, "published_on": published_on(raw),
-            "url": raw.get("jobUrl"), "location_gap": None, "location_note": None,
+            "url": raw.get("jobUrl"), "commute_problem": None, "far_office_reminder": None,
             "employment_type": raw.get("employmentType"), "workplace_type": workplace_type}

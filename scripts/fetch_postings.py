@@ -37,7 +37,7 @@ sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
 from job_fit.sources import arbeitsagentur                                  # noqa: E402
-from job_fit.code_nodes.location import location_gap, location_note, locations_from_api   # noqa: E402
+from job_fit.code_nodes.location import commute_problem, far_office_reminder, locations_from_api   # noqa: E402
 from job_fit.llm.decisions_api_filter import ask_decisions_filter                        # noqa: E402
 from job_fit.code_nodes.title_filter import genai_signals, title_status         # noqa: E402
 
@@ -119,8 +119,8 @@ def main():
                 decisions = ask_decisions_filter(title, text)
                 decisions_tokens += decisions.pop("input_tokens")
                 row.update(decisions)
-                row["location_gap"] = location_gap(decisions["office_presence"], locations, decisions["presence_confidence"])
-                row["location_note"] = location_note(decisions["office_presence"], locations)
+                row["commute_problem"] = commute_problem(decisions["office_presence"], locations, decisions["presence_confidence"])
+                row["far_office_reminder"] = far_office_reminder(decisions["office_presence"], locations)
             except Exception as e:                                      # noqa: BLE001
                 row["decisions_call_error"] = f"{type(e).__name__}: {e}"[:300]
         batch.append(row)
@@ -130,7 +130,7 @@ def main():
             note = "no posting text"
         else:
             note = (f"ai_eng {row['ai_eng_probability']:.2f} {str(row['ai_work_type']):15} "
-                    f"presence {row['office_presence']}{('  LOCATION ' + row['location_gap']['kind'].upper()) if row['location_gap'] else ''}")
+                    f"presence {row['office_presence']}{('  LOCATION ' + row['commute_problem']['kind'].upper()) if row['commute_problem'] else ''}")
         print(f"[{i}/{min(len(passed), args.max)}] {title[:55]:55} {note}")
         # a posting whose Decisions API call failed goes through anyway: Haiku costs less than a missed job
         if row.get("is_it_ai_eng") or "decisions_call_error" in row:
@@ -141,7 +141,7 @@ def main():
     (BATCHES / f"batch_{today}.json").write_text(json.dumps(batch_all, ensure_ascii=False, indent=1), encoding="utf-8")
     (BATCHES / f"set_{today}.json").write_text(json.dumps(final_set, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"\n{len(batch)} checked, {len(final_set)} are AI engineering roles "
-          f"({sum(1 for r in batch if r.get('is_it_ai_eng') and r.get('location_gap'))} of them with a location gap). "
+          f"({sum(1 for r in batch if r.get('is_it_ai_eng') and r.get('commute_problem'))} of them with a location gap). "
           f"Decisions API cost: ${decisions_tokens * 0.10 / 1_000_000:.4f}")
     # the same set under a fixed name, so an overnight command can find it after midnight
     (BATCHES / "set_latest.json").write_text(json.dumps(final_set, ensure_ascii=False, indent=1), encoding="utf-8")

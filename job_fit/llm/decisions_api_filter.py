@@ -17,8 +17,9 @@ Three questions share one request (the posting is billed once):
 """
 
 DEFAULT_PROVIDER = "openai"
-QUESTIONS_VERSION = "q3"   # q1: first test; q2: "must live in the region" counts as weekly presence;
-                           # q3 (25 Nov 2026): one fixed office day a week is its own answer (one_day_weekly)
+QUESTIONS_VERSION = "q4"   # q1: first test; q2: "must live in the region" counts as weekly presence;
+                           # q3 (25 Nov 2026): one fixed office day a week is its own answer;
+                           # q4 (25 Nov 2026): clearer answer names (few_days_a_month, one_day_a_week, two_plus_days_a_week, ...)
 MODELS = {"openai": "gpt-6-luna", "google": "gemini-decision-1"}
 THRESHOLD = 0.49  # ai_eng_probability >= 0.49 goes to Haiku (set 19 Nov 2026 from the 25-posting test)
 
@@ -45,12 +46,12 @@ FOCUS_CHOICES = [
 PRESENCE_CHOICES = [
     {"value": "not_mentioned", "description": "The posting says nothing about remote work or office days."},
     {"value": "remote", "description": "Fully remote, or office visits are only optional."},
-    {"value": "occasional", "description": "Hybrid with office days less than once a week: a few days per month at most."},
-    {"value": "one_day_weekly", "description": "Exactly one fixed office day every week, otherwise remote "
+    {"value": "few_days_a_month", "description": "Hybrid with office days less than once a week: a few days per month at most."},
+    {"value": "one_day_a_week", "description": "Exactly one fixed office day every week, otherwise remote "
                                                "(for example 'one office day a week', '1 day on site per week')."},
-    {"value": "weekly", "description": "Two or more office days every week, mostly or fully on site, "
+    {"value": "two_plus_days_a_week", "description": "Two or more office days every week, mostly or fully on site, "
                                        "or the person must live in the city or region."},
-    {"value": "regular_unspecified", "description": "Regular presence at the office is required, "
+    {"value": "regular_unknown_frequency", "description": "Regular presence at the office is required, "
                                                     "without saying how often."},
 ]
 

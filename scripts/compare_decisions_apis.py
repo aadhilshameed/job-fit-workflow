@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(ROOT))
 load_dotenv(ROOT / ".env")
 
-from job_fit.code_nodes.location import location_gap           # noqa: E402
+from job_fit.code_nodes.location import commute_problem           # noqa: E402
 from job_fit.llm.decisions_api_filter import QUESTIONS_VERSION, ask_decisions_filter        # noqa: E402
 
 PROVIDERS = ["openai", "google"]
@@ -58,10 +58,10 @@ def main():
             try:
                 decisions = ask_decisions_filter(p["title"], p["description"], provider)
                 tokens[provider] += decisions["input_tokens"] or 0
-                decisions["location_gap"] = location_gap(decisions["office_presence"], p.get("locations") or [],
+                decisions["commute_problem"] = commute_problem(decisions["office_presence"], p.get("locations") or [],
                                                    decisions["presence_confidence"])
                 row, status = decisions, (f"ai_eng {decisions['ai_eng_probability']:.2f} {str(decisions['ai_work_type']):15} "
-                                    f"presence {decisions['office_presence']}{('  LOCATION ' + decisions['location_gap']['kind'].upper()) if decisions['location_gap'] else ''}")
+                                    f"presence {decisions['office_presence']}{('  LOCATION ' + decisions['commute_problem']['kind'].upper()) if decisions['commute_problem'] else ''}")
             except Exception as e:                                       # noqa: BLE001
                 row, status = {"error": f"{type(e).__name__}: {e}"[:400]}, "ERROR " + f"{type(e).__name__}: {e}"[:100]
             row |= {"provider": provider, "refnr": p["refnr"], "seconds": round(time.perf_counter() - start, 2)}

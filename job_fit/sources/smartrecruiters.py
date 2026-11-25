@@ -138,6 +138,6 @@ def to_posting(raw: dict, company: str) -> dict:
             "remote": bool(place.get("remote")),
             "description": "", "published_on": published_on(raw),
             "url": PUBLIC_URL.format(company=company, posting_id=posting_id),
-            "location_gap": None, "location_note": None,
+            "commute_problem": None, "far_office_reminder": None,
             "experience_level": (raw.get("experienceLevel") or {}).get("label"),
             "employment_type": (raw.get("typeOfEmployment") or {}).get("label")}

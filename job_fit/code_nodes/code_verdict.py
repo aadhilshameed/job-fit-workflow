@@ -46,10 +46,10 @@ def quote_verification(quote: str, background: str) -> str:
     return "not_verified"
 
 
-def compute_verdict(assessment: Assessment, background: str, location_gap: dict | None = None) -> dict:
+def compute_verdict(assessment: Assessment, background: str, commute_problem: dict | None = None) -> dict:
     """Returns the code verdict plus everything needed to explain it.
 
-    location_gap: None, or {"kind": "skip" or "check", "reason": ...} from location.location_gap().
+    commute_problem: None, or {"kind": "skip" or "check", "reason": ...} from location.commute_problem().
     """
     requirements = [r.model_copy() for r in assessment.requirements if r.found_in != "tasks_section"]
     #.model_copy() makes a copy of the each requirements from the response of the model.
@@ -79,8 +79,8 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
     eligibility_gaps = [r for r in critical_eligibility if r.match_result == "hard_gap"]
     missing_eligibility = [r for r in critical_eligibility if r.match_result == "not_stated"]
 
-    location_skip = bool(location_gap) and location_gap["kind"] == "skip"
-    location_check = bool(location_gap) and location_gap["kind"] == "check"
+    location_skip = bool(commute_problem) and commute_problem["kind"] == "skip"
+    location_check = bool(commute_problem) and commute_problem["kind"] == "check"
 
     if location_skip or eligibility_gaps or len(hard_gaps) >= 2 or len(partials) > 2:
         verdict = "skip"
@@ -97,10 +97,10 @@ def compute_verdict(assessment: Assessment, background: str, location_gap: dict 
         "verdicts_agree": verdict == assessment.model_verdict,
         "model_verdict_reason": assessment.model_verdict_reason,
         "role_focus": assessment.role_focus[:3],
-        "critical_gaps": ([f"location ({location_gap['kind']}): {location_gap['reason']}"] if location_gap else [])
+        "critical_gaps": ([f"location ({commute_problem['kind']}): {commute_problem['reason']}"] if commute_problem else [])
                          + [f"{r.match_result}: {r.requirement_text}" for r in eligibility_gaps + hard_gaps + partials]
                          + [f"partial (language, not counted): {r.requirement_text}" for r in language_partials],
-        "location_gap": location_gap,
+        "commute_problem": commute_problem,
         "missing_eligibility": [r.requirement_text for r in missing_eligibility],
         "unverified_quotes": [r.requirement_text for r in requirements
                               if quote_statuses[id(r)] == "not_verified"],
