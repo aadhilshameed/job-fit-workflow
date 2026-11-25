@@ -17,6 +17,7 @@ import requests
 from psycopg.rows import dict_row
 
 GEOCODE_URL = "https://api.geoapify.com/v1/geocode/search"
+WRONG_KIND_OF_PLACE = {"street", "amenity", "building"}   # Geoapify result types that are never a job's city
 
 # Geoapify's state codes -> the Arbeitsagentur's spelling, which the location rule (code_nodes/location.py) uses
 STATE_NAMES = {"BW": "BADEN_WUERTTEMBERG", "BY": "BAYERN", "BE": "BERLIN", "BB": "BRANDENBURG", "HB": "BREMEN",
@@ -42,6 +43,12 @@ def ask_geoapify(text: str) -> dict:
         return {"lat": None, "lon": None, "country_code": None, "state_code": None, "result_type": None,
                 "confidence": None, "found_name": None}
     best = results[0]
+    if best.get("result_type") in WRONG_KIND_OF_PLACE:
+        # "heidelberg, ger" came back as a street called Heidelberg in Ilmenau (Thuringia), and
+        # "london, england, spain" as a building called London in Spain: a street or a building is never
+        # what a job posting means, so treat it as not found (25 Nov 2026)
+        return {"lat": None, "lon": None, "country_code": None, "state_code": None,
+                "result_type": best.get("result_type"), "confidence": None, "found_name": best.get("formatted")}
     return {"lat": best.get("lat"), "lon": best.get("lon"), "country_code": best.get("country_code"),
             "state_code": best.get("state_code"), "result_type": best.get("result_type"),
             "confidence": (best.get("rank") or {}).get("confidence"), "found_name": best.get("formatted")}

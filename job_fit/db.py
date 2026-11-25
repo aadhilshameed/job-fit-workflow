@@ -216,6 +216,15 @@ def unsent_verdicts(conn, leave_out: set[int] = frozenset()) -> list[dict]:
             WHERE v.code_verdict IN ('apply', 'stretch', 'lack_of_info')
               AND v.sent_to_telegram_at IS NULL
               AND v.assessed_at > now() - make_interval(days => %s)
+              -- never a second message for the same job: skip it if any of its verdicts already went out
+              -- (posting 9 reached Telegram twice on 22 Nov 2026, from two verdicts of one posting)
+              AND NOT EXISTS (SELECT 1 FROM model_verdicts sent
+                              WHERE sent.screened_posting_id = v.screened_posting_id
+                                AND sent.sent_to_telegram_at IS NOT NULL)
+              -- and only the newest unsent verdict per job
+              AND v.id = (SELECT max(newest.id) FROM model_verdicts newest
+                          WHERE newest.screened_posting_id = v.screened_posting_id
+                            AND newest.code_verdict IS NOT NULL)
             ORDER BY v.id
             """, (RESEND_DAYS,)).fetchall()
         rows = [r for r in rows if r["verdict_id"] not in leave_out]

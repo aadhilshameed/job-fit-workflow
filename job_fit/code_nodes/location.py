@@ -33,7 +33,8 @@ HOME = (50.1917, 11.7856)            # Münchberg
 WEEKLY_RADIUS_KM = 115
 CHECK_RADIUS_KM = 170       # 115 to 170 km: Leipzig, Regensburg, Würzburg, Ansbach, Gunzenhausen, Dresden
 TWICE_A_MONTH_STATES = {"BAYERN", "THUERINGEN", "SACHSEN", "SACHSEN_ANHALT", "HESSEN",
-                        "BADEN_WUERTTEMBERG", "BERLIN"}   # the API's own spelling of the federal states
+                        "BADEN_WUERTTEMBERG", "BERLIN", "BRANDENBURG"}   # the API's own spelling of the federal states
+# Brandenburg added 25 Nov 2026: Potsdam is next to Berlin (a Potsdam working student job was skipped)
 
 SEVERAL_DAYS_A_WEEK = {"two_plus_days_a_week", "regular_unknown_frequency"}       # two or more office days a week
 ONE_DAY_A_WEEK = "one_day_a_week"

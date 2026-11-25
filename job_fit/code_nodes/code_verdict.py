@@ -77,16 +77,20 @@ def compute_verdict(assessment: Assessment, background: str, commute_problem: di
     critical_eligibility = [r for r in requirements
                             if r.requirement_type == "eligibility" and r.importance == "critical"]
     eligibility_gaps = [r for r in critical_eligibility if r.match_result == "hard_gap"]
+    # a half-met eligibility (start date, full-time hours, duration) is never apply: at least stretch (25 Nov 2026)
+    eligibility_partials = [r for r in critical_eligibility if r.match_result == "partial"]
     missing_eligibility = [r for r in critical_eligibility if r.match_result == "not_stated"]
 
     location_skip = bool(commute_problem) and commute_problem["kind"] == "skip"
     location_check = bool(commute_problem) and commute_problem["kind"] == "check"
 
-    if location_skip or eligibility_gaps or len(hard_gaps) >= 2 or len(partials) > 2:
+    too_many_gaps = (len(hard_gaps) >= 2 or len(partials) > 2
+                     or (len(hard_gaps) == 1 and len(partials) >= 2))   # one missing skill plus two half-met is too much (25 Nov 2026)
+    if location_skip or eligibility_gaps or too_many_gaps:
         verdict = "skip"
     elif location_check or missing_eligibility or not requirements:      # nothing to judge is not a fit
         verdict = "lack_of_info"
-    elif len(hard_gaps) == 1 or len(partials) == 2:
+    elif len(hard_gaps) == 1 or len(partials) == 2 or eligibility_partials:
         verdict = "stretch"
     else:
         verdict = "apply"
@@ -99,6 +103,7 @@ def compute_verdict(assessment: Assessment, background: str, commute_problem: di
         "role_focus": assessment.role_focus[:3],
         "critical_gaps": ([f"location ({commute_problem['kind']}): {commute_problem['reason']}"] if commute_problem else [])
                          + [f"{r.match_result}: {r.requirement_text}" for r in eligibility_gaps + hard_gaps + partials]
+                         + [f"partial (eligibility): {r.requirement_text}" for r in eligibility_partials]
                          + [f"partial (language, not counted): {r.requirement_text}" for r in language_partials],
         "commute_problem": commute_problem,
         "missing_eligibility": [r.requirement_text for r in missing_eligibility],
